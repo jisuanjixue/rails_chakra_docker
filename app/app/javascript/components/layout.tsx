@@ -1,12 +1,11 @@
-import React from 'react';
+import React from "react";
 
-const Layout =  () => (
+const Layout = () => (
   <div
     style={{
-      height: '100vh',
+      height: "100vh",
     }}
-  >
-  </div>
+  ></div>
 );
 
-export default Layout
+export default Layout;

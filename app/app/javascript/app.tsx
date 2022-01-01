@@ -1,34 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 import {
-    BrowserRouter as Router,
-    Route,
-    Routes,
-    // useLocation
-} from 'react-router-dom';
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  // useLocation
+} from "react-router-dom";
+import { setAuthHeaders } from "./apis/axios";
 
-import './charts/ChartjsConfig';
+import "./charts/ChartjsConfig";
 
-import Dashboard from './pages/dashboard';
+import Dashboard from "./pages/dashboard";
+import Login from "./pages/login";
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
+  // previous code if any
 
-    // const location = useLocation();
-    // console.log("🚀 ~ file: app.tsx ~ line 16 ~ App ~ location", location)
+  useEffect(() => {
+    setAuthHeaders(setLoading);
+  }, []);
 
-    // useEffect(() => {
-    //     const node: any = document.querySelector('html')
-    //     node.style.scrollBehavior = 'auto'
-    //     window.scroll({ top: 0 })
-    //     node.style.scrollBehavior = ''
-    // }, [location]); // triggered on route change
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
-    return (
-        <Router>
-            <Routes>
-                <Route path="/home/index" element={<Dashboard />} />
-            </Routes>
-        </Router>
-    )
-}
+  // const location = useLocation();
+  // console.log("🚀 ~ file: app.tsx ~ line 16 ~ App ~ location", location)
+
+  // useEffect(() => {
+  //     const node: any = document.querySelector('html')
+  //     node.style.scrollBehavior = 'auto'
+  //     window.scroll({ top: 0 })
+  //     node.style.scrollBehavior = ''
+  // }, [location]); // triggered on route change
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/home/index" element={<Dashboard />} />
+        <Route path="/" element={<Login />} />
+      </Routes>
+    </Router>
+  );
+};
 
 export default App;

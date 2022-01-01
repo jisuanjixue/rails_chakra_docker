@@ -1,24 +1,28 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Transition from '../../utils/Transition';
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Transition from "../../utils/Transition";
 
 // import UserAvatar from '../../images/user-avatar-32.png';
 
 function UserMenu() {
-
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const trigger:any = useRef(null);
-  const dropdown:any = useRef(null);
+  const trigger: any = useRef(null);
+  const dropdown: any = useRef(null);
 
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
-      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
+      if (
+        !dropdownOpen ||
+        dropdown.current.contains(target) ||
+        trigger.current.contains(target)
+      )
+        return;
       setDropdownOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -27,8 +31,8 @@ function UserMenu() {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   return (
@@ -42,8 +46,13 @@ function UserMenu() {
       >
         {/* <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" /> */}
         <div className="flex items-center truncate">
-          <span className="ml-2 text-sm font-medium truncate group-hover:text-gray-800">Acme Inc.</span>
-          <svg className="w-3 h-3 ml-1 text-gray-400 fill-current shrink-0" viewBox="0 0 12 12">
+          <span className="ml-2 text-sm font-medium truncate group-hover:text-gray-800">
+            Acme Inc.
+          </span>
+          <svg
+            className="w-3 h-3 ml-1 text-gray-400 fill-current shrink-0"
+            viewBox="0 0 12 12"
+          >
             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
           </svg>
         </div>
@@ -57,7 +66,9 @@ function UserMenu() {
         enterEnd="opacity-100 translate-y-0"
         leave="transition ease-out duration-200"
         leaveStart="opacity-100"
-        leaveEnd="opacity-0" appear={undefined}      >
+        leaveEnd="opacity-0"
+        appear={undefined}
+      >
         <div
           ref={dropdown}
           onFocus={() => setDropdownOpen(true)}
@@ -90,7 +101,7 @@ function UserMenu() {
         </div>
       </Transition>
     </div>
-  )
+  );
 }
 
 export default UserMenu;

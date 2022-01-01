@@ -1,27 +1,47 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 function DashboardAvatars() {
   return (
     <ul className="flex flex-wrap justify-center mb-8 -ml-px -space-x-3 sm:justify-start sm:mb-0">
       <li>
         <Link className="block" to="#0">
-          <img className="rounded-full w-9 h-9 bg-user"  width="36" height="36" alt="User 01" />
+          <img
+            className="rounded-full w-9 h-9 bg-user"
+            width="36"
+            height="36"
+            alt="User 01"
+          />
         </Link>
       </li>
       <li>
         <Link className="block" to="#0">
-          <img className="rounded-full w-9 h-9 bg-user" width="36" height="36" alt="User 02" />
+          <img
+            className="rounded-full w-9 h-9 bg-user"
+            width="36"
+            height="36"
+            alt="User 02"
+          />
         </Link>
       </li>
       <li>
         <Link className="block" to="#0">
-          <img className="rounded-full w-9 h-9 bg-user" width="36" height="36" alt="User 03" />
+          <img
+            className="rounded-full w-9 h-9 bg-user"
+            width="36"
+            height="36"
+            alt="User 03"
+          />
         </Link>
       </li>
       <li>
         <Link className="block" to="#0">
-          <img className="rounded-full w-9 h-9 bg-user" width="36" height="36" alt="User 04" />
+          <img
+            className="rounded-full w-9 h-9 bg-user"
+            width="36"
+            height="36"
+            alt="User 04"
+          />
         </Link>
       </li>
       <li>

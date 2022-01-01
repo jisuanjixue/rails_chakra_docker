@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -23,26 +25,18 @@ gem "turbo-rails"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 # gem "stimulus-rails"
-gem 'jsbundling-rails'
+gem "jsbundling-rails"
 
 # Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
 gem "tailwindcss-rails"
 
-gem 'cssbundling-rails'
+gem "cssbundling-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
-
-# Build  graphql APIs
-# gem "graphql", "~> 1.12", ">= 1.12.19"
-
-# # Build  graphql auth APIs
-# gem 'graphql_devise', '~> 0.17.1'
-# gem 'devise_token_auth', '~> 1.2'
-# gem 'devise', '~> 4.8', '>= 4.8.1'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -65,6 +59,9 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  # For code formatting and linting
+  gem "rubocop"
+  gem "rubocop-rails"
 end
 
 group :development do
