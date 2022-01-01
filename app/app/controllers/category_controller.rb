@@ -2,6 +2,7 @@
 
 class CategoryController < ApplicationController
   def index
-    @categories = Category.all
+    categories = Category.all
+    render status: :ok, json: { categories: categories }
   end
 end
