@@ -11,6 +11,7 @@ import "./charts/ChartjsConfig";
 
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
+import Category from "./pages/category";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -39,6 +40,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Dashboard />} />
+        <Route path="/categories" element={<Category />} />
       </Routes>
     </Router>
   );
