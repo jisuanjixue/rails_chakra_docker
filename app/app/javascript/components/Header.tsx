@@ -3,10 +3,11 @@ import SearchModal from "./header/SearchModal";
 import Notifications from "./header/Notifications";
 import Help from "./header/Help";
 import UserMenu from "./header/UserMenu";
+import ThemeSelect from "./header/ThemeSelect";
 
 function Header({ sidebarOpen, setSidebarOpen }) {
   return (
-    <header className="sticky top-0 bg-white border-b border-gray-200 z-30">
+    <header className="sticky top-0 z-30 bg-white border-b border-gray-200">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 -mb-px">
           {/* Header: Left side */}
@@ -33,11 +34,12 @@ function Header({ sidebarOpen, setSidebarOpen }) {
 
           {/* Header: Right side */}
           <div className="flex items-center">
+            <ThemeSelect />
             <SearchModal />
             <Notifications />
             <Help />
             {/*  Divider */}
-            <hr className="w-px h-6 bg-gray-200 mx-3" />
+            <hr className="w-px h-6 mx-3 bg-gray-200" />
             <UserMenu />
           </div>
         </div>

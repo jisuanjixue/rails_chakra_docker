@@ -12,7 +12,7 @@ function Banner() {
               className="ml-5 text-gray-500 hover:text-gray-400"
               onClick={() => setBannerOpen(false)}
             >
-              <span className="sr-only">Close</span>
+              <span className="sr-only">设置主题</span>
               <svg
                 className="w-4 h-4 fill-current shrink-0"
                 viewBox="0 0 16 16"

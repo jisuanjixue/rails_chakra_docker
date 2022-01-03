@@ -6,12 +6,14 @@ import {
   // useLocation
 } from "react-router-dom";
 import { setAuthHeaders } from "./apis/axios";
+import { themeChange } from 'theme-change'
 
 import "./charts/ChartjsConfig";
 
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 import Category from "./pages/category";
+import "./app.css";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -19,6 +21,7 @@ const App = () => {
 
   useEffect(() => {
     setAuthHeaders(setLoading);
+    themeChange(false)
   }, []);
 
   if (loading) {
