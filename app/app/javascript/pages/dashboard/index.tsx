@@ -6,8 +6,6 @@ import WelcomeBanner from "../../components/dashboard/WelcomeBanner";
 import DashboardCard01 from "../../components/dashboard/DashboardCard01";
 import Banner from "../../components/Banner";
 
-import "./index.css";
-
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

@@ -2,12 +2,9 @@
 
 Rails.application.routes.draw do
 
-  resources :category, only: :index
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :category, only: [:index, :create, :update, :destroy]
 
   # Defines the root path route ("/")
-  # root to: "session#login"
-
-  root "home#index"
+  root to: "home#index"
   get '*path', to: 'home#index', via: :all
 end

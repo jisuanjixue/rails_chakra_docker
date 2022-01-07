@@ -87,7 +87,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             </svg>
           </button>
           {/* Logo */}
-          <NavLink exact to="/" className="block">
+          <NavLink to="/" className="block">
             <svg width="32" height="32" viewBox="0 0 32 32">
               <defs>
                 <linearGradient
@@ -151,7 +151,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                  exact
+                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname === "/" && "hover:text-gray-200"
@@ -191,7 +191,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                  exact
+                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("analytics") && "hover:text-gray-200"
@@ -287,8 +287,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              exact
-                              to="/categories"
+                              to="/category/list"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
                               <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
@@ -298,7 +297,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              exact
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -309,7 +307,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              exact
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -318,38 +315,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               </span>
                             </NavLink>
                           </li>
-                          {/* 
-                          
-                          <li className="mb-1 last:mb-0">
-                            <NavLink exact to="/" className="block text-gray-400 truncate transition duration-150 hover:text-gray-200">
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Shop</span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink exact to="/" className="block text-gray-400 truncate transition duration-150 hover:text-gray-200">
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Shop 2</span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink exact to="/" className="block text-gray-400 truncate transition duration-150 hover:text-gray-200">
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Single Product</span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink exact to="/" className="block text-gray-400 truncate transition duration-150 hover:text-gray-200">
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Cart</span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink exact to="/" className="block text-gray-400 truncate transition duration-150 hover:text-gray-200">
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Cart 2</span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink exact to="/" className="block text-gray-400 truncate transition duration-150 hover:text-gray-200">
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Pay</span>
-                            </NavLink>
-                          </li> */}
                         </ul>
                       </div>
                     </React.Fragment>
@@ -363,7 +328,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                  exact
+                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("campaigns") && "hover:text-gray-200"
@@ -447,34 +412,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              exact
+                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
                               <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
                                 Team - Tabs
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              exact
-                              to="/"
-                              className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
-                            >
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Team - Tiles
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              exact
-                              to="/"
-                              className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
-                            >
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Profile
                               </span>
                             </NavLink>
                           </li>
@@ -491,7 +434,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                  exact
+                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("messages") && "hover:text-gray-200"
@@ -525,7 +468,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                  exact
+                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("tasks") && "hover:text-gray-200"
@@ -565,7 +508,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                  exact
+                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("inbox") && "hover:text-gray-200"
@@ -599,7 +542,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                  exact
+                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("calendar") && "hover:text-gray-200"
@@ -699,67 +642,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              exact
+                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
                               <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
                                 My Account
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              exact
-                              to="/"
-                              className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
-                            >
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                My Notifications
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              exact
-                              to="/"
-                              className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
-                            >
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Connected Apps
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              exact
-                              to="/"
-                              className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
-                            >
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Plans
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              exact
-                              to="/"
-                              className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
-                            >
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Billing & Invoices
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              exact
-                              to="/"
-                              className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
-                            >
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Give Feedback
                               </span>
                             </NavLink>
                           </li>
@@ -850,7 +738,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              exact
+                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -861,7 +749,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              exact
+                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -872,7 +760,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              exact
+                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -883,7 +771,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              exact
+                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -894,7 +782,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              exact
+                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
