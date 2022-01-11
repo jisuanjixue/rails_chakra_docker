@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CategoryController < ApplicationController
-  before_action :find_params, only: [:create, :update, :destroy]
+  before_action :find_params, only: [:update, :destroy]
 
   def index
     categories = Category.roots
@@ -9,7 +9,7 @@ class CategoryController < ApplicationController
   end
   
   def create
-    if @category.nil?
+    if params[:id].empty?    
       category = Category.find_or_create_by_path(category_params[:name])
       if category
         render status: :ok, json: { success: 'category was successfully created' }
@@ -18,6 +18,7 @@ class CategoryController < ApplicationController
         render status: :unprocessable_entity, json: { error: error  }
       end
     else
+      @category = Category.find(params[:id])
       category = @category.find_or_create_by_path(category_params[:name])
       render status: :ok, json: { success: 'child category was successfully created' }
     end
@@ -42,7 +43,7 @@ class CategoryController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name)
+    params.require(:category).permit(:name, :id)
   end
 
   def find_params

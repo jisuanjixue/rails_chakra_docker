@@ -8,7 +8,6 @@ import App from "../app";
 
 // Create a client
 const queryClient = new QueryClient()
-console.log("🚀 ~ file: index.tsx ~ line 11 ~ queryClient", queryClient)
 
 ReactDOM.render(
   <React.StrictMode>

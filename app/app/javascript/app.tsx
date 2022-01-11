@@ -12,9 +12,11 @@ import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 import Category from "./pages/category";
 import "./app.css";
+import { setAuthHeaders } from "./apis/axios";
 
 const App = () => {
   useEffect(() => {
+    setAuthHeaders();
     themeChange(false)
   }, []);
 
