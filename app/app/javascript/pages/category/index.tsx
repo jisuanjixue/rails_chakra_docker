@@ -18,15 +18,13 @@ const Category = () => {
     };
     const { status, data, error, isFetching } = fetchCategories();
 
-    console.log("🚀 ~ file: index.tsx ~ line 24 ~ Category ~ data", data)
-
-    const [name, setName] = useState('');
+    const [category, setCategory] = useState({name: '', id: ''});
     const queryClient = useQueryClient();
 
     // Mutations
-    const addCategory = useMutation(name => categoriesApi.create(name), {
+    const addCategory = useMutation((category:any) => categoriesApi.create(category), {
         onMutate: async name => {
-            setName('')
+            setCategory({name: '', id: ''})
             await queryClient.cancelQueries('categories')
             const previousValue = queryClient.getQueryData('categories')
             queryClient.setQueryData('categories', (old: any) => ({
@@ -40,7 +38,7 @@ const Category = () => {
     })
 
     const onSubmit = () => {
-        addCategory.mutate(name)
+        addCategory.mutate(category)
     }
 
     return (
@@ -54,7 +52,7 @@ const Category = () => {
                             <label className="label">
                                 <span className="label-text">请填入类型名称</span>
                             </label>
-                            <input value={name} onChange={event => setName(event.target.value)} type="text" placeholder="username" className="input input-bordered" />
+                            <input value={category.name} onChange={event => setCategory({id: '', name: event.target.value})} type="text" placeholder="username" className="input input-bordered" />
                         </div>
                         <div className="modal-action">
                             <label htmlFor="my-modal-2" className="btn btn-primary" onClick={() => onSubmit()}>确定</label>
@@ -71,8 +69,6 @@ const Category = () => {
                                 <tr>
                                     <th></th>
                                     <th>名称</th>
-                                    {/* <th>Job</th>
-                        <th>Favorite Color</th> */}
                                 </tr>
                             </thead>
                             <tbody>
