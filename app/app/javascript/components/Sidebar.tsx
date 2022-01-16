@@ -151,7 +151,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname === "/" && "hover:text-gray-200"
@@ -191,7 +190,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("analytics") && "hover:text-gray-200"
@@ -231,7 +229,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           pathname.includes("ecommerce") &&
                           "hover:text-gray-200"
                         }`}
-                        onClick={(e) => {
+                        onClick={e => {
                           e.preventDefault();
                           sidebarExpanded
                             ? handleClick()
@@ -328,7 +326,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("campaigns") && "hover:text-gray-200"
@@ -365,7 +362,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                           pathname.includes("team") && "hover:text-gray-200"
                         }`}
-                        onClick={(e) => {
+                        onClick={e => {
                           e.preventDefault();
                           sidebarExpanded
                             ? handleClick()
@@ -412,7 +409,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -434,7 +430,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("messages") && "hover:text-gray-200"
@@ -468,7 +463,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("tasks") && "hover:text-gray-200"
@@ -508,7 +502,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("inbox") && "hover:text-gray-200"
@@ -542,7 +535,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }`}
               >
                 <NavLink
-                 
                   to="/"
                   className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("calendar") && "hover:text-gray-200"
@@ -579,7 +571,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                           pathname.includes("settings") && "hover:text-gray-200"
                         }`}
-                        onClick={(e) => {
+                        onClick={e => {
                           e.preventDefault();
                           sidebarExpanded
                             ? handleClick()
@@ -642,7 +634,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -667,7 +658,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
                           pathname.includes("utility") && "hover:text-gray-200"
                         }`}
-                        onClick={(e) => {
+                        onClick={e => {
                           e.preventDefault();
                           sidebarExpanded
                             ? handleClick()
@@ -738,7 +729,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -749,7 +739,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -760,7 +749,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -771,7 +759,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
@@ -782,7 +769,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                             
                               to="/"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >

@@ -24,6 +24,8 @@ services:
       - "3000:3000"
     depends_on:
       - database
+    tty: true
+    stdin_open: true
 
 volumes:
   database:

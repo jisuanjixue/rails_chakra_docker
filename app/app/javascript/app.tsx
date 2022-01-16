@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes
-} from "react-router-dom";
-import { themeChange } from 'theme-change'
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { themeChange } from "theme-change";
 
 import "./charts/ChartjsConfig";
 
@@ -17,7 +13,7 @@ import { setAuthHeaders } from "./apis/axios";
 const App = () => {
   useEffect(() => {
     setAuthHeaders();
-    themeChange(false)
+    themeChange(false);
   }, []);
 
   return (

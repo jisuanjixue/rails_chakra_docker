@@ -102,7 +102,7 @@ function DateSelect() {
           onFocus={() => setDropdownOpen(true)}
           onBlur={() => setDropdownOpen(false)}
         >
-          {options.map((option) => {
+          {options.map(option => {
             return (
               <button
                 key={option.id}
