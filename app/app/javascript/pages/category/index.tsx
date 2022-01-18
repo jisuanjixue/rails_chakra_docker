@@ -1,7 +1,6 @@
 
 
 import React, { useState, useMemo, useCallback, useEffect } from "react";
-import { ReactQueryDevtools } from "react-query/devtools";
 import {
     useQuery,
     useQueryClient,
@@ -299,7 +298,6 @@ const Category = () => {
                 </div>
                 </div>
             }
-            <ReactQueryDevtools initialIsOpen />
         </>
     )
 }

@@ -33,7 +33,7 @@ gem "tailwindcss-rails"
 gem "cssbundling-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
+gem 'fast_jsonapi', '~> 1.5'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -53,6 +53,9 @@ gem "bootsnap", require: false
 # Multi-level category weapon
 gem "closure_tree"
 
+gem "devise"
+gem "devise-jwt", "~> 0.9.0"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -70,7 +73,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "pry"
-  gem 'pry-rails'
+  gem "pry-rails"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"

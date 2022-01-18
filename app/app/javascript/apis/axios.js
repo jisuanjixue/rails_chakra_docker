@@ -3,17 +3,10 @@ import axios from "axios";
 axios.defaults.baseURL = "/";
 
 export const setAuthHeaders = () => {
+  const token = localStorage.getItem("token");
   axios.defaults.headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
-    "X-CSRF-TOKEN": document
-      .querySelector('[name="csrf-token"]')
-      .getAttribute("content"),
+    Authorization: token ? "Bearer " + token : "",
   };
-  const token = localStorage.getItem("authToken");
-  const email = localStorage.getItem("authEmail");
-  if (token && email) {
-    axios.defaults.headers["X-Auth-Email"] = email;
-    axios.defaults.headers["X-Auth-Token"] = token;
-  }
 };

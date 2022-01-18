@@ -6,6 +6,7 @@ import "./charts/ChartjsConfig";
 
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
+import Signup from "./pages/signup";
 import Category from "./pages/category";
 import "./app.css";
 import { setAuthHeaders } from "./apis/axios";
@@ -21,6 +22,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Dashboard />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/category/list" element={<Category />} />
       </Routes>
     </Router>
