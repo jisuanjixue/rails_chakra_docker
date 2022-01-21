@@ -1,25 +1,53 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  respond_to :json
+    # before_action :configure_sign_in_params, only: [:create]
+    respond_to :json
+    # GET /resource/sign_in
+    # def new
+    #   super
+    # end
+  
+    # POST /resource/sign_in
+    def create
+      super { @token = current_token }
+    end
+  
+    # DELETE /resource/sign_out
+    # def destroy
+    #   super
+    # end
+  
+    # protected
+  
+    # If you have extra params to permit, append them to the sanitizer.
+    # def configure_sign_in_params
+    #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
+    # end
+    private 
 
-  private
-
+    def current_token
+      request.env['warden-jwt_auth.token']
+    end
+  
     def respond_with(resource, _opts = {})
-      render json: { message: "You are logged in." }, status: :ok
+        render json: {
+          status: {code: 200, message: 'Logged in sucessfully.'},
+          data: {user: UserSerializer.new(resource).serializable_hash[:data][:attributes], token: @token}
+        }, status: :ok
     end
-
+  
     def respond_to_on_destroy
-      log_out_success && return if current_user
-
-      log_out_failure
-    end
-
-    def log_out_success
-      render json: { message: "You are logged out." }, status: :ok
-    end
-
-    def log_out_failure
-      render json: { message: "Hmm nothing happened." }, status: :unauthorized
+      if current_user 
+        render json: {
+          status: 200,
+          message: "logged out successfully"
+        }, status: :ok
+      else
+        render json: { 
+          status: 401,
+          message: "Couldn't find an active session."
+        }, status: :unauthorized
+      end
     end
 end

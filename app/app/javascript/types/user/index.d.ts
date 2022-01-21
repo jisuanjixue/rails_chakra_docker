@@ -3,5 +3,15 @@ interface UserRegister {
     email: string;
     password: string;
 }
+interface UserLogin {
+    login: string;
+    password: string;
+    password_confirmation: string;
+}
+interface UserInfo {
+    id: string;
+    name: string;
+    email: string;
+}
 
-export { UserRegister  }
+export { UserRegister, UserLogin, UserInfo  }

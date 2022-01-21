@@ -305,7 +305,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              to="/"
+                              to="/login"
                               className="block text-gray-400 truncate transition duration-150 hover:text-gray-200"
                             >
                               <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">

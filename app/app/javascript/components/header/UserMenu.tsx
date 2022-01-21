@@ -1,14 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Transition from "../../utils/Transition";
+import {MyContext } from "../../ContextManager";
 
-// import UserAvatar from '../../images/user-avatar-32.png';
-
-function UserMenu() {
+const UserMenu = (props = {}) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  // const { state} = useContext(MyContext);
+  // console.log("🚀 ~ file: UserMenu.tsx ~ line 9 ~ UserMenu ~ dispatch", dispatch)
   const trigger: any = useRef(null);
-  const dropdown: any = useRef(null);
+  const dropdown: any = useRef(null); 
 
   // close on click outside
   useEffect(() => {
@@ -47,7 +47,7 @@ function UserMenu() {
         {/* <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" /> */}
         <div className="flex items-center truncate">
           <span className="ml-2 text-sm font-medium truncate group-hover:text-gray-800">
-            Acme Inc.
+           bobo
           </span>
           <svg
             className="w-3 h-3 ml-1 text-gray-400 fill-current shrink-0"
@@ -75,7 +75,7 @@ function UserMenu() {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200">
-            <div className="font-medium text-gray-800">Acme Inc.</div>
+            <div className="font-medium text-gray-800"> bobo</div>
             <div className="text-xs italic text-gray-500">Administrator</div>
           </div>
           <ul>
@@ -85,16 +85,16 @@ function UserMenu() {
                 to="/"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                Settings
+                设置
               </Link>
             </li>
             <li>
               <Link
                 className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 hover:text-indigo-600"
-                to="/"
+                to="/logout"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                Sign Out
+                退出
               </Link>
             </li>
           </ul>
