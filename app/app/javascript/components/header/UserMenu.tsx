@@ -1,14 +1,22 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Transition from "../../utils/Transition";
-import {MyContext } from "../../ContextManager";
+import { UserContext } from "../../ContextManager";
+import userApi from "../../apis/user";
+import { useMutation } from "react-query";
+;
+
 
 const UserMenu = (props = {}) => {
+  const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  // const { state} = useContext(MyContext);
-  // console.log("🚀 ~ file: UserMenu.tsx ~ line 9 ~ UserMenu ~ dispatch", dispatch)
+  const { state } = useContext(UserContext);
+  const { user } = state;
+  console.log("🚀 ~ file: UserMenu.tsx ~ line 9 ~ UserMenu ~ state", state)
   const trigger: any = useRef(null);
-  const dropdown: any = useRef(null); 
+  const dropdown: any = useRef(null);
+
+  useEffect(() => { }, [])
 
   // close on click outside
   useEffect(() => {
@@ -35,6 +43,20 @@ const UserMenu = (props = {}) => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
+  const logoutUser = useMutation(() => userApi.logout(), {
+    onSuccess: (data) => {
+      if(data.status === 200) {
+        navigate('/');
+        localStorage.removeItem("token");
+      }
+    }
+  })
+
+  const handOut = () => {
+    logoutUser.mutate();
+    setDropdownOpen(!dropdownOpen)
+  }
+
   return (
     <div className="relative inline-flex">
       <button
@@ -47,7 +69,7 @@ const UserMenu = (props = {}) => {
         {/* <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" /> */}
         <div className="flex items-center truncate">
           <span className="ml-2 text-sm font-medium truncate group-hover:text-gray-800">
-           bobo
+            {user.name}
           </span>
           <svg
             className="w-3 h-3 ml-1 text-gray-400 fill-current shrink-0"
@@ -75,8 +97,8 @@ const UserMenu = (props = {}) => {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200">
-            <div className="font-medium text-gray-800"> bobo</div>
-            <div className="text-xs italic text-gray-500">Administrator</div>
+            <div className="font-medium text-gray-800">{user.name}</div>
+            <div className="text-xs italic text-gray-500">管理员</div>
           </div>
           <ul>
             <li>
@@ -92,7 +114,7 @@ const UserMenu = (props = {}) => {
               <Link
                 className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 hover:text-indigo-600"
                 to="/logout"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={() => handOut()}
               >
                 退出
               </Link>

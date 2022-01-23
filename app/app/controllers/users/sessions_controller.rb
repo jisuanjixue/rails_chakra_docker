@@ -10,7 +10,7 @@ class Users::SessionsController < Devise::SessionsController
   
     # POST /resource/sign_in
     def create
-      super { @token = current_token }
+      super
     end
   
     # DELETE /resource/sign_out
@@ -25,15 +25,11 @@ class Users::SessionsController < Devise::SessionsController
     #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
     # end
     private 
-
-    def current_token
-      request.env['warden-jwt_auth.token']
-    end
   
     def respond_with(resource, _opts = {})
         render json: {
           status: {code: 200, message: 'Logged in sucessfully.'},
-          data: {user: UserSerializer.new(resource).serializable_hash[:data][:attributes], token: @token}
+          data: {user: UserSerializer.new(resource).serializable_hash[:data][:attributes]}
         }, status: :ok
     end
   

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_18_015945) do
+ActiveRecord::Schema.define(version: 2022_01_23_014229) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2022_01_18_015945) do
 
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti", null: false
-    t.datetime "expired_at", precision: 6, null: false
+    t.datetime "exp", precision: 6, null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 

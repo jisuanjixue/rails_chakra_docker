@@ -10,24 +10,25 @@ import Signup from "./pages/signup";
 import Category from "./pages/category";
 import "./app.css";
 import handInterceptor from "./apis/axios";
-
+import UserProvider from "./context/index";
 
 const App = () => {
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   handInterceptor()
-
   useEffect(() => {
     themeChange(false);
-  }, [pathname]);
+  }, []);
 
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/category/list" element={<Category />} />
-    </Routes>
+    <UserProvider>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+         <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/category/list" element={<Category />} />
+      </Routes>
+    </UserProvider>
   );
 };
 

@@ -4,18 +4,21 @@ import {
     useMutation
 } from "react-query";
 import userApi from "../../apis/user";
+import {useNavigate} from "react-router-dom";
+;
+
 import { UserRegister } from '../../types/user';
 
 const Signup = () => {
+    const navigate = useNavigate();
     const [user, setUser] = useState<UserRegister>({name: '', email: '', password: ''})
 
     const handValue = useCallback((e) => setUser({ ...user, [e.target.name]: e.target.value }), [user.name, user.email, user.password])
-    console.log(user)
 
     const userRegistration = useMutation((user: UserRegister) => userApi.create(user), {
         mutationKey: 'userRegistration',
         onSuccess: () => {
-            console.log('success')
+            navigate('/')
         },
         onError: (err, variables) => {
             console.log(err, variables)

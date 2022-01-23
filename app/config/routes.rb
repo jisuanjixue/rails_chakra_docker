@@ -13,15 +13,15 @@ Rails.application.routes.draw do
       registrations: "users/registrations"
     }
 
-  # devise_scope :user do
-  #   authenticated :user do
-  #     root 'home#index', as: :authenticated_root
-  #   end
+  devise_scope :user do
+    authenticated :user do
+      root 'home#index', as: :authenticated_root
+    end
 
     # unauthenticated do
-    #   root '', as: :unauthenticated_root
+    #   root 'home#index', as: :unauthenticated_root
     # end
-  # end
+  end
 
   get '/current_user', to: 'current_user#index'
   resources :category, only: [:index, :create, :update, :destroy]

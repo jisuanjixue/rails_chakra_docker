@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
     QueryClient,
     useQueryClient,
@@ -14,22 +14,24 @@ const Login = () => {
     const [user, setUser] = useState<UserLogin>(defaultUser);
 
     const handValue = useCallback((e) => setUser({ ...user, [e.target.name]: e.target.value }), [user.login, user.password, user.password_confirmation]);
-    // const queryClient = useQueryClient();
+    const queryClient = useQueryClient();
 
     const userLogin:any = useMutation((user: UserLogin) => userApi.login(user), {
-        mutationKey: 'userLogin'
-        // onError: (_err, _variables, previousValue: any) => queryClient.setQueryData('currentUser', previousValue),
-        // onSettled: () => queryClient.invalidateQueries('currentUser')
+        mutationKey: 'userLogin',
+        onError: (_err, _variables, previousValue: any) => queryClient.setQueryData('currentUser', previousValue),
+        onSettled: () => queryClient.invalidateQueries('currentUser')
     })
 
-    const handleSubmit = () =>  userLogin.mutate(user, {
-        onSuccess: (data: any) => {
-        console.log("🚀 ~ file: index.tsx ~ line 27 ~ Login ~ data", data)
-            // console.log(userLogin.data.token)
-            localStorage.setItem("token", data.data.data.token);
-            navigate('/dashboard');
-        }
-    });
+    const handleSubmit = () => {
+        userLogin.mutate(user, {
+            onSuccess: (data: any) => {
+                if(data.status === 200) {
+                    localStorage.setItem("token", data.headers.authorization);
+                    window.location.replace('/dashboard')
+                }
+            },
+        });
+    } 
 
     return (
         <>
