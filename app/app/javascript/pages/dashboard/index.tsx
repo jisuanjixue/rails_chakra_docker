@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import {
-  useMutation,
   useQuery,
-  useQueryClient,
   // useMutation
 } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -13,14 +11,12 @@ import WelcomeBanner from "../../components/dashboard/WelcomeBanner";
 import DashboardCard01 from "../../components/dashboard/DashboardCard01";
 import Banner from "../../components/Banner";
 import userApi from "../../apis/user";
-import { UserInfo } from '../../types/user';
 import { UserContext } from "../../ContextManager";
 
 
 const Dashboard = () => {
   const { dispatch } = useContext(UserContext);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const initialUser = { name: '', email: '' };
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const fetchCurrentUser = () => {
@@ -40,29 +36,6 @@ const Dashboard = () => {
   };
   
   fetchCurrentUser()
-
-
-  const updateUserInfo = useMutation((user: UserInfo) => userApi.update(user), {
-    mutationKey: "editUser",
-    onMutate: async user => {
-      await queryClient.cancelQueries(['currentUser', user.id])
-      const previousValue = queryClient.getQueryData(['currentUser', user.id])
-      queryClient.setQueryData(['currentUser', user.id], user)
-      return { previousValue, user }
-    },
-    onError: (_err, _user, context: any) => {
-      queryClient.setQueryData(
-        ['currentUser', context.user.id],
-        context.previousValue
-      )
-    },
-    // Always refetch after error or success:
-    onSettled: (user: any) => {
-      queryClient.invalidateQueries(['currentUser', user.id])
-    },
-
-  })
-
   return (
     <>
       {

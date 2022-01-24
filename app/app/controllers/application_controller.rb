@@ -11,6 +11,6 @@ class ApplicationController < ActionController::Base
     added_attrs = [:name, :email, :password]
     devise_parameter_sanitizer.permit(:sign_up, keys: added_attrs)
     devise_parameter_sanitizer.permit(:sign_in, keys: [:login, :password, :password_confirmation])
-    devise_parameter_sanitizer.permit(:account_update, keys: added_attrs)
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email], except: [:password, :password_confirmation, :current_password])
   end
 end

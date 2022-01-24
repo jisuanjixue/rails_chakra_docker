@@ -1,5 +1,3 @@
-
-
 import React, { useState, useMemo, useCallback, useEffect } from "react";
 import {
     useQuery,
@@ -80,7 +78,7 @@ const Category = () => {
             const previousValue: any = queryClient.getQueryData('categories')
             const updateValue = [...previousValue.categories]
             const removeDeleted = updateValue.filter(f => f.id !== id)
-            queryClient.setQueryData('categories', (old:any) => {
+            queryClient.setQueryData('categories', (old: any) => {
                 return ({
                     ...old,
                     categories: removeDeleted,
@@ -99,10 +97,10 @@ const Category = () => {
             updateCategory.mutate(category)
         } else {
             deleteCategory.mutate(category.id)
-            setShow({ isShow: false, type: ''})
+            setShow({ isShow: false, type: '' })
         }
         if (addCategory.isSuccess || updateCategory.isSuccess || deleteCategory.isSuccess) {
-            setShow({ isShow: false, type: ''})
+            setShow({ isShow: false, type: '' })
             return (
                 <div className="alert alert-success">
                     <div className="flex-1">
@@ -114,7 +112,7 @@ const Category = () => {
                 </div>
             )
         }
-        if (addCategory.isError ||  updateCategory.isError) {
+        if (addCategory.isError || updateCategory.isError) {
             <div className="alert alert-error">
                 <div className="flex-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-6 h-6 mx-2 stroke-current">
@@ -154,16 +152,16 @@ const Category = () => {
             }, useExpanded)
         return (
             <>
-                <div className="mt-4 flex flex-col">
-                    <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
-                        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <div className="flex flex-col mt-4">
+                    <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                            <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
                                 <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-50">
                                         {headerGroups.map(headerGroup => (
                                             <tr {...headerGroup.getHeaderGroupProps()}>
                                                 {headerGroup.headers.map(column => (
-                                                    <th scope="col" className="group px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" {...column.getHeaderProps()}>{column.render('Header')}
+                                                    <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group" {...column.getHeaderProps()}>{column.render('Header')}
                                                     </th>
                                                 ))}
                                             </tr>
@@ -291,11 +289,11 @@ const Category = () => {
                 (show.isShow && show.type === "del") && <div className="modal modal-open">
                     <div className="modal-box">
                         <p>确定要删除吗？</p>
-                    <div className="modal-action">
-                        <div className="btn btn-primary" onClick={() => onSubmit()}>确定</div>
-                        <div className="btn" onClick={() => onClose()}>关闭</div>
+                        <div className="modal-action">
+                            <div className="btn btn-primary" onClick={() => onSubmit()}>确定</div>
+                            <div className="btn" onClick={() => onClose()}>关闭</div>
+                        </div>
                     </div>
-                </div>
                 </div>
             }
         </>

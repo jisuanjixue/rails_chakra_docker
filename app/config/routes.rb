@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       root 'home#index', as: :authenticated_root
     end
 
+    
+
     # unauthenticated do
     #   root 'home#index', as: :unauthenticated_root
     # end
