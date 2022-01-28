@@ -2,10 +2,10 @@ import React from "react";
 
 function WelcomeBanner() {
   return (
-    <div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8">
+    <div className="relative mb-8 overflow-hidden rounded-sm bg-indigo-200 p-4 sm:p-6">
       {/* Background illustration */}
       <div
-        className="absolute right-0 top-0 -mt-4 mr-16 pointer-events-none hidden xl:block"
+        className="pointer-events-none absolute right-0 top-0 -mt-4 mr-16 hidden xl:block"
         aria-hidden="true"
       >
         <svg width="319" height="198" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -68,7 +68,7 @@ function WelcomeBanner() {
 
       {/* Content */}
       <div className="relative">
-        <h1 className="text-2xl md:text-3xl text-gray-800 font-bold mb-1">
+        <h1 className="mb-1 text-2xl font-bold text-gray-800 md:text-3xl">
           Good afternoon, Acme Inc. 👋
         </h1>
         <p>Here is what’s happening with your projects today:</p>

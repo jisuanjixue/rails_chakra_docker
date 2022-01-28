@@ -40,7 +40,7 @@ function SearchModal() {
       {/* Button */}
       <button
         ref={trigger}
-        className={`w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition duration-150 rounded-full ml-3 ${
+        className={`ml-3 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 transition duration-150 hover:bg-gray-200 ${
           searchOpen && "bg-gray-200"
         }`}
         onClick={() => {
@@ -51,7 +51,7 @@ function SearchModal() {
       >
         <span className="sr-only">Search</span>
         <svg
-          className="w-4 h-4"
+          className="h-4 w-4"
           viewBox="0 0 16 16"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -67,7 +67,7 @@ function SearchModal() {
       </button>
       {/* Modal backdrop */}
       <Transition
-        className="fixed inset-0 bg-gray-900 bg-opacity-30 z-50 transition-opacity"
+        className="fixed inset-0 z-50 bg-gray-900 bg-opacity-30 transition-opacity"
         show={searchOpen}
         enter="transition ease-out duration-200"
         enterStart="opacity-0"
@@ -80,7 +80,7 @@ function SearchModal() {
       {/* Modal dialog */}
       <Transition
         id="search-modal"
-        className="fixed inset-0 z-50 overflow-hidden flex items-start top-20 mb-4 justify-center transform px-4 sm:px-6"
+        className="fixed inset-0 top-20 z-50 mb-4 flex transform items-start justify-center overflow-hidden px-4 sm:px-6"
         role="dialog"
         aria-modal="true"
         show={searchOpen}
@@ -92,7 +92,7 @@ function SearchModal() {
         leaveEnd="opacity-0 translate-y-4"
       >
         <div
-          className="bg-white overflow-auto max-w-2xl w-full max-h-full rounded shadow-lg"
+          className="max-h-full w-full max-w-2xl overflow-auto rounded bg-white shadow-lg"
           ref={searchContent}
         >
           {/* Search form */}
@@ -103,18 +103,18 @@ function SearchModal() {
               </label>
               <input
                 id="modal-search"
-                className="w-full border-0 focus:ring-transparent placeholder-gray-400 appearance-none py-3 pl-10 pr-4"
+                className="w-full appearance-none border-0 py-3 pl-10 pr-4 placeholder-gray-400 focus:ring-transparent"
                 type="search"
                 placeholder="Search Anything…"
                 ref={searchInput}
               />
               <button
-                className="absolute inset-0 right-auto group"
+                className="group absolute inset-0 right-auto"
                 type="submit"
                 aria-label="Search"
               >
                 <svg
-                  className="w-4 h-4 shrink-0 fill-current text-gray-400 group-hover:text-gray-500 ml-4 mr-2"
+                  className="ml-4 mr-2 h-4 w-4 shrink-0 fill-current text-gray-400 group-hover:text-gray-500"
                   viewBox="0 0 16 16"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -131,18 +131,18 @@ function SearchModal() {
           >
             {/* Recent searches */}
             <div className="mb-3 last:mb-0">
-              <div className="text-xs font-semibold text-gray-400 uppercase px-2 mb-2">
+              <div className="mb-2 px-2 text-xs font-semibold uppercase text-gray-400">
                 Recent searches
               </div>
               <ul className="text-sm">
                 <li>
                   <Link
-                    className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="group flex items-center rounded p-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                     to="#0"
                     onClick={() => setSearchOpen(!searchOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
+                      className="mr-3 h-4 w-4 shrink-0 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50"
                       viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
@@ -152,12 +152,12 @@ function SearchModal() {
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="group flex items-center rounded p-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                     to="#0"
                     onClick={() => setSearchOpen(!searchOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
+                      className="mr-3 h-4 w-4 shrink-0 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50"
                       viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
@@ -167,12 +167,12 @@ function SearchModal() {
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="group flex items-center rounded p-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                     to="#0"
                     onClick={() => setSearchOpen(!searchOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
+                      className="mr-3 h-4 w-4 shrink-0 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50"
                       viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
@@ -182,12 +182,12 @@ function SearchModal() {
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="group flex items-center rounded p-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                     to="#0"
                     onClick={() => setSearchOpen(!searchOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
+                      className="mr-3 h-4 w-4 shrink-0 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50"
                       viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
@@ -197,12 +197,12 @@ function SearchModal() {
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="group flex items-center rounded p-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                     to="#0"
                     onClick={() => setSearchOpen(!searchOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
+                      className="mr-3 h-4 w-4 shrink-0 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50"
                       viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
@@ -212,12 +212,12 @@ function SearchModal() {
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="group flex items-center rounded p-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                     to="#0"
                     onClick={() => setSearchOpen(!searchOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
+                      className="mr-3 h-4 w-4 shrink-0 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50"
                       viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
@@ -229,18 +229,18 @@ function SearchModal() {
             </div>
             {/* Recent pages */}
             <div className="mb-3 last:mb-0">
-              <div className="text-xs font-semibold text-gray-400 uppercase px-2 mb-2">
+              <div className="mb-2 px-2 text-xs font-semibold uppercase text-gray-400">
                 Recent pages
               </div>
               <ul className="text-sm">
                 <li>
                   <Link
-                    className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="group flex items-center rounded p-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                     to="#0"
                     onClick={() => setSearchOpen(!searchOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
+                      className="mr-3 h-4 w-4 shrink-0 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50"
                       viewBox="0 0 16 16"
                     >
                       <path d="M14 0H2c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h8l5-5V1c0-.6-.4-1-1-1zM3 2h10v8H9v4H3V2z" />
@@ -255,12 +255,12 @@ function SearchModal() {
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="group flex items-center rounded p-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                     to="#0"
                     onClick={() => setSearchOpen(!searchOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
+                      className="mr-3 h-4 w-4 shrink-0 fill-current text-gray-400 group-hover:text-white group-hover:text-opacity-50"
                       viewBox="0 0 16 16"
                     >
                       <path d="M14 0H2c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h8l5-5V1c0-.6-.4-1-1-1zM3 2h10v8H9v4H3V2z" />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   useQuery,
   // useMutation
@@ -11,31 +11,34 @@ import WelcomeBanner from "../../components/dashboard/WelcomeBanner";
 import DashboardCard01 from "../../components/dashboard/DashboardCard01";
 import Banner from "../../components/Banner";
 import userApi from "../../apis/user";
-import { UserContext } from "../../ContextManager";
-
+import { UserContext } from "../../controllers/ContextManager";
 
 const Dashboard = () => {
   const { dispatch } = useContext(UserContext);
   const navigate = useNavigate();
-  const initialUser = { name: '', email: '' };
+  const initialUser = { name: "", email: "" };
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const fetchCurrentUser = () => {
-    return useQuery("currentUser", async () => {
-      const { data } = await userApi.queryMe()
-      return data;
-    }, {
-      refetchOnWindowFocus: false,
-      onSuccess: (data) => {
-        dispatch({ type: 'getUser', payload: data })
+    return useQuery(
+      "currentUser",
+      async () => {
+        const { data } = await userApi.queryMe();
+        return data;
       },
-      onError: (err) => {
-        if (err) navigate('/login')
-      },
-      initialData: initialUser
-    });
+      {
+        refetchOnWindowFocus: false,
+        onSuccess: data => {
+          dispatch({ type: "getUser", payload: data });
+        },
+        onError: err => {
+          if (err) navigate("/login");
+        },
+        initialData: initialUser,
+      }
+    );
   };
-  
-  fetchCurrentUser()
+
+  fetchCurrentUser();
   return (
     <>
       {
@@ -44,12 +47,12 @@ const Dashboard = () => {
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
           {/* Content area */}
-          <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+          <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
             {/*  Site header */}
             <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
             <main>
-              <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
+              <div className="max-w-9xl mx-auto w-full px-4 py-8 sm:px-6 lg:px-8">
                 {/* Welcome banner */}
                 <WelcomeBanner />
                 {/* Cards */}
@@ -65,6 +68,6 @@ const Dashboard = () => {
       }
     </>
   );
-}
+};
 
 export default Dashboard;

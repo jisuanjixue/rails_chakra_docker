@@ -3,13 +3,12 @@ import SearchModal from "./header/SearchModal";
 import Notifications from "./header/Notifications";
 import Help from "./header/Help";
 import UserMenu from "./header/UserMenu";
-import ThemeSelect from "./header/ThemeSelect";
 
 function Header({ sidebarOpen, setSidebarOpen }) {
   return (
-    <header className="sticky top-0 z-30 bg-white border-b border-gray-200">
+    <header className="sticky top-0 z-30 border-b border-gray-200 bg-white">
       <div className="px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 -mb-px">
+        <div className="-mb-px flex h-16 items-center justify-between">
           {/* Header: Left side */}
           <div className="flex">
             {/* Hamburger button */}
@@ -21,7 +20,7 @@ function Header({ sidebarOpen, setSidebarOpen }) {
             >
               <span className="sr-only">Open sidebar</span>
               <svg
-                className="w-6 h-6 fill-current"
+                className="h-6 w-6 fill-current"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -34,12 +33,11 @@ function Header({ sidebarOpen, setSidebarOpen }) {
 
           {/* Header: Right side */}
           <div className="flex items-center">
-            <ThemeSelect />
             <SearchModal />
             <Notifications />
             <Help />
             {/*  Divider */}
-            <hr className="w-px h-6 mx-3 bg-gray-200" />
+            <hr className="mx-3 h-6 w-px bg-gray-200" />
             <UserMenu />
           </div>
         </div>

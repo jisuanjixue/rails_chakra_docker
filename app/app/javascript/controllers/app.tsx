@@ -1,30 +1,26 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { themeChange } from "theme-change";
 
-import "./charts/ChartjsConfig";
+import "../charts/ChartjsConfig";
 
-import Dashboard from "./pages/dashboard";
-import Login from "./pages/login";
-import Market from "./pages/market";
-import Signup from "./pages/signup";
-import Category from "./pages/category";
-import "./app.css";
-import handInterceptor from "./apis/axios";
-import UserProvider from "./context/index";
+import Dashboard from "../pages/dashboard";
+import Login from "../pages/login";
+import Market from "../pages/market";
+import Signup from "../pages/signup";
+import Category from "../pages/category";
+import handInterceptor from "../apis/axios";
+import UserProvider from "../context";
 
 const App = () => {
   const { pathname } = useLocation();
-  handInterceptor()
-  useEffect(() => {
-    themeChange(false);
-  }, [pathname]);
+  handInterceptor();
+  useEffect(() => {}, [pathname]);
 
   return (
     <UserProvider>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/market" element={<Market />} />
+        <Route path="/markets" element={<Market />} />
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/signup" element={<Signup />} />

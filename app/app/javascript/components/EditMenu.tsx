@@ -14,8 +14,9 @@ function EditMenu({ children, ...rest }) {
         !dropdownOpen ||
         dropdown.current.contains(target) ||
         trigger.current.contains(target)
-      )
+      ) {
         return;
+      }
       setDropdownOpen(false);
     };
     document.addEventListener("click", clickHandler);
@@ -36,7 +37,7 @@ function EditMenu({ children, ...rest }) {
     <div {...rest}>
       <button
         ref={trigger}
-        className={`text-gray-400 hover:text-gray-500 rounded-full ${
+        className={`rounded-full text-gray-400 hover:text-gray-500 ${
           dropdownOpen && "bg-gray-100 text-gray-500"
         }`}
         aria-haspopup="true"
@@ -44,7 +45,7 @@ function EditMenu({ children, ...rest }) {
         aria-expanded={dropdownOpen}
       >
         <span className="sr-only">Menu</span>
-        <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
+        <svg className="h-8 w-8 fill-current" viewBox="0 0 32 32">
           <circle cx="16" cy="16" r="2" />
           <circle cx="10" cy="16" r="2" />
           <circle cx="22" cy="16" r="2" />
@@ -53,7 +54,7 @@ function EditMenu({ children, ...rest }) {
       <Transition
         show={dropdownOpen}
         tag="div"
-        className="origin-top-right z-10 absolute top-full right-0 min-w-36 bg-white border border-gray-200 py-1.5 rounded shadow-lg overflow-hidden mt-1"
+        className="min-w-36 absolute top-full right-0 z-10 mt-1 origin-top-right overflow-hidden rounded border border-gray-200 bg-white py-1.5 shadow-lg"
         enter="transition ease-out duration-200 transform"
         enterStart="opacity-0 -translate-y-2"
         enterEnd="opacity-100 translate-y-0"

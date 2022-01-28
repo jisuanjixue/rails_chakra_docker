@@ -68,6 +68,9 @@ yarn-error.log
 yarn-debug.log*
 .yarn-integrity
 .yarnrc
+.yarn/cache
+.yarn/unplugged
+.yarn/install-state.gz
 yarn-1.22.5.cjs
 yarn-1.22.5.js
 

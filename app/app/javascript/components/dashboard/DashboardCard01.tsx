@@ -74,9 +74,9 @@ function DashboardCard01() {
   };
 
   return (
-    <div className="flex flex-col bg-white border border-gray-200 rounded-sm shadow-lg col-span-full sm:col-span-6 xl:col-span-4">
+    <div className="col-span-full flex flex-col rounded-sm border border-gray-200 bg-white shadow-lg sm:col-span-6 xl:col-span-4">
       <div className="px-5 pt-5">
-        <header className="flex items-start justify-between mb-2">
+        <header className="mb-2 flex items-start justify-between">
           {/* Icon */}
           {/* <img src={Icon} width="32" height="32" alt="Icon 01" /> */}
           {/* Menu button */}
@@ -108,12 +108,12 @@ function DashboardCard01() {
           </EditMenu>
         </header>
         <h2 className="mb-2 text-lg font-semibold text-gray-800">Acme Plus</h2>
-        <div className="mb-1 text-xs font-semibold text-gray-400 uppercase">
+        <div className="mb-1 text-xs font-semibold uppercase text-gray-400">
           Sales
         </div>
         <div className="flex items-start">
           <div className="mr-2 text-3xl font-bold text-gray-800">$24,780</div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+          <div className="rounded-full bg-green-500 px-1.5 text-sm font-semibold text-white">
             +49%
           </div>
         </div>

@@ -35,10 +35,10 @@ function Help() {
   });
 
   return (
-    <div className="relative inline-flex ml-3">
+    <div className="relative ml-3 inline-flex">
       <button
         ref={trigger}
-        className={`w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition duration-150 rounded-full ${
+        className={`flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 transition duration-150 hover:bg-gray-200 ${
           dropdownOpen && "bg-gray-200"
         }`}
         aria-haspopup="true"
@@ -47,7 +47,7 @@ function Help() {
       >
         <span className="sr-only">Need help?</span>
         <svg
-          className="w-4 h-4"
+          className="h-4 w-4"
           viewBox="0 0 16 16"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -59,7 +59,7 @@ function Help() {
       </button>
 
       <Transition
-        className="origin-top-right z-10 absolute top-full right-0 min-w-44 bg-white border border-gray-200 py-1.5 rounded shadow-lg overflow-hidden mt-1"
+        className="min-w-44 absolute top-full right-0 z-10 mt-1 origin-top-right overflow-hidden rounded border border-gray-200 bg-white py-1.5 shadow-lg"
         show={dropdownOpen}
         enter="transition ease-out duration-200 transform"
         enterStart="opacity-0 -translate-y-2"
@@ -73,18 +73,18 @@ function Help() {
           onFocus={() => setDropdownOpen(true)}
           onBlur={() => setDropdownOpen(false)}
         >
-          <div className="text-xs font-semibold text-gray-400 uppercase pt-1.5 pb-2 px-4">
+          <div className="px-4 pt-1.5 pb-2 text-xs font-semibold uppercase text-gray-400">
             Need help?
           </div>
           <ul>
             <li>
               <Link
-                className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
+                className="flex items-center py-1 px-3 text-sm font-medium text-indigo-500 hover:text-indigo-600"
                 to="#0"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 <svg
-                  className="w-3 h-3 fill-current text-indigo-300 shrink-0 mr-2"
+                  className="mr-2 h-3 w-3 shrink-0 fill-current text-indigo-300"
                   viewBox="0 0 12 12"
                 >
                   <rect y="3" width="12" height="9" rx="1" />
@@ -95,12 +95,12 @@ function Help() {
             </li>
             <li>
               <Link
-                className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
+                className="flex items-center py-1 px-3 text-sm font-medium text-indigo-500 hover:text-indigo-600"
                 to="#0"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 <svg
-                  className="w-3 h-3 fill-current text-indigo-300 shrink-0 mr-2"
+                  className="mr-2 h-3 w-3 shrink-0 fill-current text-indigo-300"
                   viewBox="0 0 12 12"
                 >
                   <path d="M10.5 0h-9A1.5 1.5 0 000 1.5v9A1.5 1.5 0 001.5 12h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0010.5 0zM10 7L8.207 5.207l-3 3-1.414-1.414 3-3L5 2h5v5z" />
@@ -110,12 +110,12 @@ function Help() {
             </li>
             <li>
               <Link
-                className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
+                className="flex items-center py-1 px-3 text-sm font-medium text-indigo-500 hover:text-indigo-600"
                 to="#0"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 <svg
-                  className="w-3 h-3 fill-current text-indigo-300 shrink-0 mr-2"
+                  className="mr-2 h-3 w-3 shrink-0 fill-current text-indigo-300"
                   viewBox="0 0 12 12"
                 >
                   <path d="M11.854.146a.5.5 0 00-.525-.116l-11 4a.5.5 0 00-.015.934l4.8 1.921 1.921 4.8A.5.5 0 007.5 12h.008a.5.5 0 00.462-.329l4-11a.5.5 0 00-.116-.525z" />

@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users, 
-    path: '', 
+  get "markets/index"
+  devise_for :users,
+    path: "",
     path_names: {
-    sign_in: 'login',
-    sign_out: 'logout',
-    registration: 'signup'
-  },
+      sign_in: "login",
+      sign_out: "logout",
+      registration: "signup"
+    },
     controllers: {
       sessions: "users/sessions",
       registrations: "users/registrations"
@@ -15,17 +16,16 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     authenticated :user do
-      root 'home#index', as: :authenticated_root
+      root "home#index", as: :authenticated_root
     end
-
-    
-
     # unauthenticated do
     #   root 'home#index', as: :unauthenticated_root
     # end
   end
 
-  get '/current_user', to: 'current_user#index'
+  resources :markets, only: [:index, :create, :update, :destroy]
+
+  get "/current_user", to: "current_user#index"
   resources :category, only: [:index, :create, :update, :destroy]
 
   # Defines the root path route ("/")

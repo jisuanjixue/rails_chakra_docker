@@ -1,15 +1,15 @@
-import axios from "axios";
+import { request } from "./axios";
 
-const list = () => axios.get("/category");
-const create = data => axios.post("/category", data);
-const update = ( payload ) => axios.put(`/category/${payload.id}`, payload);
-const remove = (id) => axios.delete(`/category/${id}`)
+const list = () => request.get("/category");
+const create = data => request.post("/category", data);
+const update = payload => request.put(`/category/${payload.id}`, payload);
+const remove = id => request.delete(`/category/${id}`);
 
 const categoriesApi = {
   list,
   create,
   update,
-  remove
+  remove,
 };
 
 export default categoriesApi;

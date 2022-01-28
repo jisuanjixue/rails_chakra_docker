@@ -26,12 +26,13 @@ module.exports = {
     },
   },
   parserOptions: {
+    ecmaVersion: 6,
     ecmaFeatures: {
       tsx: true,
     },
-    ecmaVersion: 2018,
     sourceType: "module",
   },
+  parser: "babel-eslint",
   // babel-eslint is deprecated now. This is the latest package.
   plugins: [
     "react",

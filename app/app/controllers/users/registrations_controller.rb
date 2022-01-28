@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :authenticate_user!,  only: [:update_resource]
 
@@ -30,8 +32,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # PUT /resource
-
-
 
   # DELETE /resource
   # def destroy
@@ -70,25 +70,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
   private
 
-
-  def update_resource(resource, params)
-    resource.update_without_password(params)
-  end
-
-  def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
-  end
-
-  def respond_with(resource, _opts = {})
-    if resource.persisted?
-      render json: {
-        status: {code: 200, message: 'Signed up sucessfully.'},
-        data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
-      }
-    else
-      render json: {
-        status: {message: "User couldn't be created successfully. #{resource.errors.full_messages.to_sentence}"}
-      }, status: :unprocessable_entity
+    def update_resource(resource, params)
+      resource.update_without_password(params)
     end
-  end
+
+    def configure_account_update_params
+      devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+    end
+
+    def respond_with(resource, _opts = {})
+      if resource.persisted?
+        render json: {
+          status: { code: 200, message: "Signed up sucessfully." },
+          data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
+        }
+      else
+        render json: {
+          status: { message: "User couldn't be created successfully. #{resource.errors.full_messages.to_sentence}" }
+        }, status: :unprocessable_entity
+      end
+    end
 end

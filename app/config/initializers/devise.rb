@@ -22,14 +22,14 @@ Devise.setup do |config|
       landlord: [nil, :json]
     }
     jwt.dispatch_requests = [
-      ['POST', %r{^/login$}],
-      ['POST', %r{^/signup$}],
+      ["POST", %r{^/login$}],
+      ["POST", %r{^/signup$}],
     ]
     jwt.dispatch_requests = [
-      ['PUT', %r{^/signup$}],
+      ["PUT", %r{^/signup$}],
     ]
     jwt.revocation_requests = [
-      ['DELETE', %r{^/logout$}]
+      ["DELETE", %r{^/logout$}]
     ]
     jwt.expiration_time = 6000.minutes.to_i
   end
@@ -44,8 +44,8 @@ Devise.setup do |config|
   # with default "from" parameter.
   config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
-  # config.http_authenticatable_on_xhr = false 
-  # config.navigational_formats = [: "* / *"，"* / *", :html, js] 
+  # config.http_authenticatable_on_xhr = false
+  # config.navigational_formats = [: "* / *"，"* / *", :html, js]
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'

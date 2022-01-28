@@ -9,7 +9,7 @@ function SidebarLinkGroup({ children, activecondition }) {
 
   return (
     <li
-      className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
+      className={`mb-0.5 rounded-sm px-3 py-2 last:mb-0 ${
         activecondition && "bg-gray-900"
       }`}
     >
