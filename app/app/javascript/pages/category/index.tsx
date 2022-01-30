@@ -282,20 +282,21 @@ const Category = () => {
     );
     return (
       <>
-        <Box className="mt-4 flex flex-col">
+        <Box className="flex flex-col mt-4">
           <Box className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <Box className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <Box className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
                 <Table {...getTableProps()} variant="simple">
                   <TableCaption>系统类型</TableCaption>
                   <Thead className="bg-gray-50">
-                    {headerGroups.map(headerGroup => (
-                      <Tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
+                    {headerGroups.map((headerGroup, index) => (
+                      <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                        {headerGroup.headers.map((column, i) => (
                           <Th
                             scope="col"
-                            className="group px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                            className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group"
                             {...column.getHeaderProps()}
+                            key={i}
                           >
                             {column.render("Header")}
                           </Th>
@@ -305,15 +306,19 @@ const Category = () => {
                   </Thead>
                   <Tbody
                     {...getTableBodyProps()}
-                    className="divide-y divide-gray-200 bg-white"
+                    className="bg-white divide-y divide-gray-200"
                   >
                     {rows.map((row, i) => {
                       prepareRow(row);
                       return (
-                        <Tr {...row.getRowProps()}>
-                          {row.cells.map(cell => {
+                        <Tr {...row.getRowProps()} key={i}>
+                          {row.cells.map((cell, index) => {
                             return (
-                              <Td {...cell.getCellProps()} role="cell">
+                              <Td
+                                {...cell.getCellProps()}
+                                role="cell"
+                                key={index}
+                              >
                                 {cell.column.Cell.name === "defaultRenderer" ? (
                                   <Box className="text-sm text-gray-500">
                                     {cell.render("Cell")}

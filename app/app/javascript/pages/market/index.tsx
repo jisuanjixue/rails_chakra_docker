@@ -8,19 +8,15 @@ import {
   useAsyncDebounce,
   useExpanded,
 } from "react-table";
+
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Switch,
   Spinner,
   useToast,
   Box,
@@ -38,8 +34,17 @@ import {
   CloseButton,
   Heading,
   Container,
-  Textarea,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  FormLabel,
+  FormControl,
+  TableCaption,
+  Input,
+  Switch,
   Select,
+  Textarea,
 } from "@chakra-ui/react";
 import {
   AddIcon,
@@ -47,7 +52,7 @@ import {
   DeleteIcon,
   ChevronDownIcon,
 } from "@chakra-ui/icons";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import marketApi from "../../apis/market";
@@ -67,7 +72,6 @@ const Market = () => {
   const toast = useToast();
   const cancelRef: any = useRef();
   const initialValues: MarketInfo = {
-    id: "",
     name: "",
     type: "",
     is_show: false,
@@ -97,7 +101,7 @@ const Market = () => {
   };
 
   const { status, data, error, isFetching, isRefetching } = fetchMarkets();
-  const tableData = data?.markets;
+  const tableData = data?.markets.data;
 
   // Mutations
   const addMarket = useMutation((market: any) => marketApi.create(market), {
@@ -172,9 +176,11 @@ const Market = () => {
     setShow({ isShow: false, type: "" });
   };
 
-  const selectedChange = (value: any) => {
-    console.log(value);
-  };
+  useEffect(() => {}, []);
+
+  // const selectedChange = (value: any) => {
+  //   console.log(value);
+  // };
 
   const onSubmit = values => {
     if (show.type === "add") {
@@ -425,63 +431,66 @@ const Market = () => {
     );
     return (
       <>
-        <div className="mt-4 flex flex-col">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-              <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
-                <table
+        <Box className="flex flex-col mt-4">
+          <Box className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <Box className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+              <Box className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+                <Table
                   {...getTableProps()}
                   className="min-w-full divide-y divide-gray-200"
                 >
-                  <thead className="bg-gray-50">
-                    {headerGroups.map(headerGroup => (
-                      <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                          <th
+                  <TableCaption>市场列表</TableCaption>
+                  <Thead className="bg-gray-50">
+                    {headerGroups.map((headerGroup, i) => (
+                      <Tr {...headerGroup.getHeaderGroupProps()} key={i}>
+                        {headerGroup.headers.map((column, index) => (
+                          <Th
                             scope="col"
-                            className="group px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                            className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group"
                             {...column.getHeaderProps()}
+                            key={index}
                           >
                             {column.render("Header")}
                             {/* Render the columns filter UI */}
-                            <div>
+                            <Box>
                               {column.canFilter
                                 ? column.render("Filter")
                                 : null}
-                            </div>
-                          </th>
+                            </Box>
+                          </Th>
                         ))}
-                      </tr>
+                      </Tr>
                     ))}
-                    <tr>
-                      <th
+                    <Tr>
+                      <Th
                         colSpan={visibleColumns.length}
                         style={{
                           textAlign: "left",
                         }}
                       >
-                        <GlobalFilter
+                        {/* <GlobalFilter
                           preGlobalFilteredRows={preGlobalFilteredRows}
                           globalFilter={state.globalFilter}
                           setGlobalFilter={setGlobalFilter}
-                        />
-                      </th>
-                    </tr>
-                  </thead>
+                        /> */}
+                      </Th>
+                    </Tr>
+                  </Thead>
                   <tbody
                     {...getTableBodyProps()}
-                    className="divide-y divide-gray-200 bg-white"
+                    className="bg-white divide-y divide-gray-200"
                   >
                     {rows.map((row, i) => {
                       prepareRow(row);
                       return (
-                        <tr {...row.getRowProps()}>
-                          {row.cells.map(cell => {
+                        <tr {...row.getRowProps()} key={i}>
+                          {row.cells.map((cell, index) => {
                             return (
                               <td
                                 {...cell.getCellProps()}
-                                className="whitespace-nowrap px-6 py-4"
+                                className="px-6 py-4 whitespace-nowrap"
                                 role="cell"
+                                key={index}
                               >
                                 {cell.column.Cell.name === "defaultRenderer" ? (
                                   <div className="text-sm text-gray-500">
@@ -497,11 +506,11 @@ const Market = () => {
                       );
                     })}
                   </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+                </Table>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </>
     );
   };
@@ -602,10 +611,15 @@ const Market = () => {
         ],
       },
       {
-        Header: "操作",
+        Header: () => (
+          <Heading as="h4" size="md">
+            操作
+          </Heading>
+        ),
+        id: "action",
         columns: [
           {
-            accessor: (originalRow, _) => (
+            accessor: originalRow => (
               <Button
                 colorScheme="teal"
                 leftIcon={<EditIcon />}
@@ -622,7 +636,7 @@ const Market = () => {
           },
           {
             Header: "",
-            accessor: (originalRow, _) => (
+            accessor: originalRow => (
               <Button
                 colorScheme="red"
                 leftIcon={<DeleteIcon />}
@@ -646,6 +660,7 @@ const Market = () => {
     <>
       <Container maxW="container.xl">
         <Button
+          mt={5}
           onClick={() => handModal("add")}
           colorScheme="blue"
           variant="solid"
@@ -694,7 +709,7 @@ const Market = () => {
                   onSubmit={async values => onSubmit(values)}
                   validationSchema={MarketSchema}
                 >
-                  {({ isSubmitting, setFieldValue }) => {
+                  {props => {
                     if (show.type === "edit") {
                       useEffect(() => {
                         const fields = [
@@ -705,7 +720,7 @@ const Market = () => {
                           "remark",
                         ];
                         fields.forEach(field =>
-                          setFieldValue(field, market[field], false)
+                          props.setFieldValue(field, market[field], false)
                         );
                       }, []);
                     }
@@ -729,64 +744,68 @@ const Market = () => {
                           )}
                         </Field>
                         <Field name="type">
-                          <FormControl>
-                            <FormLabel htmlFor="type">市场类型</FormLabel>
-                            <Select
-                              icon={<ChevronDownIcon />}
-                              variant="filled"
-                              id="type"
-                              color="white"
-                              placeholder="请选择"
-                            >
-                              <option>产区</option>
-                              <option>销区</option>
-                            </Select>
-                            <ErrorMessage name="type" />
-                          </FormControl>
+                          {({ field }) => (
+                            <FormControl>
+                              <FormLabel htmlFor="type">市场类型</FormLabel>
+                              <Select
+                                {...field}
+                                icon={<ChevronDownIcon />}
+                                variant="filled"
+                                id="type"
+                                color="white"
+                                placeholder="请选择"
+                              >
+                                <option>产区</option>
+                                <option>销区</option>
+                              </Select>
+                              <ErrorMessage name="type" />
+                            </FormControl>
+                          )}
                         </Field>
                         <Field name="is_show">
-                          <FormControl display="flex" alignItems="center">
-                            <FormLabel htmlFor="is_show" mb="0">
-                              是否展示
-                            </FormLabel>
-                            <Switch id="is_show" />
-                            <ErrorMessage name="is_show" />
-                          </FormControl>
+                          {({ field }) => (
+                            <FormControl display="flex" alignItems="center">
+                              <FormLabel htmlFor="is_show">是否展示</FormLabel>
+                              <Switch {...field} id="is_show" />
+                              <ErrorMessage name="is_show" />
+                            </FormControl>
+                          )}
                         </Field>
                         <Field name="address">
-                          <FormControl>
-                            <FormLabel htmlFor="address" mb="0">
-                              地址选择
-                            </FormLabel>
-                            <ErrorMessage name="address" />
-                          </FormControl>
+                          {({ field }) => (
+                            <FormControl>
+                              <FormLabel htmlFor="address">地址</FormLabel>
+                              <Select
+                                {...field}
+                                icon={<ChevronDownIcon />}
+                                variant="filled"
+                                id="address"
+                                color="white"
+                                placeholder="请选择"
+                              >
+                                <option></option>
+                                <option>销区</option>
+                              </Select>
+                              <ErrorMessage name="address" />
+                            </FormControl>
+                          )}
                         </Field>
                         <Field name="remark">
-                          <FormControl>
-                            <FormLabel htmlFor="remark" mb="0">
-                              备注
-                            </FormLabel>
-                            <Textarea isInvalid placeholder="填写备注" />
-                            <ErrorMessage name="remark" />
-                          </FormControl>
+                          {({ field }) => (
+                            <FormControl>
+                              <FormLabel htmlFor="address">备注</FormLabel>
+                              <Textarea
+                                {...field}
+                                id="remark"
+                                isRequired
+                                isInvalid
+                                type="text"
+                                placeholder="请填入市场名称"
+                              />
+                              <ErrorMessage name="remark" />
+                            </FormControl>
+                          )}
                         </Field>
-                        <ModalFooter>
-                          <Button
-                            colorScheme="blue"
-                            mr={3}
-                            onClick={() => onClose()}
-                          >
-                            关闭
-                          </Button>
-                          <Button
-                            variant="solid"
-                            type="submit"
-                            colorScheme="blue"
-                            isLoading={isSubmitting}
-                          >
-                            提交
-                          </Button>
-                        </ModalFooter>
                       </Form>
                     );
                   }}

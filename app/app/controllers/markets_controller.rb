@@ -5,7 +5,7 @@ class MarketsController < ApplicationController
     markets = Market.all
     render json: {
       status: {code: 200, message: '获取成功'},
-      data: { markets: MarketSerializer.new(markets)[:data][:attributes]}
+      markets: MarketSerializer.new(markets).serializable_hash
     }
   end
 
@@ -14,7 +14,7 @@ class MarketsController < ApplicationController
     if market.save
       render json: {
         status: {code: 200, message: '创建成功'},
-        data: {market: MarketSerializer.new(market).[:data][:attributes]}
+        data: {market: MarketSerializer.new(market).serializable_hash}
       }
     else
       error = market.errors.full_messages.to_sentence
