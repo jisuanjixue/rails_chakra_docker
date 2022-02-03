@@ -441,6 +441,7 @@ const Category = () => {
             accessor: (originalRow, _) => (
               <Button
                 colorScheme="red"
+                size="sm"
                 leftIcon={<DeleteIcon />}
                 variant="solid"
                 onClick={() => handModal(originalRow.id, "del")}

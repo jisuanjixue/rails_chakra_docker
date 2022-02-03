@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-
+import { Box } from "@chakra-ui/react";
 import "../charts/ChartjsConfig";
 
+import Sidebar from "../components/Sidebar";
+import Header from "../components/Header";
 import Dashboard from "../pages/dashboard";
 import Login from "../pages/login";
 import Market from "../pages/market";
@@ -12,20 +14,27 @@ import handInterceptor from "../apis/axios";
 import UserProvider from "../context";
 
 const App = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { pathname } = useLocation();
   handInterceptor();
   useEffect(() => {}, [pathname]);
 
   return (
     <UserProvider>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/markets/list" element={<Market />} />
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/category/list" element={<Category />} />
-      </Routes>
+      <Box className="flex h-screen overflow-hidden">
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Box className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/markets/list" element={<Market />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/category/list" element={<Category />} />
+          </Routes>
+        </Box>
+      </Box>
     </UserProvider>
   );
 };

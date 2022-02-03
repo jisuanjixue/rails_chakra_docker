@@ -45,6 +45,7 @@ import {
   Switch,
   Select,
   Textarea,
+  Divider,
 } from "@chakra-ui/react";
 import {
   AddIcon,
@@ -743,6 +744,7 @@ const Market = () => {
                             </FormControl>
                           )}
                         </Field>
+                        <Divider orientation="horizontal" />
                         <Field name="type">
                           {({ field }) => (
                             <FormControl>
@@ -762,6 +764,7 @@ const Market = () => {
                             </FormControl>
                           )}
                         </Field>
+                        <Divider orientation="horizontal" />
                         <Field name="is_show">
                           {({ field }) => (
                             <FormControl display="flex" alignItems="center">
@@ -771,6 +774,7 @@ const Market = () => {
                             </FormControl>
                           )}
                         </Field>
+                        <Divider orientation="horizontal" />
                         <Field name="address">
                           {({ field }) => (
                             <FormControl>
@@ -784,12 +788,13 @@ const Market = () => {
                                 placeholder="请选择"
                               >
                                 <option></option>
-                                <option>销区</option>
+                                <option></option>
                               </Select>
                               <ErrorMessage name="address" />
                             </FormControl>
                           )}
                         </Field>
+                        <Divider orientation="horizontal" />
                         <Field name="remark">
                           {({ field }) => (
                             <FormControl>
