@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/dabit/annotate_models.git
+  revision: b0d0041e06137514fa2bf5d2e10ca4af101cbfb9
+  branch: rails-7
+  specs:
+    annotate (3.1.1)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -225,6 +234,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  annotate!
   bootsnap
   closure_tree
   cssbundling-rails
@@ -250,4 +260,4 @@ RUBY VERSION
    ruby 3.0.2p107
 
 BUNDLED WITH
-   2.3.5
+   2.3.6

@@ -71,6 +71,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'annotate', github: 'dabit/annotate_models', branch: 'rails-7'
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "pry"
   gem "pry-rails"

@@ -1,5 +1,18 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: markets
+#
+#  id         :integer          not null, primary key
+#  address    :string           default([]), not null
+#  is_show    :boolean          default(TRUE)
+#  name       :string
+#  remark     :text
+#  type       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class MarketSerializer
   include FastJsonapi::ObjectSerializer
   attributes :id, :name, :type, :is_show, :address, :remark, :created_at, :updated_at
