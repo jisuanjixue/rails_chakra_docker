@@ -8,7 +8,7 @@ import {
   useAsyncDebounce,
   useExpanded,
 } from "react-table";
-
+import { pcaa } from "area-data";
 import {
   Modal,
   ModalOverlay,
@@ -177,7 +177,14 @@ const Market = () => {
     setShow({ isShow: false, type: "" });
   };
 
-  useEffect(() => {}, []);
+  const flatArr = (arr: any) => {
+    return Object.entries(arr).flat();
+  };
+
+  useEffect(() => {
+    const newArr = flatArr(pcaa[86]);
+    console.log(newArr);
+  }, []);
 
   // const selectedChange = (value: any) => {
   //   console.log(value);
@@ -787,8 +794,9 @@ const Market = () => {
                                 color="white"
                                 placeholder="请选择"
                               >
-                                <option></option>
-                                <option></option>
+                                {/* {pcaa[86].map((item, index) => (
+                                  <option key={index}>{item}</option>
+                                ))} */}
                               </Select>
                               <ErrorMessage name="address" />
                             </FormControl>

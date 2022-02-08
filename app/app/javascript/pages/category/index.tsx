@@ -9,6 +9,8 @@ import { useQuery, useQueryClient, useMutation } from "react-query";
 import { useTable, useExpanded } from "react-table";
 import {
   Modal,
+  useColorModeValue,
+  Flex,
   ModalOverlay,
   ModalContent,
   ModalHeader,
@@ -61,6 +63,10 @@ const Category = () => {
   const toast = useToast();
   const cancelRef: any = useRef();
   const isError = category.name === "";
+  const scheme = "brand";
+  const step1 = useColorModeValue("600", "300");
+  const step2 = useColorModeValue("500", "400");
+  const step3 = useColorModeValue("300", "500");
 
   const fetchCategories = () => {
     return useQuery(
@@ -286,54 +292,128 @@ const Category = () => {
           <Box className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <Box className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <Box className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
-                <Table {...getTableProps()} variant="simple">
-                  <TableCaption>系统类型</TableCaption>
-                  <Thead className="bg-gray-50">
-                    {headerGroups.map((headerGroup, index) => (
-                      <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                        {headerGroup.headers.map((column, i) => (
-                          <Th
-                            scope="col"
-                            className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group"
-                            {...column.getHeaderProps()}
-                            key={i}
-                          >
-                            {column.render("Header")}
-                          </Th>
-                        ))}
-                      </Tr>
-                    ))}
-                  </Thead>
-                  <Tbody
-                    {...getTableBodyProps()}
-                    className="bg-white divide-y divide-gray-200"
+                <Flex
+                  w="full"
+                  bg="gray.600"
+                  p={50}
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Table
+                    w="full"
+                    display={{
+                      base: "block",
+                      md: "table",
+                    }}
+                    sx={{
+                      "@media print": {
+                        display: "table",
+                      },
+                    }}
+                    bg={useColorModeValue("white", "gray.800")}
+                    {...getTableProps()}
+                    variant="simple"
                   >
-                    {rows.map((row, i) => {
-                      prepareRow(row);
-                      return (
-                        <Tr {...row.getRowProps()} key={i}>
-                          {row.cells.map((cell, index) => {
-                            return (
-                              <Td
-                                {...cell.getCellProps()}
-                                role="cell"
-                                key={index}
-                              >
-                                {cell.column.Cell.name === "defaultRenderer" ? (
-                                  <Box className="text-sm text-gray-500">
-                                    {cell.render("Cell")}
-                                  </Box>
-                                ) : (
-                                  cell.render("Cell")
-                                )}
-                              </Td>
-                            );
-                          })}
+                    <TableCaption>系统类型</TableCaption>
+                    <Thead
+                      display={{
+                        base: "none",
+                        md: "table-header-group",
+                      }}
+                      sx={{
+                        "@media print": {
+                          display: "table-header-group",
+                        },
+                      }}
+                    >
+                      {headerGroups.map((headerGroup, index) => (
+                        <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                          {headerGroup.headers.map((column, i) => (
+                            <Th
+                              scope="col"
+                              className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group"
+                              {...column.getHeaderProps()}
+                              key={i}
+                            >
+                              {column.render("Header")}
+                            </Th>
+                          ))}
                         </Tr>
-                      );
-                    })}
-                  </Tbody>
-                </Table>
+                      ))}
+                    </Thead>
+                    <Tbody
+                      {...getTableBodyProps()}
+                      display={{
+                        base: "block",
+                        lg: "table-row-group",
+                      }}
+                      sx={{
+                        "@media print": {
+                          display: "table-row-group",
+                        },
+                      }}
+                    >
+                      {rows.map((row, i) => {
+                        prepareRow(row);
+                        return (
+                          <Tr
+                            {...row.getRowProps()}
+                            key={i}
+                            display={{
+                              base: "grid",
+                              md: "table-row",
+                            }}
+                            sx={{
+                              "@media print": {
+                                display: "table-row",
+                              },
+                              gridTemplateColumns:
+                                "minmax(0px, 35%) minmax(0px, 65%)",
+                              gridGap: "10px",
+                            }}
+                          >
+                            {row.cells.map((cell, index) => {
+                              return (
+                                <Td
+                                  {...cell.getCellProps()}
+                                  role="cell"
+                                  key={index}
+                                  // display={{
+                                  //   base: 'table-cell',
+                                  //   md: 'none',
+                                  // }}
+                                  sx={{
+                                    "@media print": {
+                                      display: "none",
+                                    },
+                                    textTransform: "uppercase",
+                                    color: useColorModeValue(
+                                      "gray.400",
+                                      "gray.400"
+                                    ),
+                                    fontSize: "xs",
+                                    fontWeight: "bold",
+                                    letterSpacing: "wider",
+                                    fontFamily: "heading",
+                                  }}
+                                >
+                                  {cell.column.Cell.name ===
+                                  "defaultRenderer" ? (
+                                    <Box className="text-sm text-gray-500">
+                                      {cell.render("Cell")}
+                                    </Box>
+                                  ) : (
+                                    cell.render("Cell")
+                                  )}
+                                </Td>
+                              );
+                            })}
+                          </Tr>
+                        );
+                      })}
+                    </Tbody>
+                  </Table>
+                </Flex>
               </Box>
             </Box>
           </Box>
@@ -417,8 +497,8 @@ const Category = () => {
               </Button>
             ),
             id: "add",
-            width: 10,
-            minWidth: 5,
+            width: 1,
+            minWidth: 0,
           },
           {
             accessor: (originalRow, _) => (
@@ -433,8 +513,8 @@ const Category = () => {
               </Button>
             ),
             id: "edit",
-            width: 10,
-            minWidth: 5,
+            width: 1,
+            minWidth: 0,
           },
           {
             Header: "",
@@ -450,8 +530,8 @@ const Category = () => {
               </Button>
             ),
             id: "del",
-            width: 10,
-            minWidth: 5,
+            width: 1,
+            minWidth: 0,
           },
         ],
       },
@@ -465,10 +545,30 @@ const Category = () => {
         <Button
           mt={5}
           onClick={() => handModal("", "add")}
-          colorScheme="blue"
+          bgColor={`${scheme}.${step1}`}
+          colorScheme="white"
           variant="solid"
+          fontWeight="medium"
+          rounded="md"
+          shadow="base"
+          _focus={{
+            outline: "none",
+          }}
           leftIcon={<AddIcon />}
           size="md"
+          transition="background 0.8s"
+          backgroundPosition="center"
+          _hover={{
+            bgColor: `${scheme}.${step2}`,
+            bgGradient: `radial(circle, transparent 1%, ${scheme}.${step2} 1%)`,
+            bgPos: "center",
+            backgroundSize: "15000%",
+          }}
+          _active={{
+            bgColor: `${scheme}.${step3}`,
+            backgroundSize: "100%",
+            transition: "background 0s",
+          }}
         >
           新增顶级类型
         </Button>
