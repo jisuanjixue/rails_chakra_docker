@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import SidebarLinkGroup from "./SidebarLinkGroup";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
@@ -52,7 +53,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
   }, [sidebarExpanded]);
 
   return (
-    <div>
+    <Box
+      as="section"
+      bg={useColorModeValue("gray.50", "gray.700")}
+      minH="100vh"
+    >
       {/* Sidebar backdrop (mobile only) */}
       <div
         className={`fixed inset-0 z-40 bg-gray-900 bg-opacity-30 transition-opacity duration-200 lg:z-auto lg:hidden ${
@@ -79,7 +84,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             aria-controls="sidebar"
             aria-expanded={sidebarOpen}
           >
-            <span className="sr-only">Close sidebar</span>
+            <span className="sr-only">关闭</span>
             <svg
               className="w-6 h-6 fill-current"
               viewBox="0 0 24 24"
@@ -820,7 +825,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           </div>
         </div>
       </div>
-    </div>
+    </Box>
   );
 }
 
