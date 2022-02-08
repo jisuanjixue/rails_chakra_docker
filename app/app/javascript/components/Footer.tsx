@@ -1,3 +1,5 @@
+import React, { ReactNode } from "react";
+
 import {
   Box,
   chakra,
@@ -8,7 +10,6 @@ import {
   VisuallyHidden,
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-import React, { ReactNode } from "react";
 
 const Logo = (props: any) => {
   return (
@@ -64,10 +65,7 @@ const SocialButton = ({
 
 export default function SmallWithLogoLeft() {
   return (
-    <Box
-      bg={useColorModeValue("gray.50", "gray.900")}
-      color={useColorModeValue("gray.700", "gray.200")}
-    >
+    <Box color={useColorModeValue("gray.700", "gray.200")}>
       <Container
         as={Stack}
         maxW={"6xl"}

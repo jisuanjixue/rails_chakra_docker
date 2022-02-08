@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import "../charts/ChartjsConfig";
 
 import Sidebar from "../components/Sidebar";
@@ -17,14 +17,15 @@ import UserProvider from "../context";
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { pathname } = useLocation();
+  const bg = useColorModeValue("white", "gray.800");
   handInterceptor();
-  useEffect(() => { }, [pathname]);
+  useEffect(() => {}, [pathname]);
 
   return (
     <UserProvider>
-      <Box className="flex h-screen overflow-hidden">
+      <Box className="flex h-screen overflow-hidden" bg={bg}>
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <Box pos="absolute"  display="flex" className="flex-col flex-1 overflow-x-hidden overflow-y-auto">
+        <Box className="flex-col flex flex-1 overflow-x-hidden overflow-y-auto">
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <Routes>
             <Route path="/login" element={<Login />} />

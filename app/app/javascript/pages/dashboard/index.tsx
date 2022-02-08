@@ -10,8 +10,10 @@ import DashboardCard01 from "../../components/dashboard/DashboardCard01";
 import Banner from "../../components/Banner";
 import userApi from "../../apis/user";
 import { UserContext } from "../../controllers/ContextManager";
+// import { useColorModeValue, Box} from "@chakra-ui/react";
 
 const Dashboard = () => {
+  // const bg = useColorModeValue("white", "gray.800");
   const { dispatch } = useContext(UserContext);
   const navigate = useNavigate();
   const initialUser = { name: "", email: "" };
@@ -37,23 +39,17 @@ const Dashboard = () => {
 
   fetchCurrentUser();
   return (
-    <>
-      {
-        <div className="flex h-screen overflow-hidden">
-          <main>
-            <div className="w-full px-4 py-8 mx-auto max-w-9xl sm:px-6 lg:px-8">
-              <WelcomeBanner />
-              <div className="grid grid-cols-12 gap-6">
-                {/* Line chart (Acme Plus) */}
-                <DashboardCard01 />
-              </div>
-            </div>
-          </main>
-          <Banner />
-          {/* </div> */}
+    <div className="flex h-screen overflow-hidden">
+      <main>
+        <div className="w-full px-4 py-8 mx-auto max-w-9xl sm:px-6 lg:px-8">
+          <WelcomeBanner />
+          <div className="grid grid-cols-12 gap-6">
+            <DashboardCard01 />
+          </div>
         </div>
-      }
-    </>
+      </main>
+      <Banner />
+    </div>
   );
 };
 
