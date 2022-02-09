@@ -21,7 +21,7 @@
 !/log/.keep
 !/tmp/.keep
 /db/backups
-/public/uploads
+/public/*
 *.DS_Store
 coverage
 .*swp
