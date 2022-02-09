@@ -6,6 +6,10 @@
 
 # Ignore bundler config.
 /.bundle
+/vendor/*
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -75,20 +79,13 @@ yarn-1.22.5.cjs
 yarn-1.22.5.js
 
 # Ignore node_modules in cypress folder
-cypress-tests/node_modules
+app/node_modules
 
 # Ignore package-lock.json in cypress folder
-cypress-tests/package-lock.json
+app/package-lock.json
 
 # Ignore all logfiles and tempfiles in cypress folder
-cypress-tests/cypress/results
-cypress-tests/debug.log
+app/debug.log
 
 # Ignore IDE related files in cypress folder
-cypress-tests/.vscode
-
-# Ignore cypress screenshots and videos
-cypress-tests/cypress/artifacts/screenshots/
-cypress-tests/cypress/artifacts/videos/
-cypress-tests/cypress/screenshots/
-cypress-tests/cypress/videos/
+app/.vscode
