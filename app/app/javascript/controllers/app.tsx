@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import "../charts/ChartjsConfig";
@@ -16,7 +16,6 @@ import handInterceptor from "../apis/axios";
 import UserProvider from "../context";
 
 const App = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { pathname } = useLocation();
   const bg = useColorModeValue("white", "gray.800");
   handInterceptor();
@@ -32,7 +31,7 @@ const App = () => {
       >
         <Sidebar />
         <Box className="flex-col flex flex-1 overflow-x-hidden overflow-y-auto">
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <Header />
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/markets/list" element={<Market />} />
