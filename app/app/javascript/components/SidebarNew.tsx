@@ -108,7 +108,7 @@ export default function Sidebar() {
         </NavItem>
         <Collapse in={integrations.isOpen}>
           <NavItem pl="12" py="2">
-            <NavLink to="/category/list">
+            <NavLink to="/markets/list">
               <Text className="text-sm font-medium duration-200 lg:sidebar-expanded:opacity-100 lg:opacity-0 2xl:opacity-100">
                 市场信息
               </Text>
@@ -133,7 +133,7 @@ export default function Sidebar() {
         </NavItem>
         <Collapse in={integrations.isOpen}>
           <NavItem pl="12" py="2">
-            <NavLink to="/category/list">
+            <NavLink to="/markets/list">
               <Text className="text-sm font-medium duration-200 lg:sidebar-expanded:opacity-100 lg:opacity-0 2xl:opacity-100">
                 信息分类
               </Text>

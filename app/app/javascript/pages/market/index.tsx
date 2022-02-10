@@ -8,7 +8,6 @@ import {
   useAsyncDebounce,
   useExpanded,
 } from "react-table";
-import { pcaa } from "area-data";
 import {
   Modal,
   ModalOverlay,
@@ -46,6 +45,10 @@ import {
   Select,
   Textarea,
   Divider,
+  Menu,
+  MenuList,
+  MenuItem,
+  MenuButton,
 } from "@chakra-ui/react";
 import {
   AddIcon,
@@ -58,6 +61,7 @@ import * as Yup from "yup";
 
 import marketApi from "../../apis/market";
 import { MarketInfo } from "../../types/market";
+import arr from "../../../../public/addr";
 
 const Market = () => {
   const defaultData = {
@@ -182,8 +186,8 @@ const Market = () => {
   };
 
   useEffect(() => {
-    const newArr = flatArr(pcaa[86]);
-    console.log(newArr);
+    // const newArr = flatArr(pcaa[86]);
+    // console.log(newArr);
   }, []);
 
   // const selectedChange = (value: any) => {
@@ -783,21 +787,26 @@ const Market = () => {
                         </Field>
                         <Divider orientation="horizontal" />
                         <Field name="address">
-                          {({ field }) => (
+                          {() => (
                             <FormControl>
                               <FormLabel htmlFor="address">地址</FormLabel>
-                              <Select
-                                {...field}
-                                icon={<ChevronDownIcon />}
-                                variant="filled"
-                                id="address"
-                                color="white"
-                                placeholder="请选择"
+                              <Menu
+                                eventListeners={{ scroll: true, resize: true }}
+                                matchWidth={true}
+                                boundary="scrollParent"
                               >
-                                {/* {pcaa[86].map((item, index) => (
-                                  <option key={index}>{item}</option>
-                                ))} */}
-                              </Select>
+                                <MenuButton
+                                  as={Button}
+                                  rightIcon={<ChevronDownIcon />}
+                                >
+                                  选择地址
+                                </MenuButton>
+                                <MenuList>
+                                  {arr.map((v, i) => (
+                                    <MenuItem key={i}>{v.label}</MenuItem>
+                                  ))}
+                                </MenuList>
+                              </Menu>
                               <ErrorMessage name="address" />
                             </FormControl>
                           )}
