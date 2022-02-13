@@ -628,7 +628,7 @@ const Category = () => {
                   {!isError ? (
                     <FormHelperText>填写不同名称类型</FormHelperText>
                   ) : (
-                    <FormErrorMessage>名称必须要填</FormErrorMessage>
+                    <FormErrorMessage>必填</FormErrorMessage>
                   )}
                 </FormControl>
               </ModalBody>

@@ -42,19 +42,23 @@ import {
   TableCaption,
   Input,
   Switch,
-  Select,
   Textarea,
-  Divider,
+  Text,
   Menu,
   MenuList,
   MenuItem,
   MenuButton,
+  useDisclosure,
+  useColorModeValue,
+  VStack,
+  StackDivider,
 } from "@chakra-ui/react";
 import {
   AddIcon,
   EditIcon,
   DeleteIcon,
   ChevronDownIcon,
+  ChevronUpIcon,
 } from "@chakra-ui/icons";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -64,6 +68,12 @@ import { MarketInfo } from "../../types/market";
 import arr from "../../../../public/addr";
 
 const Market = () => {
+  const { isOpen, onOpen, onClose: onSelectClose } = useDisclosure();
+  const {
+    isOpen: isAddrOpen,
+    onOpen: onAddrOpen,
+    onClose: onAddrClose,
+  } = useDisclosure();
   const defaultData = {
     name: "",
     type: "",
@@ -85,10 +95,17 @@ const Market = () => {
   };
 
   const MarketSchema = Yup.object().shape({
-    name: Yup.string().min(1, "太短了").max(10, "太长了!").required("必填"),
-    type: Yup.string().required("必填"),
-    is_show: Yup.boolean().required("必填"),
-    address: Yup.array().required("必填"),
+    name: Yup.string()
+      .min(1, "太短了")
+      .max(10, "太长了!")
+      .required(
+        <Text as="sup" color="red">
+          必填
+        </Text>
+      ),
+    type: Yup.string().required("必选"),
+    is_show: Yup.boolean().required("必选"),
+    address: Yup.array().required("必选"),
   });
 
   const queryClient = useQueryClient();
@@ -404,8 +421,8 @@ const Market = () => {
             const rowValue = row.values[id];
             return rowValue !== undefined
               ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
+                  .toLowerCase()
+                  .startsWith(String(filterValue).toLowerCase())
               : true;
           });
         },
@@ -739,94 +756,138 @@ const Market = () => {
 
                     return (
                       <Form>
-                        <Field name="name">
-                          {({ field }) => (
-                            <FormControl variant="floating" id="name">
-                              <Input
-                                {...field}
+                        <VStack
+                          divider={<StackDivider borderColor="gray.200" />}
+                          spacing={4}
+                          align="stretch"
+                        >
+                          <Field name="name">
+                            {({ field }) => (
+                              <FormControl
                                 isRequired
-                                isInvalid
-                                type="text"
-                                placeholder=""
-                              />
-                              <FormLabel htmlFor="name">名称</FormLabel>
-                              <ErrorMessage name="name" />
-                            </FormControl>
-                          )}
-                        </Field>
-                        <Divider orientation="horizontal" />
-                        <Field name="type">
-                          {({ field }) => (
-                            <FormControl>
-                              <FormLabel htmlFor="type">市场类型</FormLabel>
-                              <Select
-                                {...field}
-                                icon={<ChevronDownIcon />}
-                                variant="filled"
-                                id="type"
-                                color="white"
-                                placeholder="请选择"
+                                variant="floating"
+                                id="name"
                               >
-                                <option>产区</option>
-                                <option>销区</option>
-                              </Select>
-                              <ErrorMessage name="type" />
-                            </FormControl>
-                          )}
-                        </Field>
-                        <Divider orientation="horizontal" />
-                        <Field name="is_show">
-                          {({ field }) => (
-                            <FormControl display="flex" alignItems="center">
-                              <FormLabel htmlFor="is_show">是否展示</FormLabel>
-                              <Switch {...field} id="is_show" />
-                              <ErrorMessage name="is_show" />
-                            </FormControl>
-                          )}
-                        </Field>
-                        <Divider orientation="horizontal" />
-                        <Field name="address">
-                          {() => (
-                            <FormControl>
-                              <FormLabel htmlFor="address">地址</FormLabel>
-                              <Menu
-                                eventListeners={{ scroll: true, resize: true }}
-                                matchWidth={true}
-                                boundary="scrollParent"
-                              >
-                                <MenuButton
-                                  as={Button}
-                                  rightIcon={<ChevronDownIcon />}
+                                <Input
+                                  {...field}
+                                  isRequired
+                                  isInvalid
+                                  type="text"
+                                  placeholder=""
+                                />
+                                <FormLabel htmlFor="name">名称</FormLabel>
+                                <ErrorMessage name="name" />
+                              </FormControl>
+                            )}
+                          </Field>
+                          <Field name="type">
+                            {() => (
+                              <FormControl isRequired>
+                                <Menu isOpen={isOpen}>
+                                  <MenuButton
+                                    as={Button}
+                                    _hover={{
+                                      bg: useColorModeValue(
+                                        "gray.100",
+                                        "gray.700"
+                                      ),
+                                    }}
+                                    aria-label="Courses"
+                                    onMouseEnter={onOpen}
+                                    onMouseLeave={onSelectClose}
+                                  >
+                                    选择市场类型{" "}
+                                    {isOpen ? (
+                                      <ChevronUpIcon />
+                                    ) : (
+                                      <ChevronDownIcon />
+                                    )}
+                                  </MenuButton>
+                                  <MenuList
+                                    onMouseEnter={onOpen}
+                                    onMouseLeave={onSelectClose}
+                                  >
+                                    <MenuItem>产区</MenuItem>
+                                    <MenuItem>销区</MenuItem>
+                                  </MenuList>
+                                </Menu>
+                                <ErrorMessage name="type" />
+                              </FormControl>
+                            )}
+                          </Field>
+                          <Field name="is_show">
+                            {({ field }) => (
+                              <FormControl display="flex" alignItems="center">
+                                <FormLabel htmlFor="is_show">
+                                  是否展示
+                                </FormLabel>
+                                <Switch {...field} id="is_show" />
+                                <ErrorMessage name="is_show" />
+                              </FormControl>
+                            )}
+                          </Field>
+                          <Field name="address">
+                            {() => (
+                              <FormControl isRequired>
+                                <Menu
+                                  eventListeners={{
+                                    scroll: true,
+                                    resize: true,
+                                  }}
+                                  isOpen={isAddrOpen}
+                                  matchWidth={true}
+                                  boundary="scrollParent"
                                 >
-                                  选择地址
-                                </MenuButton>
-                                <MenuList>
-                                  {arr.map((v, i) => (
-                                    <MenuItem key={i}>{v.label}</MenuItem>
-                                  ))}
-                                </MenuList>
-                              </Menu>
-                              <ErrorMessage name="address" />
-                            </FormControl>
-                          )}
-                        </Field>
-                        <Divider orientation="horizontal" />
+                                  <MenuButton
+                                    as={Button}
+                                    _hover={{
+                                      bg: useColorModeValue(
+                                        "gray.100",
+                                        "gray.700"
+                                      ),
+                                    }}
+                                    aria-label="Courses"
+                                    onMouseEnter={onAddrOpen}
+                                    onMouseLeave={onAddrClose}
+                                  >
+                                    选择地址{" "}
+                                    {isAddrOpen ? (
+                                      <ChevronUpIcon />
+                                    ) : (
+                                      <ChevronDownIcon />
+                                    )}
+                                  </MenuButton>
+                                  <MenuList
+                                    onMouseEnter={onAddrOpen}
+                                    onMouseLeave={onAddrClose}
+                                  >
+                                    {arr.map((v, i) => (
+                                      <MenuItem key={i}>{v.label}</MenuItem>
+                                    ))}
+                                  </MenuList>
+                                </Menu>
+                                <ErrorMessage name="address" />
+                              </FormControl>
+                            )}
+                          </Field>
+                          {/* <Divider orientation="horizontal" /> */}
 
-                        <Field name="remark">
-                          {({ field }) => (
-                            <FormControl variant="floating" id="remark">
-                              <Textarea
-                                {...field}
-                                isRequired
-                                isInvalid
-                                type="text"
-                                placeholder=""
-                              />
-                              <FormLabel htmlFor="remark">备注</FormLabel>
-                              <ErrorMessage name="remark" />
-                            </FormControl>
-                          )}
-                        </Field>
+                          <Field name="remark">
+                            {({ field }) => (
+                              <FormControl variant="floating" id="remark">
+                                <Textarea
+                                  {...field}
+                                  isRequired
+                                  isInvalid
+                                  type="text"
+                                  placeholder=""
+                                />
+                                <FormLabel htmlFor="remark">备注</FormLabel>
+                                <ErrorMessage name="remark" />
+                              </FormControl>
+                            )}
+                          </Field>
+                        </VStack>
                       </Form>
                     );
                   }}
