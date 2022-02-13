@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { ChakraProvider } from "@chakra-ui/react";
 import App from "./app";
 import theme from './theme'
+import Fonts from './fonts'
 
 // Create a client
 const queryClient = new QueryClient();
@@ -14,10 +15,11 @@ const queryClient = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
+      <Fonts />
       <QueryClientProvider client={queryClient}>
         <Router>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-            <App />
+          <App />
         </Router>
         <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>

@@ -607,10 +607,13 @@ const Category = () => {
               <ModalHeader>类型提交</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <FormControl isInvalid={isError} isRequired>
-                  <FormLabel htmlFor="name">请填入类型名称</FormLabel>
+                <FormControl
+                  id="name"
+                  variant="floating"
+                  isInvalid={isError}
+                  isRequired
+                >
                   <Input
-                    id="name"
                     isRequired
                     isInvalid
                     errorBorderColor="crimson"
@@ -619,8 +622,9 @@ const Category = () => {
                     type="text"
                     size="md"
                     variant="filled"
-                    placeholder="类型名称"
+                    placeholder=""
                   />
+                  <FormLabel>类型名称</FormLabel>
                   {!isError ? (
                     <FormHelperText>填写不同名称类型</FormHelperText>
                   ) : (

@@ -404,8 +404,8 @@ const Market = () => {
             const rowValue = row.values[id];
             return rowValue !== undefined
               ? String(rowValue)
-                  .toLowerCase()
-                  .startsWith(String(filterValue).toLowerCase())
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
               : true;
           });
         },
@@ -741,16 +741,15 @@ const Market = () => {
                       <Form>
                         <Field name="name">
                           {({ field }) => (
-                            <FormControl>
-                              <FormLabel htmlFor="name">名称</FormLabel>
+                            <FormControl variant="floating" id="name">
                               <Input
                                 {...field}
-                                id="name"
                                 isRequired
                                 isInvalid
                                 type="text"
-                                placeholder="请填入市场名称"
+                                placeholder=""
                               />
+                              <FormLabel htmlFor="name">名称</FormLabel>
                               <ErrorMessage name="name" />
                             </FormControl>
                           )}
@@ -812,18 +811,18 @@ const Market = () => {
                           )}
                         </Field>
                         <Divider orientation="horizontal" />
+
                         <Field name="remark">
                           {({ field }) => (
-                            <FormControl>
-                              <FormLabel htmlFor="address">备注</FormLabel>
+                            <FormControl variant="floating" id="remark">
                               <Textarea
                                 {...field}
-                                id="remark"
                                 isRequired
                                 isInvalid
                                 type="text"
-                                placeholder="请填入市场名称"
+                                placeholder=""
                               />
+                              <FormLabel htmlFor="remark">备注</FormLabel>
                               <ErrorMessage name="remark" />
                             </FormControl>
                           )}

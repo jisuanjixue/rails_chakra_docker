@@ -13,8 +13,8 @@ const colors = {
     600: "#3c4178",
     700: "#2a2f57",
     800: "#181c37",
-    900: "#080819"
-  }
+    900: "#080819",
+  },
 };
 
 const config: ThemeConfig = {
@@ -22,7 +22,44 @@ const config: ThemeConfig = {
   useSystemColorMode: false,
 };
 
+const activeLabelStyles = {
+  transform: "scale(0.85) translateY(-24px) translateX(-10px)",
+};
+
 // 3. extend the theme
-const theme = extendTheme({ colors,config });
+const theme = extendTheme({
+  components: {
+    Form: {
+      variants: {
+        floating: {
+          container: {
+            _focusWithin: {
+              label: {
+                ...activeLabelStyles,
+              },
+            },
+            label: {
+              top: 0,
+              left: 0,
+              zIndex: 2,
+              position: "absolute",
+              backgroundColor: "white",
+              pointerEvents: "none",
+              mx: 3,
+              px: 1,
+              my: 2,
+            },
+          },
+        },
+      },
+    },
+  },
+  colors,
+  config,
+  fonts: {
+    heading: "Heading Font Name",
+    body: "Body Font Name",
+  },
+});
 
 export default theme;
