@@ -6,8 +6,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ChakraProvider } from "@chakra-ui/react";
 import App from "./app";
-import theme from './theme'
-import Fonts from './fonts'
+import theme from '../theme/theme'
+import {Fonts} from '../theme/foundations/fonts'
 
 // Create a client
 const queryClient = new QueryClient();
