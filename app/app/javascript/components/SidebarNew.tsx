@@ -13,93 +13,88 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
+  useControllableState,
+  HStack,
 } from "@chakra-ui/react";
-import { FaClipboardCheck, FaRss } from "react-icons/fa";
+import { FaRss } from "react-icons/fa";
 import { AiFillGift } from "react-icons/ai";
 import { BsGearFill } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
-import { HiCode, HiCollection } from "react-icons/hi";
+import { HiCode } from "react-icons/hi";
+// import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { MdHome, MdKeyboardArrowRight } from "react-icons/md";
 import { Logo } from "@choc-ui/logo";
+import NavItem from "./NavItem";
 
 export default function Sidebar() {
   const sidebar = useDisclosure();
+  // const [show, setShow] = useControllableState({ defaultValue: true });
+  const [navSize, changeNavSize] = useControllableState({
+    defaultValue: "large",
+  });
   const integrations = useDisclosure();
+  const integrationsOne = useDisclosure();
 
-  const NavItem = props => {
-    const { icon, children, ...rest } = props;
-    return (
-      <Flex
-        align="center"
-        px="4"
-        pl="4"
-        mx="2"
-        rounded="md"
-        py="3"
-        cursor="pointer"
-        color={useColorModeValue("inherit", "gray.400")}
-        _hover={{
-          bg: useColorModeValue("gray.100", "gray.900"),
-          color: useColorModeValue("gray.900", "gray.200"),
-        }}
-        role="group"
-        fontWeight="semibold"
-        transition=".15s ease"
-        {...rest}
-      >
-        {icon && (
-          <Icon
-            mx="2"
-            boxSize="4"
-            _groupHover={{
-              color: useColorModeValue("gray.600", "gray.300"),
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    );
-  };
-
-  const SidebarContent = props => (
-    <Box
-      as="nav"
-      pos="fixed"
-      top="0"
-      left="0"
-      zIndex="sticky"
-      h="full"
-      pb="10"
-      overflowX="hidden"
-      overflowY="auto"
+  const SidebarContent = () => (
+    <Flex
+      display={{ base: "none", md: "inline-flex" }}
+      pos="sticky"
+      left="5"
+      h="95vh"
+      marginTop="2.5vh"
+      boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
+      borderRadius={navSize === "small" ? "15px" : "30px"}
+      w={navSize === "small" ? "75px" : "200px"}
+      flexDir="column"
+      justifyContent="space-between"
       bg={useColorModeValue("white", "gray.800")}
-      borderColor={useColorModeValue("inherit", "gray.700")}
-      borderRightWidth="1px"
-      w="60"
-      {...props}
     >
-      <Flex px="4" py="5" align="center">
+      <HStack spacing="24px">
         <Logo />
         <Text
-          fontSize="2xl"
-          ml="2"
+          fontSize="md"
+          ml={5}
+          display={navSize === "small" ? "none" : "flex"}
           color={useColorModeValue("brand.500", "white")}
           fontWeight="semibold"
         >
           管理系统
         </Text>
-      </Flex>
+      </HStack>
       <Flex
-        direction="column"
+        p="5%"
+        flexDir="column"
+        w="100%"
+        alignItems={navSize === "small" ? "center" : "flex-start"}
         as="nav"
         fontSize="sm"
         color="gray.600"
         aria-label="Main Navigation"
       >
-        <NavItem icon={MdHome}>分析仪表</NavItem>
-        <NavItem icon={FaRss} onClick={integrations.onToggle}>
-          市场管理
+        <IconButton
+          aria-label="open siderbar"
+          background="none"
+          mt={5}
+          _hover={{ background: "none" }}
+          icon={<FiMenu />}
+          onClick={() => {
+            if (navSize === "small") changeNavSize("large");
+            else changeNavSize("small");
+          }}
+        />
+        <NavItem
+          navSize={navSize}
+          icon={MdHome}
+          title="分析仪表"
+          description="This is the description for the dashboard."
+          active={undefined}
+        />
+        <NavItem
+          navSize={navSize}
+          icon={FaRss}
+          title="市场管理"
+          onClick={integrations.onToggle}
+        >
           <Icon
             as={MdKeyboardArrowRight}
             ml="auto"
@@ -107,53 +102,57 @@ export default function Sidebar() {
           />
         </NavItem>
         <Collapse in={integrations.isOpen}>
-          <NavItem pl="12" py="2">
+          <NavItem navSize={navSize} title="市场信息">
             <NavLink to="/markets/list">
-              <Text className="text-sm font-medium duration-200 lg:sidebar-expanded:opacity-100 lg:opacity-0 2xl:opacity-100">
-                市场信息
-              </Text>
+              {/* <Text className="text-sm font-medium duration-200 lg:sidebar-expanded:opacity-100 lg:opacity-0 2xl:opacity-100">
+                  
+                </Text> */}
             </NavLink>
           </NavItem>
-          {/* <NavItem pl="12" py="2">
-            信息统计
-          </NavItem>
-          <NavItem pl="12" py="2">
-            评论管理
-          </NavItem> */}
         </Collapse>
-        <NavItem icon={HiCollection}>Collections</NavItem>
-        <NavItem icon={FaClipboardCheck}>Checklists</NavItem>
-        <NavItem icon={HiCode} onClick={integrations.onToggle}>
-          信息管理
+        <NavItem
+          navSize={navSize}
+          icon={HiCode}
+          title="信息管理"
+          onClick={integrationsOne.onToggle}
+        >
           <Icon
             as={MdKeyboardArrowRight}
             ml="auto"
-            transform={integrations.isOpen && "rotate(90deg)"}
+            transform={integrationsOne.isOpen && "rotate(90deg)"}
           />
         </NavItem>
-        <Collapse in={integrations.isOpen}>
-          <NavItem pl="12" py="2">
+        <Collapse in={integrationsOne.isOpen}>
+          <NavItem>
             <NavLink to="/category/list">
               <Text className="text-sm font-medium duration-200 lg:sidebar-expanded:opacity-100 lg:opacity-0 2xl:opacity-100">
                 信息分类
               </Text>
             </NavLink>
           </NavItem>
-          <NavItem pl="12" py="2">
-            信息统计
-          </NavItem>
-          <NavItem pl="12" py="2">
-            评论管理
-          </NavItem>
         </Collapse>
-        <NavItem icon={AiFillGift}>Changelog</NavItem>
-        <NavItem icon={BsGearFill}>Settings</NavItem>
+        <NavItem
+          navSize={navSize}
+          title="Changelog"
+          icon={AiFillGift}
+          // description={undefined}
+          // active={undefined}
+          // children={undefined}
+        />
+        <NavItem
+          navSize={navSize}
+          title="Settings"
+          icon={BsGearFill}
+          // description={undefined}
+          // active={undefined}
+          // children={undefined}
+        />
       </Flex>
-    </Box>
+    </Flex>
   );
   return (
     <>
-      <SidebarContent display={{ base: "none", md: "unset" }} />
+      <SidebarContent />
       <Drawer
         isOpen={sidebar.isOpen}
         onClose={sidebar.onClose}
@@ -161,10 +160,10 @@ export default function Sidebar() {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <SidebarContent w="full" borderRight="none" />
+          <SidebarContent />
         </DrawerContent>
       </Drawer>
-      <Box ml={{ base: 0, md: 60 }} transition=".3s ease">
+      <Box ml={{ base: 0, md: 0 }} transition=".3s ease">
         <Flex
           as="header"
           align="center"

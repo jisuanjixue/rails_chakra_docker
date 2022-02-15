@@ -288,136 +288,131 @@ const Category = () => {
     );
     return (
       <>
-        <Box className="flex flex-col mt-4">
+        {/* <Box className="flex flex-col mt-4">
           <Box className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <Box className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-              <Box className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
-                <Flex
-                  w="full"
-                  bg="gray.600"
-                  p={50}
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Table
-                    w="full"
+              <Box className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"> */}
+        <Flex
+          w="full"
+          bg="gray.600"
+          p={50}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Table
+            w="full"
+            display={{
+              base: "block",
+              md: "table",
+            }}
+            sx={{
+              "@media print": {
+                display: "table",
+              },
+            }}
+            bg={useColorModeValue("white", "gray.800")}
+            {...getTableProps()}
+            variant="simple"
+          >
+            <TableCaption>系统类型</TableCaption>
+            <Thead
+              display={{
+                base: "none",
+                md: "table-header-group",
+              }}
+              sx={{
+                "@media print": {
+                  display: "table-header-group",
+                },
+              }}
+            >
+              {headerGroups.map((headerGroup, index) => (
+                <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                  {headerGroup.headers.map((column, i) => (
+                    <Th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group"
+                      {...column.getHeaderProps()}
+                      key={i}
+                    >
+                      {column.render("Header")}
+                    </Th>
+                  ))}
+                </Tr>
+              ))}
+            </Thead>
+            <Tbody
+              {...getTableBodyProps()}
+              display={{
+                base: "block",
+                lg: "table-row-group",
+              }}
+              sx={{
+                "@media print": {
+                  display: "table-row-group",
+                },
+              }}
+            >
+              {rows.map((row, i) => {
+                prepareRow(row);
+                return (
+                  <Tr
+                    {...row.getRowProps()}
+                    key={i}
                     display={{
-                      base: "block",
-                      md: "table",
+                      base: "grid",
+                      md: "table-row",
                     }}
                     sx={{
                       "@media print": {
-                        display: "table",
+                        display: "table-row",
                       },
+                      gridTemplateColumns: "minmax(0px, 35%) minmax(0px, 65%)",
+                      gridGap: "10px",
                     }}
-                    bg={useColorModeValue("white", "gray.800")}
-                    {...getTableProps()}
-                    variant="simple"
                   >
-                    <TableCaption>系统类型</TableCaption>
-                    <Thead
-                      display={{
-                        base: "none",
-                        md: "table-header-group",
-                      }}
-                      sx={{
-                        "@media print": {
-                          display: "table-header-group",
-                        },
-                      }}
-                    >
-                      {headerGroups.map((headerGroup, index) => (
-                        <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                          {headerGroup.headers.map((column, i) => (
-                            <Th
-                              scope="col"
-                              className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group"
-                              {...column.getHeaderProps()}
-                              key={i}
-                            >
-                              {column.render("Header")}
-                            </Th>
-                          ))}
-                        </Tr>
-                      ))}
-                    </Thead>
-                    <Tbody
-                      {...getTableBodyProps()}
-                      display={{
-                        base: "block",
-                        lg: "table-row-group",
-                      }}
-                      sx={{
-                        "@media print": {
-                          display: "table-row-group",
-                        },
-                      }}
-                    >
-                      {rows.map((row, i) => {
-                        prepareRow(row);
-                        return (
-                          <Tr
-                            {...row.getRowProps()}
-                            key={i}
-                            display={{
-                              base: "grid",
-                              md: "table-row",
-                            }}
-                            sx={{
-                              "@media print": {
-                                display: "table-row",
-                              },
-                              gridTemplateColumns:
-                                "minmax(0px, 35%) minmax(0px, 65%)",
-                              gridGap: "10px",
-                            }}
-                          >
-                            {row.cells.map((cell, index) => {
-                              return (
-                                <Td
-                                  {...cell.getCellProps()}
-                                  role="cell"
-                                  key={index}
-                                  // display={{
-                                  //   base: 'table-cell',
-                                  //   md: 'none',
-                                  // }}
-                                  sx={{
-                                    "@media print": {
-                                      display: "none",
-                                    },
-                                    textTransform: "uppercase",
-                                    color: useColorModeValue(
-                                      "gray.400",
-                                      "gray.400"
-                                    ),
-                                    fontSize: "xs",
-                                    fontWeight: "bold",
-                                    letterSpacing: "wider",
-                                    fontFamily: "heading",
-                                  }}
-                                >
-                                  {cell.column.Cell.name ===
-                                  "defaultRenderer" ? (
-                                    <Box className="text-sm text-gray-500">
-                                      {cell.render("Cell")}
-                                    </Box>
-                                  ) : (
-                                    cell.render("Cell")
-                                  )}
-                                </Td>
-                              );
-                            })}
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </Flex>
-              </Box>
+                    {row.cells.map((cell, index) => {
+                      return (
+                        <Td
+                          {...cell.getCellProps()}
+                          role="cell"
+                          key={index}
+                          // display={{
+                          //   base: 'table-cell',
+                          //   md: 'none',
+                          // }}
+                          sx={{
+                            "@media print": {
+                              display: "none",
+                            },
+                            textTransform: "uppercase",
+                            color: useColorModeValue("gray.400", "gray.400"),
+                            fontSize: "xs",
+                            fontWeight: "bold",
+                            letterSpacing: "wider",
+                            fontFamily: "heading",
+                          }}
+                        >
+                          {cell.column.Cell.name === "defaultRenderer" ? (
+                            <Box className="text-sm text-gray-500">
+                              {cell.render("Cell")}
+                            </Box>
+                          ) : (
+                            cell.render("Cell")
+                          )}
+                        </Td>
+                      );
+                    })}
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </Flex>
+        {/* </Box>
             </Box>
           </Box>
-        </Box>
+        </Box> */}
       </>
     );
   };

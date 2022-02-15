@@ -45,12 +45,10 @@ function Header() {
                 <SearchModal />
                 <Notifications />
                 <Help />
-                {/*  Divider */}
                 <hr className="w-px h-6 mx-3 bg-gray-200" />
                 <UserMenu />
               </HStack>
             </Flex>
-            {/* </Box> */}
           </Flex>
         </chakra.div>
       </chakra.header>

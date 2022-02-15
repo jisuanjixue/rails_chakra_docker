@@ -207,9 +207,6 @@ const Market = () => {
     // console.log(newArr);
   }, []);
 
-  // const selectedChange = (value: any) => {
-  //   console.log(value);
-  // };
 
   const onSubmit = values => {
     if (show.type === "add") {
