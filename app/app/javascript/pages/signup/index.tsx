@@ -1,3 +1,18 @@
+// Chakra imports
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  HStack,
+  Icon,
+  Input,
+  Link,
+  Switch,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React, { useState, useCallback } from "react";
 import {
   // useQueryClient,
@@ -6,8 +21,15 @@ import {
 import userApi from "../../apis/user";
 import { useNavigate } from "react-router-dom";
 import { UserRegister } from "../../types/user";
+// Assets
+// import BgSignUp from "../../images/BgSignUp.png";
+import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
 
-const Signup = () => {
+const SignUp = () => {
+  const titleColor = useColorModeValue("teal.300", "teal.200");
+  const textColor = useColorModeValue("gray.700", "white");
+  const bgColor = useColorModeValue("white", "gray.700");
+  const bgIcons = useColorModeValue("teal.200", "rgba(255, 255, 255, 0.5)");
   const navigate = useNavigate();
   const [user, setUser] = useState<UserRegister>({
     name: "",
@@ -36,88 +58,239 @@ const Signup = () => {
   const handleSubmit = () => {
     userRegistration.mutate(user);
   };
-
   return (
-    <>
-      <div className="flex min-h-screen items-center bg-gray-50">
-        <div className="mx-auto h-full max-w-4xl flex-1 rounded-lg bg-white shadow-xl">
-          <div className="flex flex-col md:flex-row">
-            <div className="h-32 md:h-auto md:w-1/2">
-              <img
-                className="h-full w-full object-cover"
-                src="https://source.unsplash.com/user/erondu/1600x900"
-                alt="img"
-              />
-            </div>
-            <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
-              <div className="w-full">
-                <div className="flex justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-20 w-20 text-blue-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                    />
-                  </svg>
-                </div>
-                <h1 className="mb-4 text-center text-2xl font-bold text-gray-700">
-                  注册
-                </h1>
-                <div>
-                  <label className="block text-sm">昵称</label>
-                  <input
-                    type="text"
-                    className="w-full rounded-md border px-4 py-2 text-sm focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                    placeholder="Name"
-                    value={user.name}
-                    name="name"
-                    onChange={e => handValue(e)}
-                  />
-                </div>
-                <div className="mt-4">
-                  <label className="block text-sm">电子邮件</label>
-                  <input
-                    type="email"
-                    className="w-full rounded-md border px-4 py-2 text-sm focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                    placeholder="Email Address"
-                    value={user.email}
-                    name="email"
-                    onChange={e => handValue(e)}
-                  />
-                </div>
-                <div>
-                  <label className="mt-4 block text-sm">密码</label>
-                  <input
-                    className="w-full rounded-md border px-4 py-2 text-sm focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                    placeholder="Password"
-                    type="password"
-                    value={user.password}
-                    name="password"
-                    onChange={e => handValue(e)}
-                  />
-                </div>
-                <button
-                  className="focus:shadow-outline-blue mt-4 block w-full rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
-                  onClick={() => handleSubmit()}
-                >
-                  注册
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <Flex
+      direction="column"
+      alignSelf="center"
+      justifySelf="center"
+      overflow="hidden"
+    >
+      <Box
+        position="absolute"
+        minH={{ base: "70vh", md: "50vh" }}
+        w={{ md: "calc(100vw - 50px)" }}
+        borderRadius={{ md: "15px" }}
+        left="0"
+        right="0"
+        bgRepeat="no-repeat"
+        overflow="hidden"
+        zIndex="-1"
+        top="0"
+        // bgImage={BgSignUp}
+        bgSize="cover"
+        mx={{ md: "auto" }}
+        mt={{ md: "14px" }}
+      ></Box>
+      <Flex
+        direction="column"
+        textAlign="center"
+        justifyContent="center"
+        align="center"
+        mt="6.5rem"
+        mb="30px"
+      >
+        <Text fontSize="4xl" color="white" fontWeight="bold">
+          Welcome!
+        </Text>
+        <Text
+          fontSize="md"
+          color="white"
+          fontWeight="normal"
+          mt="10px"
+          mb="26px"
+          w={{ base: "90%", sm: "60%", lg: "40%", xl: "30%" }}
+        >
+          Use these awesome forms to login or create new account in your project
+          for free.
+        </Text>
+      </Flex>
+      <Flex alignItems="center" justifyContent="center" mb="60px" mt="20px">
+        <Flex
+          direction="column"
+          w="445px"
+          background="transparent"
+          borderRadius="15px"
+          p="40px"
+          mx={{ base: "100px" }}
+          bg={bgColor}
+          boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)"
+        >
+          <Text
+            fontSize="xl"
+            color={textColor}
+            fontWeight="bold"
+            textAlign="center"
+            mb="22px"
+          >
+            Register With
+          </Text>
+          <HStack spacing="15px" justify="center" mb="22px">
+            <Flex
+              justify="center"
+              align="center"
+              w="75px"
+              h="75px"
+              borderRadius="15px"
+              border="1px solid lightgray"
+              cursor="pointer"
+              transition="all .25s ease"
+              _hover={{ filter: "brightness(120%)", bg: bgIcons }}
+            >
+              <Link href="#">
+                <Icon
+                  as={FaFacebook}
+                  w="30px"
+                  h="30px"
+                  _hover={{ filter: "brightness(120%)" }}
+                />
+              </Link>
+            </Flex>
+            <Flex
+              justify="center"
+              align="center"
+              w="75px"
+              h="75px"
+              borderRadius="15px"
+              border="1px solid lightgray"
+              cursor="pointer"
+              transition="all .25s ease"
+              _hover={{ filter: "brightness(120%)", bg: bgIcons }}
+            >
+              <Link href="#">
+                <Icon
+                  as={FaApple}
+                  w="30px"
+                  h="30px"
+                  _hover={{ filter: "brightness(120%)" }}
+                />
+              </Link>
+            </Flex>
+            <Flex
+              justify="center"
+              align="center"
+              w="75px"
+              h="75px"
+              borderRadius="15px"
+              border="1px solid lightgray"
+              cursor="pointer"
+              transition="all .25s ease"
+              _hover={{ filter: "brightness(120%)", bg: bgIcons }}
+            >
+              <Link href="#">
+                <Icon
+                  as={FaGoogle}
+                  w="30px"
+                  h="30px"
+                  _hover={{ filter: "brightness(120%)" }}
+                />
+              </Link>
+            </Flex>
+          </HStack>
+          <Text
+            fontSize="lg"
+            color="gray.400"
+            fontWeight="bold"
+            textAlign="center"
+            mb="22px"
+          >
+            or
+          </Text>
+          <FormControl>
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+              昵称
+            </FormLabel>
+            <Input
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              type="text"
+              placeholder="Your full name"
+              mb="24px"
+              size="lg"
+              value={user.name}
+              name="name"
+              onChange={e => handValue(e)}
+            />
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+              电子邮件
+            </FormLabel>
+            <Input
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              type="email"
+              placeholder="Your email address"
+              mb="24px"
+              size="lg"
+              value={user.email}
+              name="email"
+              onChange={e => handValue(e)}
+            />
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+              密码
+            </FormLabel>
+            <Input
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              type="password"
+              placeholder="Your password"
+              mb="24px"
+              size="lg"
+              value={user.password}
+              name="password"
+              onChange={e => handValue(e)}
+            />
+            <FormControl display="flex" alignItems="center" mb="24px">
+              <Switch id="remember-login" colorScheme="teal" me="10px" />
+              <FormLabel htmlFor="remember-login" mb="0" fontWeight="normal">
+                Remember me
+              </FormLabel>
+            </FormControl>
+            <Button
+              type="submit"
+              bg="teal.300"
+              fontSize="10px"
+              color="white"
+              fontWeight="bold"
+              w="100%"
+              h="45"
+              mb="24px"
+              _hover={{
+                bg: "teal.200",
+              }}
+              _active={{
+                bg: "teal.400",
+              }}
+              onClick={() => handleSubmit()}
+            >
+              注册
+            </Button>
+          </FormControl>
+          <Flex
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            maxW="100%"
+            mt="0px"
+          >
+            <Text color={textColor} fontWeight="medium">
+              您已有账号?
+              <Link
+                color={titleColor}
+                as="span"
+                ms="5px"
+                href="#"
+                fontWeight="bold"
+              >
+                登录
+              </Link>
+            </Text>
+          </Flex>
+        </Flex>
+      </Flex>
+    </Flex>
   );
 };
 
-export default Signup;
+export default SignUp;
