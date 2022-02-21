@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const confing = {
   baseURL: "/",
@@ -13,7 +13,7 @@ const instance = axios.create(confing);
 
 export default function handInterceptor() {
   const token = localStorage.getItem("token");
-  const navigate = useNavigate();
+  const navigate = useHistory();
   instance.interceptors.request.use(
     config => {
       //判断token是否存在 token存在 请求头才添加token 否则不添加
@@ -31,7 +31,7 @@ export default function handInterceptor() {
     // eslint-disable-next-line consistent-return
     error => {
       if (error.response && error.response.status === 401) {
-        navigate("/login");
+        navigate.push("/auth/signin");
       }
 
       return Promise.reject(error);

@@ -11,7 +11,7 @@ const user_1 = require("../../apis/user");
 const ContextManager_1 = require("../../controllers/ContextManager");
 const Dashboard = () => {
     const { dispatch } = (0, react_1.useContext)(ContextManager_1.UserContext);
-    const navigate = (0, react_router_dom_1.useNavigate)();
+    const navigate = (0, react_router_dom_1.useHistory)();
     const initialUser = { name: "", email: "" };
     const fetchCurrentUser = () => {
         return (0, react_query_1.useQuery)("currentUser", async () => {

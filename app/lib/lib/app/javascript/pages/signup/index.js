@@ -6,7 +6,7 @@ const react_query_1 = require("react-query");
 const user_1 = require("../../apis/user");
 const react_router_dom_1 = require("react-router-dom");
 const Signup = () => {
-    const navigate = (0, react_router_dom_1.useNavigate)();
+    const navigate = (0, react_router_dom_1.useHistory)();
     const [user, setUser] = (0, react_1.useState)({
         name: "",
         email: "",

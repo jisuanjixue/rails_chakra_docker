@@ -13,10 +13,10 @@ import { MainPanelComponent } from "./additions/layout/MainPanel";
 import { PanelContentComponent } from "./additions/layout/PanelContent";
 import { PanelContainerComponent } from "./additions/layout/PanelContainer";
 
-const config: ThemeConfig = {
-  initialColorMode: "light",
-  useSystemColorMode: false,
-};
+// const config: ThemeConfig = {
+//   initialColorMode: "light",
+//   useSystemColorMode: false,
+// };
 // import { mode } from "@chakra-ui/theme-tools";
 export default extendTheme(
   {
@@ -26,7 +26,7 @@ export default extendTheme(
       body: "Body Font Name",
       mono: "Menlo, monospace",
     },
-    config,
+    // config,
     fontSizes: {
       xs: "0.75rem",
       sm: "0.875rem",

@@ -15,7 +15,7 @@ import {
 import { useQueryClient, useMutation } from "react-query";
 import userApi from "../../apis/user";
 import { UserLogin } from "../../types/user";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 // Assets
 // import signInImage from "../../images/signInImage.png";
 
@@ -24,7 +24,7 @@ const SignIn = () => {
   const titleColor = useColorModeValue("teal.300", "teal.200");
   const textColor = useColorModeValue("gray.400", "white");
   const defaultUser = { login: "", password: "", password_confirmation: "" };
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const [user, setUser] = useState<UserLogin>(defaultUser);
 
   const handValue = useCallback(
@@ -86,10 +86,7 @@ const SignIn = () => {
             >
               Enter your email and password to sign in
             </Text>
-            <FormControl>
-              <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-                用户名
-              </FormLabel>
+            <FormControl variant="floating" isRequired>
               <Input
                 borderRadius="15px"
                 mb="24px"
@@ -102,8 +99,10 @@ const SignIn = () => {
                 onChange={e => handValue(e)}
               />
               <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-                密码
+                用户名
               </FormLabel>
+            </FormControl>
+            <FormControl variant="floating" isRequired>
               <Input
                 borderRadius="15px"
                 mb="36px"
@@ -116,8 +115,10 @@ const SignIn = () => {
                 onChange={e => handValue(e)}
               />
               <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-                密码确认
+                密码
               </FormLabel>
+            </FormControl>
+            <FormControl variant="floating" isRequired>
               <Input
                 borderRadius="15px"
                 mb="36px"
@@ -129,37 +130,41 @@ const SignIn = () => {
                 name="password_confirmation"
                 onChange={e => handValue(e)}
               />
-              <FormControl display="flex" alignItems="center">
-                <Switch id="remember-login" colorScheme="teal" me="10px" />
-                <FormLabel
-                  htmlFor="remember-login"
-                  mb="0"
-                  ms="1"
-                  fontWeight="normal"
-                >
-                  Remember me
-                </FormLabel>
-              </FormControl>
-              <Button
-                fontSize="10px"
-                type="submit"
-                bg="teal.300"
-                w="100%"
-                h="45"
-                mb="20px"
-                color="white"
-                mt="20px"
-                _hover={{
-                  bg: "teal.200",
-                }}
-                _active={{
-                  bg: "teal.400",
-                }}
-                onClick={() => handleSubmit()}
-              >
-                登录
-              </Button>
+              <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+                密码确认
+              </FormLabel>
             </FormControl>
+            <FormControl display="flex" alignItems="center">
+              <Switch id="remember-login" colorScheme="teal" me="10px" />
+              <FormLabel
+                htmlFor="remember-login"
+                mb="0"
+                ms="1"
+                fontWeight="normal"
+              >
+                Remember me
+              </FormLabel>
+            </FormControl>
+            <Button
+              fontSize="10px"
+              type="submit"
+              bg="teal.300"
+              w="100%"
+              h="45"
+              mb="20px"
+              color="white"
+              mt="20px"
+              _hover={{
+                bg: "teal.200",
+              }}
+              _active={{
+                bg: "teal.400",
+              }}
+              onClick={() => handleSubmit()}
+            >
+              登录
+            </Button>
+
             <Flex
               flexDirection="column"
               justifyContent="center"
@@ -170,7 +175,7 @@ const SignIn = () => {
               <Text color={textColor} fontWeight="medium">
                 您还没有账号?
                 <Box
-                  onClick={() => navigate("/signup")}
+                  onClick={() => navigate.push("/auth/signup")}
                   color={titleColor}
                   as="span"
                   ms="5px"

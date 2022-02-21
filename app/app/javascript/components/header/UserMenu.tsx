@@ -5,7 +5,7 @@ import React, {
   useContext,
   useCallback,
 } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Transition from "../../utils/Transition";
 import { UserContext } from "../../controllers/ContextManager";
 import userApi from "../../apis/user";
@@ -14,7 +14,7 @@ import { useMutation, useQueryClient } from "react-query";
 
 const UserMenu = (props = {}) => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const { state, dispatch } = useContext(UserContext);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -57,7 +57,7 @@ const UserMenu = (props = {}) => {
   const logoutUser = useMutation(() => userApi.logout(), {
     onSuccess: data => {
       if (data.status === 200) {
-        navigate("/");
+        navigate.push("/");
         localStorage.removeItem("token");
       }
     },
@@ -112,7 +112,7 @@ const UserMenu = (props = {}) => {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              className="mx-2 h-6 w-6 stroke-current"
+              className="w-6 h-6 mx-2 stroke-current"
             >
               <path
                 strokeLinecap="round"
@@ -134,7 +134,7 @@ const UserMenu = (props = {}) => {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            className="mx-2 h-6 w-6 stroke-current"
+            className="w-6 h-6 mx-2 stroke-current"
           >
             <path
               strokeLinecap="round"
@@ -157,18 +157,18 @@ const UserMenu = (props = {}) => {
     <div className="relative inline-flex">
       <button
         ref={trigger}
-        className="group inline-flex items-center justify-center"
+        className="inline-flex items-center justify-center group"
         aria-haspopup="true"
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
         {/* <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" /> */}
         <div className="flex items-center truncate">
-          <span className="ml-2 truncate text-sm font-medium group-hover:text-gray-800">
+          <span className="ml-2 text-sm font-medium truncate group-hover:text-gray-800">
             {user.name}
           </span>
           <svg
-            className="ml-1 h-3 w-3 shrink-0 fill-current text-gray-400"
+            className="w-3 h-3 ml-1 text-gray-400 fill-current shrink-0"
             viewBox="0 0 12 12"
           >
             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />

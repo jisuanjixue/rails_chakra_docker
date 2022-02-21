@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Box, useStyleConfig } from "@chakra-ui/react";
 
 function MainPanel(props) {

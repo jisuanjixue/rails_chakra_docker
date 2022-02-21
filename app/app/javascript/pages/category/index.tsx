@@ -536,141 +536,146 @@ const Category = () => {
 
   return (
     <>
-      <Container maxW="container.xl">
-        <Button
-          mt={5}
-          onClick={() => handModal("", "add")}
-          bgColor={`${scheme}.${step1}`}
-          colorScheme="white"
-          variant="solid"
-          fontWeight="medium"
-          rounded="md"
-          shadow="base"
-          _focus={{
-            outline: "none",
-          }}
-          leftIcon={<AddIcon />}
-          size="md"
-          transition="background 0.8s"
-          backgroundPosition="center"
-          _hover={{
-            bgColor: `${scheme}.${step2}`,
-            bgGradient: `radial(circle, transparent 1%, ${scheme}.${step2} 1%)`,
-            bgPos: "center",
-            backgroundSize: "15000%",
-          }}
-          _active={{
-            bgColor: `${scheme}.${step3}`,
-            backgroundSize: "100%",
-            transition: "background 0s",
-          }}
-        >
-          新增顶级类型
-        </Button>
-        {status === "loading" ? (
-          <CircularProgress isIndeterminate color="green.300" />
-        ) : status === "error" ? (
-          <Box>
-            <Alert status="error">
-              <AlertIcon />
-              <AlertTitle mr={2}>{error.message}</AlertTitle>
-              <CloseButton position="absolute" right="8px" top="8px" />
-            </Alert>
-          </Box>
-        ) : (
-          <>
-            <TableList columns={columns} data={tableData} />
+      <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }}>
+        <Container maxW="container.xl">
+          <Button
+            mt={5}
+            onClick={() => handModal("", "add")}
+            bg="teal.300"
+            colorScheme="bold"
+            variant="solid"
+            fontWeight="medium"
+            rounded="md"
+            shadow="base"
+            _focus={{
+              outline: "none",
+            }}
+            leftIcon={<AddIcon />}
+            size="md"
+            transition="background 0.8s"
+            backgroundPosition="center"
+            _hover={{
+              bgColor: "teal.200",
+              bgGradient: `radial(circle, transparent 1%, teal.300 1%)`,
+              bgPos: "center",
+              backgroundSize: "15000%",
+            }}
+            _active={{
+              bgColor: "teal.400",
+              backgroundSize: "100%",
+              transition: "background 0s",
+            }}
+          >
+            新增顶级类型
+          </Button>
+          {status === "loading" ? (
+            <CircularProgress isIndeterminate color="green.300" />
+          ) : status === "error" ? (
             <Box>
-              {isFetching ? (
-                <Spinner
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  color="blue.500"
-                  size="xl"
-                />
-              ) : (
-                " "
-              )}
+              <Alert status="error">
+                <AlertIcon />
+                <AlertTitle mr={2}>{error.message}</AlertTitle>
+                <CloseButton position="absolute" right="8px" top="8px" />
+              </Alert>
             </Box>
-          </>
-        )}
-        {show.isShow && show.type !== "del" && (
-          <Modal isOpen={show.isShow && show.type !== "del"} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>类型提交</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <FormControl
-                  id="name"
-                  variant="floating"
-                  isInvalid={isError}
-                  isRequired
-                >
-                  <Input
-                    isRequired
-                    isInvalid
-                    errorBorderColor="crimson"
-                    value={category.name}
-                    onChange={event => handValue(event)}
-                    type="text"
-                    size="md"
-                    variant="filled"
-                    placeholder=""
+          ) : (
+            <>
+              <TableList columns={columns} data={tableData} />
+              <Box>
+                {isFetching ? (
+                  <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="xl"
                   />
-                  <FormLabel>类型名称</FormLabel>
-                  {!isError ? (
-                    <FormHelperText>填写不同名称类型</FormHelperText>
-                  ) : (
-                    <FormErrorMessage>必填</FormErrorMessage>
-                  )}
-                </FormControl>
-              </ModalBody>
+                ) : (
+                  " "
+                )}
+              </Box>
+            </>
+          )}
+          {show.isShow && show.type !== "del" && (
+            <Modal
+              isOpen={show.isShow && show.type !== "del"}
+              onClose={onClose}
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>类型提交</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <FormControl
+                    id="name"
+                    variant="floating"
+                    isInvalid={isError}
+                    isRequired
+                  >
+                    <Input
+                      isRequired
+                      isInvalid
+                      errorBorderColor="crimson"
+                      value={category.name}
+                      onChange={event => handValue(event)}
+                      type="text"
+                      size="md"
+                      variant="filled"
+                      placeholder=""
+                    />
+                    <FormLabel>类型名称</FormLabel>
+                    {!isError ? (
+                      <FormHelperText>填写不同名称类型</FormHelperText>
+                    ) : (
+                      <FormErrorMessage>必填</FormErrorMessage>
+                    )}
+                  </FormControl>
+                </ModalBody>
 
-              <ModalFooter>
-                <Button
-                  colorScheme="teal"
-                  variant="outline"
-                  mr={3}
-                  onClick={() => onClose()}
-                >
-                  关闭
+                <ModalFooter>
+                  <Button
+                    colorScheme="teal"
+                    variant="outline"
+                    mr={3}
+                    onClick={() => onClose()}
+                  >
+                    关闭
+                  </Button>
+                  <Button
+                    variant="solid"
+                    colorScheme="blue"
+                    onClick={() => onSubmit()}
+                  >
+                    提交
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          )}
+          <AlertDialog
+            motionPreset="slideInBottom"
+            leastDestructiveRef={cancelRef}
+            onClose={onClose}
+            isOpen={show.isShow && show.type === "del"}
+            isCentered
+          >
+            <AlertDialogOverlay />
+            <AlertDialogContent>
+              <AlertDialogHeader>删除提示?</AlertDialogHeader>
+              <AlertDialogCloseButton />
+              <AlertDialogBody>您确定要删除这条数据吗？</AlertDialogBody>
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={() => onSubmit()}>
+                  确定
                 </Button>
-                <Button
-                  variant="solid"
-                  colorScheme="blue"
-                  onClick={() => onSubmit()}
-                >
-                  提交
+                <Button colorScheme="red" ml={3} onClick={() => onClose()}>
+                  取消
                 </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-        )}
-        <AlertDialog
-          motionPreset="slideInBottom"
-          leastDestructiveRef={cancelRef}
-          onClose={onClose}
-          isOpen={show.isShow && show.type === "del"}
-          isCentered
-        >
-          <AlertDialogOverlay />
-          <AlertDialogContent>
-            <AlertDialogHeader>删除提示?</AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>您确定要删除这条数据吗？</AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={() => onSubmit()}>
-                确定
-              </Button>
-              <Button colorScheme="red" ml={3} onClick={() => onClose()}>
-                取消
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </Container>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </Container>
+      </Flex>
     </>
   );
 };

@@ -19,7 +19,7 @@ import {
   useMutation,
 } from "react-query";
 import userApi from "../../apis/user";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { UserRegister } from "../../types/user";
 // Assets
 // import BgSignUp from "../../images/BgSignUp.png";
@@ -30,7 +30,7 @@ const SignUp = () => {
   const textColor = useColorModeValue("gray.700", "white");
   const bgColor = useColorModeValue("white", "gray.700");
   const bgIcons = useColorModeValue("teal.200", "rgba(255, 255, 255, 0.5)");
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const [user, setUser] = useState<UserRegister>({
     name: "",
     email: "",
@@ -47,7 +47,7 @@ const SignUp = () => {
     {
       mutationKey: "userRegistration",
       onSuccess: () => {
-        navigate("/");
+        navigate.push("/");
       },
       onError: (err, variables) => {
         console.log(err, variables);

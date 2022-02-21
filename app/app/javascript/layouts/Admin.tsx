@@ -1,22 +1,22 @@
 // Chakra imports
 import React, { useState } from "react";
 import { Portal, useDisclosure } from "@chakra-ui/react";
+import { Redirect, Route, Switch } from "react-router-dom";
 import Configurator from "@components/configurator/Configurator";
 import Footer from "@components/Footer";
 // Layout components
 import AdminNavbar from "@components/navbars/AdminNavbar";
 import Sidebar from "@components/sidebar/Sidebar";
-import { Route, Routes } from "react-router-dom";
 import routes from "../controllers/routes";
 // Custom Chakra theme
 // import theme from "theme/theme.js";
 import FixedPlugin from "@components/fixedPlugin/FixedPlugin";
 // Custom components
-import MainPanel from "../components/layout/MainPanel";
-import PanelContainer from "../components/layout/PanelContainer";
-import PanelContent from "../components/layout/PanelContent";
+import MainPanel from "@components/layout/MainPanel";
+import PanelContainer from "@components/layout/PanelContainer";
+import PanelContent from "@components/layout/PanelContent";
 
-export default function Dashboard(props) {
+const AdminLayout = props => {
   const { ...rest } = props;
   // states and functions
   const [sidebarVariant, setSidebarVariant] = useState("transparent");
@@ -25,8 +25,34 @@ export default function Dashboard(props) {
   const mainPanel = React.createRef();
   // functions for changing the states from components
   const getRoute = () => {
+    // console.log('2222', window.location.pathname)
     return window.location.pathname !== "/admin/full-screen-maps";
   };
+
+  const getRoutes = routes => {
+    return routes.map((prop, key) => {
+      if (prop.collapse) {
+        return getRoutes(prop.views);
+      }
+
+      if (prop.category === "account") {
+        return getRoutes(prop.views);
+      }
+
+      if (prop.layout === "/admin") {
+        return (
+          <Route
+            path={prop.layout + prop.path}
+            component={prop.component}
+            key={key}
+          />
+        );
+      }
+
+      return null;
+    });
+  };
+
   const getActiveRoute = routes => {
     const activeRoute = "Default Brand Text";
     for (let i = 0; i < routes.length; i++) {
@@ -71,29 +97,6 @@ export default function Dashboard(props) {
     }
     return activeNavbar;
   };
-  const getRoutes = routes => {
-    return routes.map((prop, key) => {
-      if (prop.collapse) {
-        return getRoutes(prop.views);
-      }
-
-      if (prop.category === "account") {
-        return getRoutes(prop.views);
-      }
-
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            element={prop.component}
-            key={key}
-          />
-        );
-      }
-
-      return null;
-    });
-  };
   const { isOpen, onOpen, onClose } = useDisclosure();
   document.documentElement.dir = "ltr";
   // Chakra Color Mode
@@ -126,10 +129,10 @@ export default function Dashboard(props) {
         {getRoute() ? (
           <PanelContent>
             <PanelContainer>
-              <Routes>
+              <Switch>
                 {getRoutes(routes)}
-                <Route path="/admin" />
-              </Routes>
+                <Redirect from="/admin" to="/admin/dashboard" />
+              </Switch>
             </PanelContainer>
           </PanelContent>
         ) : null}
@@ -155,4 +158,6 @@ export default function Dashboard(props) {
       </MainPanel>
     </>
   );
-}
+};
+
+export default AdminLayout;

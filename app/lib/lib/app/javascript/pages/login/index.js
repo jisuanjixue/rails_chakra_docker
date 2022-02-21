@@ -7,7 +7,7 @@ const user_1 = require("../../apis/user");
 const react_router_dom_1 = require("react-router-dom");
 const Login = () => {
     const defaultUser = { login: "", password: "", password_confirmation: "" };
-    const navigate = (0, react_router_dom_1.useNavigate)();
+    const navigate = (0, react_router_dom_1.useHistory)();
     const [user, setUser] = (0, react_1.useState)(defaultUser);
     const handValue = (0, react_1.useCallback)(e => setUser(Object.assign(Object.assign({}, user), { [e.target.name]: e.target.value })), [user.login, user.password, user.password_confirmation]);
     const queryClient = (0, react_query_1.useQueryClient)();

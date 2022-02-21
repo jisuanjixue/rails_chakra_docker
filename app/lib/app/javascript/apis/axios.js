@@ -14,7 +14,7 @@ const confing = {
 const instance = axios_1.default.create(confing);
 function handInterceptor() {
     const token = localStorage.getItem("token");
-    const navigate = (0, react_router_dom_1.useNavigate)();
+    const navigate = (0, react_router_dom_1.useHistory)();
     instance.interceptors.request.use(config => {
         //判断token是否存在 token存在 请求头才添加token 否则不添加
         config.headers.Authorization = config.url === "/login" ? "" : token;

@@ -9,7 +9,7 @@ const user_1 = require("../../apis/user");
 const react_query_1 = require("react-query");
 const UserMenu = (props = {}) => {
     const queryClient = (0, react_query_1.useQueryClient)();
-    const navigate = (0, react_router_dom_1.useNavigate)();
+    const navigate = (0, react_router_dom_1.useHistory)();
     const { state, dispatch } = (0, react_1.useContext)(ContextManager_1.UserContext);
     const [dropdownOpen, setDropdownOpen] = (0, react_1.useState)(false);
     const [isShow, setIsShow] = (0, react_1.useState)(false);

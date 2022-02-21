@@ -4,7 +4,7 @@ import { Box, Portal } from "@chakra-ui/react";
 import Footer from "@components/Footer";
 // core components
 import AuthNavbar from "@components/navbars/AuthNavbar";
-import { Route, Routes } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "../controllers/routes";
 
 const AuthLayout = () => {
@@ -14,7 +14,7 @@ const AuthLayout = () => {
   useEffect(() => {
     document.body.style.overflow = "unset";
     // Specify how to clean up after this effect:
-    return function cleanup() {};
+    return function cleanup() { };
   });
 
   // eslint-disable-next-line no-unused-vars
@@ -62,6 +62,7 @@ const AuthLayout = () => {
     }
     return activeNavbar;
   };
+
   const getRoutes = routes => {
     return routes.map((prop, key) => {
       if (prop.collapse) {
@@ -75,8 +76,8 @@ const AuthLayout = () => {
       if (prop.layout === "/auth") {
         return (
           <Route
-            element={prop.component}
             path={prop.layout + prop.path}
+            component={prop.component}
             key={key}
           />
         );
@@ -97,10 +98,10 @@ const AuthLayout = () => {
       </Portal>
       <Box w="100%">
         <Box ref={wrapper} w="100%">
-          <Routes>
+          <Switch>
             {getRoutes(routes)}
-            <Route path={`/auth`} />
-          </Routes>
+            <Redirect from="/auth" to="/auth/signin" />
+          </Switch>
         </Box>
       </Box>
       <Box px="24px" mx="auto" width="1044px" maxW="100%">

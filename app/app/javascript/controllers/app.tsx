@@ -1,7 +1,9 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-// import { Box, useColorModeValue } from "@chakra-ui/react";
-import "../charts/ChartjsConfig";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "../theme/theme";
+import { Fonts } from "../theme/foundations/fonts";
+// import "../charts/ChartjsConfig";
 
 // import Sidebar from "../components/Sidebar";
 // import Sidebar from "../components/SidebarNew";
@@ -21,14 +23,35 @@ const App = () => {
   // const bg = useColorModeValue("white", "gray.800");
   handInterceptor();
 
+  // const getRoutes = routes =>
+  //   routes.map((route, key) => {
+  //     if (route.category === "account") getRoutes(route.views);
+
+  //     if (route.category === "admin") getRoutes(route.views);
+
+  //     return (
+  //       <Route
+  //         path={route.layout + route.path}
+  //         element={route.component}
+  //         key={key}
+  //       />
+  //     );
+  //   });
+
   return (
-    <UserProvider>
-      <Routes>
-        <Route path="/auth" element={<AuthLayout />} />
-        <Route path="/admin" element={<AdminLayout />} />
-        <Route path="/" element={<AdminLayout />} />
-      </Routes>
-    </UserProvider>
+    <ChakraProvider theme={theme} resetCSS={false}>
+      <Fonts />
+      <UserProvider>
+        <HashRouter>
+          <Switch>
+            <Route path={`/auth`} component={AuthLayout} />
+            <Route path={`/admin`} component={AdminLayout} />
+            <Redirect from={`/`} to="/admin/dashboard" />
+          </Switch>
+        </HashRouter>
+        ,
+      </UserProvider>
+    </ChakraProvider>
 
     // <UserProvider>
     //   <Box

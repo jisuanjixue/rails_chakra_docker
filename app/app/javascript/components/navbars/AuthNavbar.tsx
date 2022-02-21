@@ -1,4 +1,6 @@
 // Chakra imports
+import React from "react";
+
 import {
   Box,
   Button,
@@ -16,7 +18,6 @@ import {
   RocketIcon,
 } from "../icons/Icons";
 import SidebarResponsive from "@components/sidebar/Sidebar";
-import React from "react";
 import { NavLink } from "react-router-dom";
 import routes from "../../controllers/routes";
 
@@ -42,12 +43,7 @@ const AuthNavbar = props => {
     "drop-shadow(0px 7px 23px rgba(0, 0, 0, 0.05))"
   );
   let navbarBackdrop = "blur(21px)";
-  let bgButton = useColorModeValue(
-    "linear-gradient(81.62deg, #313860 2.25%, #151928 79.87%)",
-    "gray.800"
-  );
   let navbarPosition = "fixed";
-  let colorButton = "white";
   if (secondary === true) {
     navbarIcon = "white";
     navbarBg = "none";
@@ -55,8 +51,6 @@ const AuthNavbar = props => {
     navbarShadow = "initial";
     navbarFilter = "initial";
     navbarBackdrop = "none";
-    bgButton = "white";
-    colorButton = "gray.700";
     mainText = "white";
     navbarPosition = "absolute";
   }
@@ -172,22 +166,6 @@ const AuthNavbar = props => {
           />
         </Box>
         {linksAuth}
-        <Link href="https://creative-tim.com/product/purity-ui-dashboard">
-          <Button
-            bg={bgButton}
-            color={colorButton}
-            fontSize="xs"
-            variant="no-hover"
-            borderRadius="35px"
-            px="30px"
-            display={{
-              sm: "none",
-              lg: "flex",
-            }}
-          >
-            Free Download
-          </Button>
-        </Link>
       </Flex>
     </Flex>
   );
