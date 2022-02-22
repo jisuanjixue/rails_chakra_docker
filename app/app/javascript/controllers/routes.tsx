@@ -24,7 +24,7 @@ const dashRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    rtlName: "لوحة القيادة",
+    rtlName: "",
     icon: <HomeIcon color="inherit" />,
     component: Dashboard,
     layout: "/admin",
@@ -32,31 +32,23 @@ const dashRoutes = [
   {
     path: "/category/list",
     name: "Category",
-    rtlName: "لوحة القيادة",
+    rtlName: "",
     icon: <StatsIcon color="inherit" />,
     component: Category,
     layout: "/admin",
   },
-  // {
-  //   path: "/billing",
-  //   name: "Billing",
-  //   rtlName: "لوحة القيادة",
-  //   icon: <CreditIcon color="inherit" />,
-  //   component: Billing,
-  //   layout: "/admin",
-  // },
-  // {
-  //   path: "/rtl-support-page",
-  //   name: "RTL",
-  //   rtlName: "آرتيإل",
-  //   icon: <SupportIcon color="inherit" />,
-  //   component: RTLPage,
-  //   layout: "/rtl",
-  // },
+  {
+    path: "/markets/list",
+    name: "Market",
+    rtlName: "",
+    icon: <StatsIcon color="inherit" />,
+    component: Category,
+    layout: "/admin",
+  },
   {
     name: "ACCOUNT PAGES",
     category: "account",
-    rtlName: "صفحات",
+    rtlName: "",
     state: "pageCollapse",
     views: [
       // {
@@ -71,7 +63,7 @@ const dashRoutes = [
       {
         path: "/signin",
         name: "Sign In",
-        rtlName: "لوحة القيادة",
+        rtlName: " ",
         icon: <DocumentIcon color="inherit" />,
         component: SignIn,
         layout: "/auth",
@@ -79,7 +71,7 @@ const dashRoutes = [
       {
         path: "/signup",
         name: "Sign Up",
-        rtlName: "لوحة القيادة",
+        rtlName: "",
         icon: <RocketIcon color="inherit" />,
         secondaryNavbar: true,
         component: SignUp,

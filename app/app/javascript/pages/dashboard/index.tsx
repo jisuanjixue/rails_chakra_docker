@@ -25,18 +25,18 @@ import {
   Th,
   Thead,
   Tr,
-  useColorMode,
+  // useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import peopleImage from "assets/img/people-image.png";
-import logoChakra from "assets/svg/logo-white.svg";
-// Custom components
-import Card from "components/Card/Card";
-import CardBody from "components/Card/CardBody";
-import CardHeader from "components/Card/CardHeader";
-import BarChart from "components/Charts/BarChart";
-import LineChart from "components/Charts/LineChart";
-import IconBox from "components/Icons/IconBox";
+// import peopleImage from "assets/img/people-image.png";
+// import logoChakra from "assets/svg/logo-white.svg";
+// // Custom components
+import Card from "@components/Card/Card";
+import CardBody from "@components/Card/CardBody";
+import CardHeader from "@components/Card/CardHeader";
+import BarChart from "@components/Charts/BarChart";
+import LineChart from "@components/Charts/LineChart";
+import IconBox from "@components/Icons/IconBox";
 // Custom icons
 import {
   CartIcon,
@@ -51,32 +51,32 @@ import TimelineRow from "@components/Tables/TimelineRow";
 // react icons
 import { BsArrowRight } from "react-icons/bs";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
-import { dashboardTableData, timelineData } from "variables/general";
+import { dashboardTableData, timelineData } from "../../variables/general";
 import userApi from "../../apis/user";
 import { UserContext } from "../../controllers/ContextManager";
 // import { useColorModeValue, Box} from "@chakra-ui/react";
 
 const Dashboard = () => {
-  const value = "$100.000";
+  // const value = "$100.000";
   // Chakra Color Mode
-  const { colorMode, toggleColorMode } = useColorMode();
+  // const { colorMode, toggleColorMode } = useColorMode();
   const iconTeal = useColorModeValue("teal.300", "teal.300");
   const iconBoxInside = useColorModeValue("white", "white");
   const textColor = useColorModeValue("gray.700", "white");
-  const [series, setSeries] = useState([
-    {
-      type: "area",
-      name: "Mobile apps",
-      data: [190, 220, 205, 350, 370, 450, 400, 360, 210, 250, 292, 150],
-    },
-    {
-      type: "area",
-      name: "Websites",
-      data: [400, 291, 121, 117, 25, 133, 121, 211, 147, 25, 201, 203],
-    },
-  ]);
+  // const [series, setSeries] = useState([
+  //   {
+  //     type: "area",
+  //     name: "Mobile apps",
+  //     data: [190, 220, 205, 350, 370, 450, 400, 360, 210, 250, 292, 150],
+  //   },
+  //   {
+  //     type: "area",
+  //     name: "Websites",
+  //     data: [400, 291, 121, 117, 25, 133, 121, 211, 147, 25, 201, 203],
+  //   },
+  // ]);
   const overlayRef: any = React.useRef();
-  const bg = useColorModeValue("white", "gray.800");
+  // const bg = useColorModeValue("white", "gray.800");
   const { dispatch } = useContext(UserContext);
   const navigate = useHistory();
   const initialUser = { name: "", email: "" };
@@ -320,7 +320,7 @@ const Dashboard = () => {
                 minHeight={{ sm: "250px" }}
               >
                 <Image
-                  src={logoChakra}
+                  src={""}
                   alt="chakra image"
                   minWidth={{ md: "300px", lg: "auto" }}
                 />
@@ -331,7 +331,7 @@ const Dashboard = () => {
         <Card maxHeight="290.5px" p="1rem">
           <CardBody
             p="0px"
-            backgroundImage={peopleImage}
+            backgroundImage={""}
             bgPosition="center"
             bgRepeat="no-repeat"
             w="100%"
