@@ -92,14 +92,14 @@ const SignIn = () => {
                 mb="24px"
                 fontSize="sm"
                 type="text"
-                placeholder="用户名或是电子邮件"
+                placeholder=""
                 size="lg"
                 value={user.login}
                 name="login"
                 onChange={e => handValue(e)}
               />
               <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-                用户名
+                用户名或是电子邮件
               </FormLabel>
             </FormControl>
             <FormControl variant="floating" isRequired>
@@ -108,7 +108,7 @@ const SignIn = () => {
                 mb="36px"
                 fontSize="sm"
                 type="password"
-                placeholder="Your password"
+                placeholder=""
                 size="lg"
                 value={user.password}
                 name="password"
@@ -124,7 +124,7 @@ const SignIn = () => {
                 mb="36px"
                 fontSize="sm"
                 type="password"
-                placeholder="Your password"
+                placeholder=""
                 size="lg"
                 value={user.password_confirmation}
                 name="password_confirmation"

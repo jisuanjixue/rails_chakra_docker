@@ -14,7 +14,7 @@ const AuthLayout = () => {
   useEffect(() => {
     document.body.style.overflow = "unset";
     // Specify how to clean up after this effect:
-    return function cleanup() { };
+    return function cleanup() {};
   });
 
   // eslint-disable-next-line no-unused-vars

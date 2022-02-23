@@ -207,7 +207,6 @@ const Market = () => {
     // console.log(newArr);
   }, []);
 
-
   const onSubmit = values => {
     if (show.type === "add") {
       addMarket.mutate(values, {

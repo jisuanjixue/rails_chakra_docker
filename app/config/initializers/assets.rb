@@ -19,7 +19,7 @@ class AssetUrlProcessor
       end
     end
 
-    { data: data }
+    { data: }
   end
 end
 

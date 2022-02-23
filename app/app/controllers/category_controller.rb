@@ -11,7 +11,7 @@ class CategoryController < ApplicationController
       new_item = { name: item.name, id: item.id, parent_id: item.parent_id, subRows: arr_map(child_arr) }
       categories << new_item
     end
-    render status: :ok, json: { categories: categories }
+    render status: :ok, json: { categories: }
   end
 
   def create
@@ -21,7 +21,7 @@ class CategoryController < ApplicationController
         render status: :ok, json: { success: "category was successfully created" }
       else
         error = category.errors.full_messages.to_sentence
-        render status: :unprocessable_entity, json: { error: error }
+        render status: :unprocessable_entity, json: { error: }
       end
     else
       category_child = Category.find(category_params[:id])
@@ -31,7 +31,7 @@ class CategoryController < ApplicationController
           render status: :ok, json: { success: "child category was successfully created" }
         else
           error = category.errors.full_messages.to_sentence
-          render status: :unprocessable_entity, json: { error: error }
+          render status: :unprocessable_entity, json: { error: }
         end
       end
     end

@@ -67,15 +67,16 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   # For code formatting and linting
   gem "rubocop"
+  gem 'rubocop-performance'
   gem "rubocop-rails"
 end
 
 group :development do
-  gem 'annotate', github: 'dabit/annotate_models', branch: 'rails-7'
+  gem "annotate", github: "dabit/annotate_models", branch: "rails-7"
   # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem "bullet"
   gem "pry"
   gem "pry-rails"
-  gem 'bullet'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
