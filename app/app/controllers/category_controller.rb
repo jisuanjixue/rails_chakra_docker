@@ -11,27 +11,27 @@ class CategoryController < ApplicationController
       new_item = { name: item.name, id: item.id, parent_id: item.parent_id, subRows: arr_map(child_arr) }
       categories << new_item
     end
-    render status: :ok, json: { categories: }
+    render(status: :ok, json: { categories: })
   end
 
   def create
     if category_params[:id].blank?
       category = Category.find_or_create_by_path(category_params[:name])
       if category
-        render status: :ok, json: { success: "category was successfully created" }
+        render(status: :ok, json: { success: "category was successfully created" })
       else
         error = category.errors.full_messages.to_sentence
-        render status: :unprocessable_entity, json: { error: }
+        render(status: :unprocessable_entity, json: { error: })
       end
     else
       category_child = Category.find(category_params[:id])
       if category_child
         new_child = category_child.find_or_create_by_path(category_params[:name])
         if new_child
-          render status: :ok, json: { success: "child category was successfully created" }
+          render(status: :ok, json: { success: "child category was successfully created" })
         else
           error = category.errors.full_messages.to_sentence
-          render status: :unprocessable_entity, json: { error: }
+          render(status: :unprocessable_entity, json: { error: })
         end
       end
     end
@@ -39,17 +39,17 @@ class CategoryController < ApplicationController
 
   def update
     if @category.update(category_params)
-      render status: :ok, json: { success: "category was updated created" }
+      render(status: :ok, json: { success: "category was updated created" })
     else
-      render status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence }
+      render(status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence })
     end
   end
 
   def destroy
     if @category.destroy
-      render status: :ok, json: { success: "Successfully deleted category." }
+      render(status: :ok, json: { success: "Successfully deleted category." })
     else
-      render status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence }
+      render(status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence })
     end
   end
 

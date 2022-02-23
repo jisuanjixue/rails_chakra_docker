@@ -67,7 +67,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   # For code formatting and linting
   gem "rubocop"
-  gem 'rubocop-performance'
+  gem "rubocop-performance"
   gem "rubocop-rails"
 end
 

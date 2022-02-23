@@ -11,7 +11,7 @@ Bundler.require(*Rails.groups)
 module App
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults(7.0)
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -22,7 +22,7 @@ module App
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.generators do |g|
-      g.test_framework :test_unit, fixture: false
+      g.test_framework(:test_unit, fixture: false)
     end
   end
 end
