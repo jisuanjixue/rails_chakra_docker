@@ -195,16 +195,13 @@ const SignUp = () => {
           >
             or
           </Text>
-          <FormControl>
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              昵称
-            </FormLabel>
+          <FormControl variant="floating" isRequired>
             <Input
               fontSize="sm"
               ms="4px"
               borderRadius="15px"
               type="text"
-              placeholder="Your full name"
+              placeholder=""
               mb="24px"
               size="lg"
               value={user.name}
@@ -212,14 +209,16 @@ const SignUp = () => {
               onChange={e => handValue(e)}
             />
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              电子邮件
+              昵称
             </FormLabel>
+          </FormControl>
+          <FormControl variant="floating" isRequired>
             <Input
               fontSize="sm"
               ms="4px"
               borderRadius="15px"
               type="email"
-              placeholder="Your email address"
+              placeholder=""
               mb="24px"
               size="lg"
               value={user.email}
@@ -227,46 +226,51 @@ const SignUp = () => {
               onChange={e => handValue(e)}
             />
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              密码
+              电子邮件
             </FormLabel>
+          </FormControl>
+          <FormControl variant="floating" isRequired>
             <Input
               fontSize="sm"
               ms="4px"
               borderRadius="15px"
               type="password"
-              placeholder="Your password"
+              placeholder=""
               mb="24px"
               size="lg"
               value={user.password}
               name="password"
               onChange={e => handValue(e)}
             />
-            <FormControl display="flex" alignItems="center" mb="24px">
-              <Switch id="remember-login" colorScheme="teal" me="10px" />
-              <FormLabel htmlFor="remember-login" mb="0" fontWeight="normal">
-                Remember me
-              </FormLabel>
-            </FormControl>
-            <Button
-              type="submit"
-              bg="teal.300"
-              fontSize="10px"
-              color="white"
-              fontWeight="bold"
-              w="100%"
-              h="45"
-              mb="24px"
-              _hover={{
-                bg: "teal.200",
-              }}
-              _active={{
-                bg: "teal.400",
-              }}
-              onClick={() => handleSubmit()}
-            >
-              注册
-            </Button>
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+              密码
+            </FormLabel>
           </FormControl>
+          <FormControl display="flex" alignItems="center" mb="24px">
+            <Switch id="remember-login" colorScheme="teal" me="10px" />
+            <FormLabel htmlFor="remember-login" mb="0" fontWeight="normal">
+              Remember me
+            </FormLabel>
+          </FormControl>
+          <Button
+            type="submit"
+            bg="teal.300"
+            fontSize="10px"
+            color="white"
+            fontWeight="bold"
+            w="100%"
+            h="45"
+            mb="24px"
+            _hover={{
+              bg: "teal.200",
+            }}
+            _active={{
+              bg: "teal.400",
+            }}
+            onClick={() => handleSubmit()}
+          >
+            注册
+          </Button>
           <Flex
             flexDirection="column"
             justifyContent="center"

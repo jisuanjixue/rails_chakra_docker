@@ -1,6 +1,12 @@
 // Chakra imports
-import React, { useState } from "react";
-import { Portal, useDisclosure } from "@chakra-ui/react";
+import React, { useState, useRef } from "react";
+import {
+  Portal,
+  useDisclosure,
+  IconButton,
+  useColorModeValue,
+  useControllableState,
+} from "@chakra-ui/react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Configurator from "@components/configurator/Configurator";
 import Footer from "@components/Footer";
@@ -15,9 +21,12 @@ import FixedPlugin from "@components/fixedPlugin/FixedPlugin";
 import MainPanel from "@components/layout/MainPanel";
 import PanelContainer from "@components/layout/PanelContainer";
 import PanelContent from "@components/layout/PanelContent";
+import { AiFillFastBackward } from "react-icons/ai";
 
 const AdminLayout = props => {
+  const settingsRef: any = useRef();
   const { ...rest } = props;
+  const navbarIcon = useColorModeValue("gray.500", "gray.200");
   // states and functions
   const [sidebarVariant, setSidebarVariant] = useState("transparent");
   const [fixed, setFixed] = useState(false);
@@ -98,6 +107,10 @@ const AdminLayout = props => {
     return activeNavbar;
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [siderbarOpen, getSiderbarOpen] = useControllableState({
+    defaultValue: true,
+  });
+
   document.documentElement.dir = "ltr";
   // Chakra Color Mode
   return (
@@ -106,6 +119,7 @@ const AdminLayout = props => {
         routes={routes}
         logoText={"PURITY UI DASHBOARD"}
         display="none"
+        isOpen={siderbarOpen}
         sidebarVariant={sidebarVariant}
         {...rest}
       />
@@ -142,6 +156,26 @@ const AdminLayout = props => {
             secondary={getActiveNavbar(routes)}
             fixed={fixed}
             onOpen={onOpen}
+          />
+        </Portal>
+        <Portal>
+          <IconButton
+            aria-label="respensve siderbar"
+            icon={<AiFillFastBackward />}
+            position="fixed"
+            variant="no-hover"
+            h="52px"
+            w="52px"
+            left="280px"
+            cursor="pointer"
+            ref={settingsRef}
+            color={navbarIcon}
+            bottom="30px"
+            borderRadius="50px"
+            boxShadow="0 2px 12px 0 rgb(0 0 0 / 16%)"
+            onClick={() =>
+              siderbarOpen ? getSiderbarOpen(false) : getSiderbarOpen(true)
+            }
           />
         </Portal>
         <Configurator

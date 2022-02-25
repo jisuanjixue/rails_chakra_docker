@@ -8,15 +8,28 @@ import {
   Text,
   Icon,
   useColorModeValue,
+  Collapse,
+  useDisclosure,
+  useControllableState,
+  // Spacer,
 } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";
 import IconBox from "@components/icons/IconBox";
 import { Separator } from "@components/separator/Separator";
+// import { AiFillFastBackward } from "react-icons/ai";
 import { Logo } from "@choc-ui/logo";
+// import { BsBox } from "react-icons/bs";
 
 const Sidebar = props => {
+  const { isOpen: siderbarItem, onToggle } = useDisclosure();
+  const [value, setValue] = useControllableState({ defaultValue: "" });
+
+  const { isOpen } = props;
   // to check for active links and opened collapses
   const location = useLocation();
+  //  Chakra Color Mode
+  // const hamburgerColor = useColorModeValue("gray.500", "gray.200");
+  // const btnRef: any = useRef();
   // this is for the rest of the collapses
   const [state, setState] = useState({});
   const mainPanel: any = useRef();
@@ -65,12 +78,18 @@ const Sidebar = props => {
                 xl: "16px",
               }}
               py="12px"
+              onClick={() => {
+                setValue(prop.name);
+                onToggle();
+              }}
             >
               {document.documentElement.dir === "rtl"
                 ? prop.rtlName
                 : prop.name}
             </Text>
-            {createLinks(prop.views)}
+            <Collapse in={value === prop.name && siderbarItem} animateOpacity>
+              {createLinks(prop.views)}
+            </Collapse>
           </>
         );
       }
@@ -225,31 +244,43 @@ const Sidebar = props => {
   // SIDEBAR
   return (
     <Box ref={mainPanel}>
-      <Box display={{ sm: "none", xl: "block" }} position="fixed">
-        <Box
-          bg={sidebarBg}
-          transition={variantChange}
-          w="260px"
-          maxW="260px"
-          ms={{
-            sm: "16px",
+      <Collapse in={isOpen} animateOpacity>
+        <Flex
+          display={{
+            base: "none",
+            md: "none",
+            sm: "none",
+            xl: "block",
           }}
-          my={{
-            sm: "16px",
-          }}
-          h="calc(100vh - 32px)"
-          ps="20px"
-          pe="20px"
-          m={sidebarMargins}
-          borderRadius={sidebarRadius}
+          position="fixed"
+          boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
+          flexDir="column"
+          bg={useColorModeValue("white", "gray.800")}
         >
-          <Box>{brand}</Box>
-          <Stack direction="column" mb="40px">
-            <Box>{links}</Box>
-          </Stack>
-          {/* <SidebarHelp></SidebarHelp> */}
-        </Box>
-      </Box>
+          <Box
+            bg={sidebarBg}
+            transition={variantChange}
+            w="260px"
+            maxW="260px"
+            ms={{
+              sm: "16px",
+            }}
+            my={{
+              sm: "16px",
+            }}
+            h="calc(100vh - 32px)"
+            ps="20px"
+            pe="20px"
+            m={sidebarMargins}
+            borderRadius={sidebarRadius}
+          >
+            <Box>{brand}</Box>
+            <Stack direction="column" mb="40px">
+              <Flex flexDir="column">{links}</Flex>
+            </Stack>
+          </Box>
+        </Flex>
+      </Collapse>
     </Box>
   );
 };

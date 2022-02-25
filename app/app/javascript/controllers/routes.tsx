@@ -5,7 +5,7 @@ import Category from "../pages/category";
 // import Tables from "views/Dashboard/Tables.js";
 // import Billing from "views/Dashboard/Billing.js";
 // import RTLPage from "views/RTL/RTLPage.js";
-// import Profile from "views/Dashboard/Profile.js";
+import Profile from "../pages/profile";
 import SignIn from "../pages/login";
 import SignUp from "../pages/signup";
 // import AdminLayout from "../layouts/Admin";
@@ -14,7 +14,7 @@ import {
   HomeIcon,
   StatsIcon,
   // CreditIcon,
-  // PersonIcon,
+  PersonIcon,
   DocumentIcon,
   RocketIcon,
   // SupportIcon,
@@ -30,8 +30,33 @@ const dashRoutes = [
     layout: "/admin",
   },
   {
+    name: "用户管理",
+    category: "user",
+    rtlName: "",
+    state: "pageCollapse",
+    views: [
+      {
+        path: "/list",
+        name: "Sign In",
+        rtlName: " ",
+        icon: <DocumentIcon color="inherit" />,
+        component: SignIn,
+        layout: "/user",
+      },
+      {
+        path: "/profile",
+        name: "Profile",
+        rtlName: "",
+        icon: <PersonIcon color="inherit" />,
+        secondaryNavbar: true,
+        component: Profile,
+        layout: "/user",
+      },
+    ],
+  },
+  {
     path: "/category/list",
-    name: "Category",
+    name: "系统分类",
     rtlName: "",
     icon: <StatsIcon color="inherit" />,
     component: Category,
@@ -39,27 +64,18 @@ const dashRoutes = [
   },
   {
     path: "/markets/list",
-    name: "Market",
+    name: "市场管理",
     rtlName: "",
     icon: <StatsIcon color="inherit" />,
     component: Category,
     layout: "/admin",
   },
   {
-    name: "ACCOUNT PAGES",
+    name: "登录注册",
     category: "account",
     rtlName: "",
     state: "pageCollapse",
     views: [
-      // {
-      //   path: "/profile",
-      //   name: "Profile",
-      //   rtlName: "لوحة القيادة",
-      //   icon: <PersonIcon color="inherit" />,
-      //   secondaryNavbar: true,
-      //   component: Profile,
-      //   layout: "/admin",
-      // },
       {
         path: "/signin",
         name: "Sign In",
