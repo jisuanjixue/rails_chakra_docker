@@ -82,6 +82,7 @@ Rails.application.routes.draw do
     authenticated :user do
       root "home#index", as: :authenticated_root
     end
+    # get 'update_account', to: 'devise/registrations#update'
     # unauthenticated do
     #   root 'home#index', as: :unauthenticated_root
     # end

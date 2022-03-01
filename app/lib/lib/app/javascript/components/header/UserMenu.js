@@ -72,7 +72,6 @@ const UserMenu = (props = {}) => {
     const onSubmit = () => {
         updateUserInfo.mutate(user, {
             onSuccess: data => {
-                console.log("🚀 ~ file: UserMenu.tsx ~ line 94 ~ onSubmit ~ data", data);
                 setIsShow(false);
                 dispatch({ type: "updateUser", payload: data });
             },

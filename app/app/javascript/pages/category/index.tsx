@@ -63,10 +63,6 @@ const Category = () => {
   const toast = useToast();
   const cancelRef: any = useRef();
   const isError = category.name === "";
-  const scheme = "brand";
-  const step1 = useColorModeValue("600", "300");
-  const step2 = useColorModeValue("500", "400");
-  const step3 = useColorModeValue("300", "500");
 
   const fetchCategories = () => {
     return useQuery(

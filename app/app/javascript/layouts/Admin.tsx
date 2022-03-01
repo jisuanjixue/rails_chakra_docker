@@ -1,5 +1,5 @@
 // Chakra imports
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   Portal,
   useDisclosure,
@@ -7,7 +7,11 @@ import {
   useColorModeValue,
   useControllableState,
 } from "@chakra-ui/react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import {
+  useQuery,
+  // useMutation
+} from "react-query";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import Configurator from "@components/configurator/Configurator";
 import Footer from "@components/Footer";
 // Layout components
@@ -22,8 +26,34 @@ import MainPanel from "@components/layout/MainPanel";
 import PanelContainer from "@components/layout/PanelContainer";
 import PanelContent from "@components/layout/PanelContent";
 import { AiFillFastBackward } from "react-icons/ai";
+import userApi from "../apis/user";
+import { UserContext } from "../controllers/ContextManager";
 
 const AdminLayout = props => {
+  const { dispatch } = useContext(UserContext);
+  const navigate = useHistory();
+  const initialUser = { name: "", email: "" };
+  const fetchCurrentUser = () => {
+    return useQuery(
+      "currentUser",
+      async () => {
+        const { data } = await userApi.queryMe();
+        return data;
+      },
+      {
+        refetchOnWindowFocus: false,
+        onSuccess: data => {
+          dispatch({ type: "getUser", payload: data });
+        },
+        onError: err => {
+          if (err) navigate.push("/auth/signin");
+        },
+        initialData: initialUser,
+      }
+    );
+  };
+
+  fetchCurrentUser();
   const settingsRef: any = useRef();
   const { ...rest } = props;
   const navbarIcon = useColorModeValue("gray.500", "gray.200");

@@ -22,6 +22,8 @@
 class User < ApplicationRecord
   attr_writer :login
 
+  has_one :profile
+
   validates :email, uniqueness: true
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates_format_of :name, with: /^[a-zA-Z0-9_\.]*$/, multiline: true
@@ -42,6 +44,19 @@ class User < ApplicationRecord
       errors.add(:name, :invalid)
     end
   end
+
+  # def update_without_current_password(params, *options)
+  #   params.delete(:current_password)
+
+  #   if params[:password].blank? && params[:password_confirmation].blank?
+  #     params.delete(:password)
+  #     params.delete(:password_confirmation)
+  #   end
+
+  #   result = update_attributes(params, *options)
+  #   clean_up_passwords
+  #   result
+  # end
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

@@ -73,6 +73,7 @@ const Sidebar = props => {
                 xl: "12px",
               }}
               mx="auto"
+              ml="-10px"
               ps={{
                 sm: "10px",
                 xl: "16px",

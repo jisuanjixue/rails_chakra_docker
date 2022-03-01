@@ -106,9 +106,6 @@ const Market = () => {
         setShow({ isShow: false, type: "" });
     };
     (0, react_2.useEffect)(() => { }, []);
-    // const selectedChange = (value: any) => {
-    //   console.log(value);
-    // };
     const onSubmit = values => {
         if (show.type === "add") {
             addMarket.mutate(values, {

@@ -1,9 +1,5 @@
-import React, { useContext, useState } from "react";
-import {
-  useQuery,
-  // useMutation
-} from "react-query";
-import { useHistory } from "react-router-dom";
+import React from "react";
+
 import {
   Box,
   Button,
@@ -52,8 +48,7 @@ import TimelineRow from "@components/Tables/TimelineRow";
 import { BsArrowRight } from "react-icons/bs";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import { dashboardTableData, timelineData } from "../../variables/general";
-import userApi from "../../apis/user";
-import { UserContext } from "../../controllers/ContextManager";
+
 // import { useColorModeValue, Box} from "@chakra-ui/react";
 
 const Dashboard = () => {
@@ -63,44 +58,8 @@ const Dashboard = () => {
   const iconTeal = useColorModeValue("teal.300", "teal.300");
   const iconBoxInside = useColorModeValue("white", "white");
   const textColor = useColorModeValue("gray.700", "white");
-  // const [series, setSeries] = useState([
-  //   {
-  //     type: "area",
-  //     name: "Mobile apps",
-  //     data: [190, 220, 205, 350, 370, 450, 400, 360, 210, 250, 292, 150],
-  //   },
-  //   {
-  //     type: "area",
-  //     name: "Websites",
-  //     data: [400, 291, 121, 117, 25, 133, 121, 211, 147, 25, 201, 203],
-  //   },
-  // ]);
   const overlayRef: any = React.useRef();
   // const bg = useColorModeValue("white", "gray.800");
-  const { dispatch } = useContext(UserContext);
-  const navigate = useHistory();
-  const initialUser = { name: "", email: "" };
-  const fetchCurrentUser = () => {
-    return useQuery(
-      "currentUser",
-      async () => {
-        const { data } = await userApi.queryMe();
-        return data;
-      },
-      {
-        refetchOnWindowFocus: false,
-        onSuccess: data => {
-          dispatch({ type: "getUser", payload: data });
-        },
-        onError: err => {
-          if (err) navigate.push("/auth/signin");
-        },
-        initialData: initialUser,
-      }
-    );
-  };
-
-  fetchCurrentUser();
 
   return (
     <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }}>
