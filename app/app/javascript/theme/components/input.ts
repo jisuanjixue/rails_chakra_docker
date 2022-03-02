@@ -2,6 +2,17 @@ const activeLabelStyles = {
   transform: "scale(0.85) translateY(-24px) translateX(-10px)",
 };
 
+const labelStyle = {
+  top: 0,
+  left: 0,
+  zIndex: 2,
+  position: "absolute",
+  pointerEvents: "none",
+  mx: 3,
+  px: 1,
+  my: 2,
+};
+
 export const inputStyles = {
   components: {
     Form: {
@@ -14,15 +25,22 @@ export const inputStyles = {
               },
             },
             label: {
-              top: 0,
-              left: 0,
-              zIndex: 2,
-              position: "absolute",
+              backgroundColor: "gray.30",
+              ...labelStyle,
+            },
+          },
+        },
+        editfloating: {
+          container: {
+            _focusWithin: {
+              label: {
+                backgroundColor: "white",
+              },
+            },
+            label: {
               backgroundColor: "white",
-              pointerEvents: "none",
-              mx: 3,
-              px: 1,
-              my: 2,
+              ...labelStyle,
+              ...activeLabelStyles,
             },
           },
         },

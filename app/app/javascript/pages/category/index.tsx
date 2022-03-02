@@ -600,7 +600,7 @@ const Category = () => {
                 <ModalBody>
                   <FormControl
                     id="name"
-                    variant="floating"
+                    variant={show.type === "add" ? "floating" : "editfloating"}
                     isInvalid={isError}
                     isRequired
                   >
