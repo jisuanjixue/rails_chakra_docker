@@ -2,6 +2,7 @@
 import React from "react";
 import Dashboard from "../pages/dashboard";
 import Category from "../pages/category";
+import Market from "../pages/market";
 // import Tables from "views/Dashboard/Tables.js";
 // import Billing from "views/Dashboard/Billing.js";
 // import RTLPage from "views/RTL/RTLPage.js";
@@ -67,7 +68,7 @@ const dashRoutes = [
     name: "市场管理",
     rtlName: "",
     icon: <StatsIcon color="inherit" />,
-    component: Category,
+    component: Market,
     layout: "/admin",
   },
   {

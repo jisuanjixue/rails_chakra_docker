@@ -9,6 +9,7 @@ import {
   useExpanded,
 } from "react-table";
 import {
+  Flex,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -417,8 +418,8 @@ const Market = () => {
             const rowValue = row.values[id];
             return rowValue !== undefined
               ? String(rowValue)
-                  .toLowerCase()
-                  .startsWith(String(filterValue).toLowerCase())
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
               : true;
           });
         },
@@ -683,238 +684,240 @@ const Market = () => {
 
   return (
     <>
-      <Container maxW="container.xl">
-        <Button
-          mt={5}
-          onClick={() => handModal("add")}
-          colorScheme="blue"
-          variant="solid"
-          leftIcon={<AddIcon />}
-          size="md"
-        >
-          新增
-        </Button>
-        {status === "loading" ? (
-          <CircularProgress isIndeterminate color="green.300" />
-        ) : status === "error" ? (
-          <Box>
-            <Alert status="error">
-              <AlertIcon />
-              <AlertTitle mr={2}>{error.message}</AlertTitle>
-              <CloseButton position="absolute" right="8px" top="8px" />
-            </Alert>
-          </Box>
-        ) : (
-          <>
-            <TableList columns={columns} data={tableData} />
+      <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }}>
+        <Container maxW="container.xl">
+          <Button
+            mt={5}
+            onClick={() => handModal("add")}
+            colorScheme="blue"
+            variant="solid"
+            leftIcon={<AddIcon />}
+            size="md"
+          >
+            新增
+          </Button>
+          {status === "loading" ? (
+            <CircularProgress isIndeterminate color="green.300" />
+          ) : status === "error" ? (
             <Box>
-              {isFetching ? (
-                <Spinner
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  color="blue.500"
-                  size="xl"
-                />
-              ) : (
-                " "
-              )}
+              <Alert status="error">
+                <AlertIcon />
+                <AlertTitle mr={2}>{error.message}</AlertTitle>
+                <CloseButton position="absolute" right="8px" top="8px" />
+              </Alert>
             </Box>
-          </>
-        )}
-        {show.isShow && show.type !== "del" && (
-          <Modal isOpen={show.isShow} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>市场提交</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <Formik
-                  initialValues={initialValues}
-                  onSubmit={async values => onSubmit(values)}
-                  validationSchema={MarketSchema}
-                >
-                  {props => {
-                    if (show.type === "edit") {
-                      useEffect(() => {
-                        const fields = [
-                          "name",
-                          "type",
-                          "is_show",
-                          "address",
-                          "remark",
-                        ];
-                        fields.forEach(field =>
-                          props.setFieldValue(field, market[field], false)
-                        );
-                      }, []);
-                    }
+          ) : (
+            <>
+              <TableList columns={columns} data={tableData} />
+              <Box>
+                {isFetching ? (
+                  <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="xl"
+                  />
+                ) : (
+                  " "
+                )}
+              </Box>
+            </>
+          )}
+          {show.isShow && show.type !== "del" && (
+            <Modal isOpen={show.isShow} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>市场提交</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <Formik
+                    initialValues={initialValues}
+                    onSubmit={async values => onSubmit(values)}
+                    validationSchema={MarketSchema}
+                  >
+                    {props => {
+                      if (show.type === "edit") {
+                        useEffect(() => {
+                          const fields = [
+                            "name",
+                            "type",
+                            "is_show",
+                            "address",
+                            "remark",
+                          ];
+                          fields.forEach(field =>
+                            props.setFieldValue(field, market[field], false)
+                          );
+                        }, []);
+                      }
 
-                    return (
-                      <Form>
-                        <VStack
-                          divider={<StackDivider borderColor="gray.200" />}
-                          spacing={4}
-                          align="stretch"
-                        >
-                          <Field name="name">
-                            {({ field }) => (
-                              <FormControl
-                                isRequired
-                                variant="floating"
-                                id="name"
-                              >
-                                <Input
-                                  {...field}
+                      return (
+                        <Form>
+                          <VStack
+                            divider={<StackDivider borderColor="gray.200" />}
+                            spacing={4}
+                            align="stretch"
+                          >
+                            <Field name="name">
+                              {({ field }) => (
+                                <FormControl
                                   isRequired
-                                  isInvalid
-                                  type="text"
-                                  placeholder=""
-                                />
-                                <FormLabel htmlFor="name">名称</FormLabel>
-                                <ErrorMessage name="name" />
-                              </FormControl>
-                            )}
-                          </Field>
-                          <Field name="type">
-                            {() => (
-                              <FormControl isRequired>
-                                <Menu isOpen={isOpen}>
-                                  <MenuButton
-                                    as={Button}
-                                    _hover={{
-                                      bg: useColorModeValue(
-                                        "gray.100",
-                                        "gray.700"
-                                      ),
-                                    }}
-                                    aria-label="Courses"
-                                    onMouseEnter={onOpen}
-                                    onMouseLeave={onSelectClose}
-                                  >
-                                    选择市场类型{" "}
-                                    {isOpen ? (
-                                      <ChevronUpIcon />
-                                    ) : (
-                                      <ChevronDownIcon />
-                                    )}
-                                  </MenuButton>
-                                  <MenuList
-                                    onMouseEnter={onOpen}
-                                    onMouseLeave={onSelectClose}
-                                  >
-                                    <MenuItem>产区</MenuItem>
-                                    <MenuItem>销区</MenuItem>
-                                  </MenuList>
-                                </Menu>
-                                <ErrorMessage name="type" />
-                              </FormControl>
-                            )}
-                          </Field>
-                          <Field name="is_show">
-                            {({ field }) => (
-                              <FormControl display="flex" alignItems="center">
-                                <FormLabel htmlFor="is_show">
-                                  是否展示
-                                </FormLabel>
-                                <Switch {...field} id="is_show" />
-                                <ErrorMessage name="is_show" />
-                              </FormControl>
-                            )}
-                          </Field>
-                          <Field name="address">
-                            {() => (
-                              <FormControl isRequired>
-                                <Menu
-                                  eventListeners={{
-                                    scroll: true,
-                                    resize: true,
-                                  }}
-                                  isOpen={isAddrOpen}
-                                  matchWidth={true}
-                                  boundary="scrollParent"
+                                  variant="floating"
+                                  id="name"
                                 >
-                                  <MenuButton
-                                    as={Button}
-                                    _hover={{
-                                      bg: useColorModeValue(
-                                        "gray.100",
-                                        "gray.700"
-                                      ),
+                                  <Input
+                                    {...field}
+                                    isRequired
+                                    isInvalid
+                                    type="text"
+                                    placeholder=""
+                                  />
+                                  <FormLabel htmlFor="name">名称</FormLabel>
+                                  <ErrorMessage name="name" />
+                                </FormControl>
+                              )}
+                            </Field>
+                            <Field name="type">
+                              {() => (
+                                <FormControl isRequired>
+                                  <Menu isOpen={isOpen}>
+                                    <MenuButton
+                                      as={Button}
+                                      _hover={{
+                                        bg: useColorModeValue(
+                                          "gray.100",
+                                          "gray.700"
+                                        ),
+                                      }}
+                                      aria-label="Courses"
+                                      onMouseEnter={onOpen}
+                                      onMouseLeave={onSelectClose}
+                                    >
+                                      选择市场类型{" "}
+                                      {isOpen ? (
+                                        <ChevronUpIcon />
+                                      ) : (
+                                        <ChevronDownIcon />
+                                      )}
+                                    </MenuButton>
+                                    <MenuList
+                                      onMouseEnter={onOpen}
+                                      onMouseLeave={onSelectClose}
+                                    >
+                                      <MenuItem>产区</MenuItem>
+                                      <MenuItem>销区</MenuItem>
+                                    </MenuList>
+                                  </Menu>
+                                  <ErrorMessage name="type" />
+                                </FormControl>
+                              )}
+                            </Field>
+                            <Field name="is_show">
+                              {({ field }) => (
+                                <FormControl display="flex" alignItems="center">
+                                  <FormLabel htmlFor="is_show">
+                                    是否展示
+                                  </FormLabel>
+                                  <Switch {...field} id="is_show" />
+                                  <ErrorMessage name="is_show" />
+                                </FormControl>
+                              )}
+                            </Field>
+                            <Field name="address">
+                              {() => (
+                                <FormControl isRequired>
+                                  <Menu
+                                    eventListeners={{
+                                      scroll: true,
+                                      resize: true,
                                     }}
-                                    aria-label="Courses"
-                                    onMouseEnter={onAddrOpen}
-                                    onMouseLeave={onAddrClose}
+                                    isOpen={isAddrOpen}
+                                    matchWidth={true}
+                                    boundary="scrollParent"
                                   >
-                                    选择地址{" "}
-                                    {isAddrOpen ? (
-                                      <ChevronUpIcon />
-                                    ) : (
-                                      <ChevronDownIcon />
-                                    )}
-                                  </MenuButton>
-                                  <MenuList
-                                    onMouseEnter={onAddrOpen}
-                                    onMouseLeave={onAddrClose}
-                                  >
-                                    {arr.map((v, i) => (
-                                      <MenuItem key={i}>{v.label}</MenuItem>
-                                    ))}
-                                  </MenuList>
-                                </Menu>
-                                <ErrorMessage name="address" />
-                              </FormControl>
-                            )}
-                          </Field>
-                          {/* <Divider orientation="horizontal" /> */}
+                                    <MenuButton
+                                      as={Button}
+                                      _hover={{
+                                        bg: useColorModeValue(
+                                          "gray.100",
+                                          "gray.700"
+                                        ),
+                                      }}
+                                      aria-label="Courses"
+                                      onMouseEnter={onAddrOpen}
+                                      onMouseLeave={onAddrClose}
+                                    >
+                                      选择地址{" "}
+                                      {isAddrOpen ? (
+                                        <ChevronUpIcon />
+                                      ) : (
+                                        <ChevronDownIcon />
+                                      )}
+                                    </MenuButton>
+                                    <MenuList
+                                      onMouseEnter={onAddrOpen}
+                                      onMouseLeave={onAddrClose}
+                                    >
+                                      {arr.map((v, i) => (
+                                        <MenuItem key={i}>{v.label}</MenuItem>
+                                      ))}
+                                    </MenuList>
+                                  </Menu>
+                                  <ErrorMessage name="address" />
+                                </FormControl>
+                              )}
+                            </Field>
+                            {/* <Divider orientation="horizontal" /> */}
 
-                          <Field name="remark">
-                            {({ field }) => (
-                              <FormControl variant="floating" id="remark">
-                                <Textarea
-                                  {...field}
-                                  isRequired
-                                  isInvalid
-                                  type="text"
-                                  placeholder=""
-                                />
-                                <FormLabel htmlFor="remark">备注</FormLabel>
-                                <ErrorMessage name="remark" />
-                              </FormControl>
-                            )}
-                          </Field>
-                        </VStack>
-                      </Form>
-                    );
-                  }}
-                </Formik>
-              </ModalBody>
-            </ModalContent>
-          </Modal>
-        )}
-        <AlertDialog
-          motionPreset="slideInBottom"
-          leastDestructiveRef={cancelRef}
-          onClose={onClose}
-          isOpen={show.isShow && show.type === "del"}
-          isCentered
-        >
-          <AlertDialogOverlay />
-          <AlertDialogContent>
-            <AlertDialogHeader>删除提示?</AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>您确定要删除这条数据吗？</AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={() => handDelSubmit()}>
-                确定
-              </Button>
-              <Button colorScheme="red" ml={3} onClick={() => onClose()}>
-                取消
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </Container>
+                            <Field name="remark">
+                              {({ field }) => (
+                                <FormControl variant="floating" id="remark">
+                                  <Textarea
+                                    {...field}
+                                    isRequired
+                                    isInvalid
+                                    type="text"
+                                    placeholder=""
+                                  />
+                                  <FormLabel htmlFor="remark">备注</FormLabel>
+                                  <ErrorMessage name="remark" />
+                                </FormControl>
+                              )}
+                            </Field>
+                          </VStack>
+                        </Form>
+                      );
+                    }}
+                  </Formik>
+                </ModalBody>
+              </ModalContent>
+            </Modal>
+          )}
+          <AlertDialog
+            motionPreset="slideInBottom"
+            leastDestructiveRef={cancelRef}
+            onClose={onClose}
+            isOpen={show.isShow && show.type === "del"}
+            isCentered
+          >
+            <AlertDialogOverlay />
+            <AlertDialogContent>
+              <AlertDialogHeader>删除提示?</AlertDialogHeader>
+              <AlertDialogCloseButton />
+              <AlertDialogBody>您确定要删除这条数据吗？</AlertDialogBody>
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={() => handDelSubmit()}>
+                  确定
+                </Button>
+                <Button colorScheme="red" ml={3} onClick={() => onClose()}>
+                  取消
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </Container>
+      </Flex>
     </>
   );
 };

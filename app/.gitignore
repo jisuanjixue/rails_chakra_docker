@@ -89,3 +89,6 @@ app/debug.log
 
 # Ignore IDE related files in cypress folder
 app/.vscode
+
+# Ignore application configuration
+/config/application.yml

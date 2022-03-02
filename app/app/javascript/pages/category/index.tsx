@@ -284,10 +284,6 @@ const Category = () => {
     );
     return (
       <>
-        {/* <Box className="flex flex-col mt-4">
-          <Box className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <Box className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-              <Box className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"> */}
         <Flex
           w="full"
           bg="gray.600"

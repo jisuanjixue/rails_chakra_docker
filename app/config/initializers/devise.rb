@@ -293,6 +293,12 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  if Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_ID.present?
+    config.omniauth :wechat, Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_ID, Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_ID, :authorize_params => {:scope => "snsapi_base"}
+  end
+  unless Rails.env.production?
+    config.omniauth :developer, fields: %w[nickname sex province city country headimgurl unionid], uid_field: :unionid
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

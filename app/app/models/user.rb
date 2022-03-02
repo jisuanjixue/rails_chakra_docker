@@ -8,9 +8,11 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  name                   :string           not null
+#  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  uid                    :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -22,7 +24,7 @@
 class User < ApplicationRecord
   attr_writer :login
 
-  has_one :profile
+  has_one :profile, dependent: :destroy
 
   validates :email, uniqueness: true
   validates :name, presence: true, uniqueness: { case_sensitive: false }
@@ -32,8 +34,8 @@ class User < ApplicationRecord
   validate :validate_name
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :jwt_authenticatable, :registerable,
-    :recoverable, :rememberable, :validatable, jwt_revocation_strategy: JwtDenylist, authentication_keys: [:login]
+  devise :omniauthable, :database_authenticatable, :jwt_authenticatable, :registerable, :recoverable, :rememberable, :validatable, jwt_revocation_strategy: JwtDenylist, authentication_keys: [:login], omniauth_providers: [:wechat]
+
 
   def login
     @login || self.name || self.email
@@ -57,6 +59,23 @@ class User < ApplicationRecord
   #   clean_up_passwords
   #   result
   # end
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.nickname = auth.extra.raw_info.nickname
+      user.token = auth.credentials.token
+      user.openid = auth.extra.raw_info.openid
+      user.headimgurl = auth.extra.raw_info.headimgurl   # assuming the user model has a name
+      user.sex = auth.extra.raw_info.sex   # assuming the user model has a name
+      user.city = auth.extra.raw_info.city   # assuming the user model has a name
+      user.province = auth.extra.raw_info.province   # assuming the user model has a name
+      user.headimgurl = auth.extra.raw_info.headimgurl   # assuming the user model has a name
+      # user.image = auth.info.image # assuming the user model has an image
+      # If you are using confirmable and the provider(s) you use validate emails, 
+      # uncomment the line below to skip the confirmation emails.
+      # user.skip_confirmation!
+    end
+  end
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

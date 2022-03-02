@@ -40,6 +40,24 @@ const SignIn = () => {
     onSettled: () => queryClient.invalidateQueries("currentUser"),
   });
 
+  const wechatLogin: any = useMutation(() => userApi.wechatLogin(), {
+    mutationKey: "wechatLogin",
+    // onError: (_err, _variables, previousValue: any) =>
+    //   queryClient.setQueryData("currentUser", previousValue),
+    // onSettled: () => queryClient.invalidateQueries("currentUser"),
+  });
+
+  const handWechatLogin = useCallback(() => {
+    wechatLogin.mutate({
+      onSuccess: (data: any) => {
+        if (data.status === 200) {
+          localStorage.setItem("token", data.headers.authorization);
+          window.location.replace("/dashboard");
+        }
+      },
+    });
+  }, []);
+
   const handleSubmit = () => {
     userLogin.mutate(user, {
       onSuccess: (data: any) => {
@@ -164,7 +182,25 @@ const SignIn = () => {
             >
               登录
             </Button>
-
+            <Button
+              fontSize="10px"
+              type="submit"
+              bg="teal.300"
+              w="100%"
+              h="45"
+              mb="20px"
+              color="white"
+              mt="20px"
+              _hover={{
+                bg: "teal.200",
+              }}
+              _active={{
+                bg: "teal.400",
+              }}
+              onClick={() => handWechatLogin()}
+            >
+              微信登录
+            </Button>
             <Flex
               flexDirection="column"
               justifyContent="center"
