@@ -8,6 +8,26 @@
 #
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+
+module Devise
+  module Models
+    module Timeoutable
+      # Checks whether the user session has expired based on configured time.
+      def timedout?(last_access)
+        return false if remember_exists_and_not_expired?
+        last_access && last_access <= self.class.timeout_in.ago
+      end
+
+      private
+
+      def remember_exists_and_not_expired?
+        return false unless respond_to?(:remember_expired?)
+        remember_created_at && !remember_expired?
+      end
+    end
+  end
+end
+
 Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
@@ -25,9 +45,9 @@ Devise.setup do |config|
       ["POST", %r{^/login$}],
       ["POST", %r{^/signup$}],
     ]
-    jwt.dispatch_requests = [
-      ["PUT", %r{^/signup$}],
-    ]
+    # jwt.dispatch_requests = [
+    #   ["PUT", %r{^/signup$}],
+    # ]
     jwt.revocation_requests = [
       ["DELETE", %r{^/logout$}]
     ]
@@ -42,13 +62,14 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
+  config.mailer_sender = "donotreply@example.com"
 
   # config.http_authenticatable_on_xhr = false
   # config.navigational_formats = [: "* / *"，"* / *", :html, js]
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
+  config.mailer = 'UserMailer'
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
@@ -185,7 +206,8 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
+  config.remember_for = 2.weeks
+  config.timeout_in = 30.minutes
 
   # Invalidates all the remember me tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
@@ -245,7 +267,7 @@ Devise.setup do |config|
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
   # change their passwords.
-  config.reset_password_within = 6.hours
+  config.reset_password_within = 2.weeks
 
   # When set to false, does not sign a user in automatically after their password is
   # reset. Defaults to true, so a user is signed in automatically after a reset.
