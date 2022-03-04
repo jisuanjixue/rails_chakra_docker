@@ -193,7 +193,7 @@ const SignUp = () => {
             textAlign="center"
             mb="22px"
           >
-            or
+            或者
           </Text>
           <FormControl variant="floating" isRequired>
             <Input

@@ -22,6 +22,7 @@ export const inputStyles = {
             _focusWithin: {
               label: {
                 ...activeLabelStyles,
+                backgroundColor: "white",
               },
             },
             label: {

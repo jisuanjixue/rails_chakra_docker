@@ -1,13 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { matchSorter } from "match-sorter";
-import {
-  useTable,
-  useFilters,
-  useGlobalFilter,
-  useAsyncDebounce,
-  useExpanded,
-} from "react-table";
+import { useTable, useFilters, useGlobalFilter, useAsyncDebounce, useExpanded } from "react-table";
 import {
   Flex,
   Modal,
@@ -54,13 +48,7 @@ import {
   VStack,
   StackDivider,
 } from "@chakra-ui/react";
-import {
-  AddIcon,
-  EditIcon,
-  DeleteIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from "@chakra-ui/icons";
+import { AddIcon, EditIcon, DeleteIcon, ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -70,11 +58,8 @@ import arr from "../../../../public/addr";
 
 const Market = () => {
   const { isOpen, onOpen, onClose: onSelectClose } = useDisclosure();
-  const {
-    isOpen: isAddrOpen,
-    onOpen: onAddrOpen,
-    onClose: onAddrClose,
-  } = useDisclosure();
+  const { isOpen: isAddrOpen, onOpen: onAddrOpen, onClose: onAddrClose } = useDisclosure();
+
   const defaultData = {
     name: "",
     type: "",
@@ -82,11 +67,16 @@ const Market = () => {
     address: [],
     remark: "",
   };
+
   const [market, setMarket] = useState<MarketInfo>(defaultData);
   const [marketId, setMarketId] = useState("");
   const [show, setShow] = useState({ isShow: false, type: "" });
   const toast = useToast();
+
   const cancelRef: any = useRef();
+  const initialRef: any = useRef();
+  const finalRef: any = useRef();
+
   const initialValues: MarketInfo = {
     name: "",
     type: "",
@@ -140,8 +130,7 @@ const Market = () => {
       });
       return previousValue;
     },
-    onError: (_err, _variables, previousValue: any) =>
-      queryClient.setQueryData("markets", previousValue),
+    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("markets", previousValue),
     onSettled: () => queryClient.invalidateQueries("markets"),
   });
 
@@ -150,20 +139,14 @@ const Market = () => {
     onMutate: async newMarket => {
       await queryClient.cancelQueries(["categories", newMarket.id]);
       // Snapshot the previous value
-      const previousValue = queryClient.getQueryData([
-        "categories",
-        newMarket.id,
-      ]);
+      const previousValue = queryClient.getQueryData(["categories", newMarket.id]);
       // Optimistically update to the new value
       queryClient.setQueryData(["categories", newMarket.id], newMarket);
       // Return a context object with the snapshotted value
       return { previousValue, newMarket };
     },
     onError: (err, newMarket, context: any) => {
-      queryClient.setQueryData(
-        ["categories", context.newMarket.id],
-        context.previousValue
-      );
+      queryClient.setQueryData(["categories", context.newMarket.id], context.previousValue);
     },
     // Always refetch after error or success:
     onSettled: (newMarket: any) => {
@@ -186,8 +169,7 @@ const Market = () => {
       });
       return previousValue;
     },
-    onError: (_err, _variables, previousValue: any) =>
-      queryClient.setQueryData("categories", previousValue),
+    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("categories", previousValue),
     onSettled: () => queryClient.invalidateQueries("categories"),
   });
 
@@ -217,13 +199,7 @@ const Market = () => {
             isClosable: true,
             variant: "solid",
             render: () => (
-              <Alert
-                status="success"
-                variant="solid"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-              >
+              <Alert status="success" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
                 <AlertIcon boxSize="40px" mr={0} />
                 <AlertTitle mt={4} mb={1} fontSize="lg">
                   新增成功！
@@ -238,13 +214,7 @@ const Market = () => {
             isClosable: true,
             variant: "solid",
             render: () => (
-              <Alert
-                status="error"
-                variant="solid"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-              >
+              <Alert status="error" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
                 <AlertIcon boxSize="40px" mr={0} />
                 <AlertTitle mt={4} mb={1} fontSize="lg">
                   新增失败！
@@ -262,13 +232,7 @@ const Market = () => {
             isClosable: true,
             variant: "solid",
             render: () => (
-              <Alert
-                status="success"
-                variant="solid"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-              >
+              <Alert status="success" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
                 <AlertIcon boxSize="40px" mr={0} />
                 <AlertTitle mt={4} mb={1} fontSize="lg">
                   编辑成功！
@@ -283,13 +247,7 @@ const Market = () => {
             isClosable: true,
             variant: "solid",
             render: () => (
-              <Alert
-                status="error"
-                variant="solid"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-              >
+              <Alert status="error" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
                 <AlertIcon boxSize="40px" mr={0} />
                 <AlertTitle mt={4} mb={1} fontSize="lg">
                   编辑失败！
@@ -321,11 +279,7 @@ const Market = () => {
   };
 
   // Define a default UI for filtering
-  const GlobalFilter = ({
-    preGlobalFilteredRows,
-    globalFilter,
-    setGlobalFilter,
-  }) => {
+  const GlobalFilter = ({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) => {
     const count = preGlobalFilteredRows.length;
     const [value, setValue] = useState(globalFilter);
     const onChange = useAsyncDebounce(value => {
@@ -350,9 +304,7 @@ const Market = () => {
     );
   };
 
-  const DefaultColumnFilter = ({
-    column: { filterValue, preFilteredRows, setFilter },
-  }) => {
+  const DefaultColumnFilter = ({ column: { filterValue, preFilteredRows, setFilter } }) => {
     const count = preFilteredRows.length;
 
     return (
@@ -366,9 +318,7 @@ const Market = () => {
     );
   };
 
-  const SelectColumnFilter = ({
-    column: { filterValue, setFilter, preFilteredRows, id },
-  }) => {
+  const SelectColumnFilter = ({ column: { filterValue, setFilter, preFilteredRows, id } }) => {
     // Calculate the options for filtering
     // using the preFilteredRows
     const options = React.useMemo(() => {
@@ -416,11 +366,7 @@ const Market = () => {
         text: (rows, id, filterValue) => {
           return rows.filter(row => {
             const rowValue = row.values[id];
-            return rowValue !== undefined
-              ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
-              : true;
+            return rowValue !== undefined ? String(rowValue).toLowerCase().startsWith(String(filterValue).toLowerCase()) : true;
           });
         },
       }),
@@ -461,10 +407,7 @@ const Market = () => {
           <Box className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <Box className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <Box className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
-                <Table
-                  {...getTableProps()}
-                  className="min-w-full divide-y divide-gray-200"
-                >
+                <Table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
                   <TableCaption>市场列表</TableCaption>
                   <Thead className="bg-gray-50">
                     {headerGroups.map((headerGroup, i) => (
@@ -478,11 +421,7 @@ const Market = () => {
                           >
                             {column.render("Header")}
                             {/* Render the columns filter UI */}
-                            <Box>
-                              {column.canFilter
-                                ? column.render("Filter")
-                                : null}
-                            </Box>
+                            <Box>{column.canFilter ? column.render("Filter") : null}</Box>
                           </Th>
                         ))}
                       </Tr>
@@ -502,26 +441,16 @@ const Market = () => {
                       </Th>
                     </Tr>
                   </Thead>
-                  <tbody
-                    {...getTableBodyProps()}
-                    className="bg-white divide-y divide-gray-200"
-                  >
+                  <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
                     {rows.map((row, i) => {
                       prepareRow(row);
                       return (
                         <tr {...row.getRowProps()} key={i}>
                           {row.cells.map((cell, index) => {
                             return (
-                              <td
-                                {...cell.getCellProps()}
-                                className="px-6 py-4 whitespace-nowrap"
-                                role="cell"
-                                key={index}
-                              >
+                              <td {...cell.getCellProps()} className="px-6 py-4 whitespace-nowrap" role="cell" key={index}>
                                 {cell.column.Cell.name === "defaultRenderer" ? (
-                                  <div className="text-sm text-gray-500">
-                                    {cell.render("Cell")}
-                                  </div>
+                                  <div className="text-sm text-gray-500">{cell.render("Cell")}</div>
                                 ) : (
                                   cell.render("Cell")
                                 )}
@@ -646,13 +575,7 @@ const Market = () => {
         columns: [
           {
             accessor: originalRow => (
-              <Button
-                colorScheme="teal"
-                leftIcon={<EditIcon />}
-                size="sm"
-                variant="solid"
-                onClick={() => handEdit(originalRow, "edit")}
-              >
+              <Button colorScheme="teal" leftIcon={<EditIcon />} size="sm" variant="solid" onClick={() => handEdit(originalRow, "edit")}>
                 编辑
               </Button>
             ),
@@ -663,12 +586,7 @@ const Market = () => {
           {
             Header: "",
             accessor: originalRow => (
-              <Button
-                colorScheme="red"
-                leftIcon={<DeleteIcon />}
-                variant="solid"
-                onClick={() => handDel(originalRow.id, "del")}
-              >
+              <Button colorScheme="red" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handDel(originalRow.id, "del")}>
                 删除
               </Button>
             ),
@@ -693,6 +611,7 @@ const Market = () => {
             variant="solid"
             leftIcon={<AddIcon />}
             size="md"
+            ref={finalRef}
           >
             新增
           </Button>
@@ -709,69 +628,50 @@ const Market = () => {
           ) : (
             <>
               <TableList columns={columns} data={tableData} />
-              <Box>
-                {isFetching ? (
-                  <Spinner
-                    thickness="4px"
-                    speed="0.65s"
-                    emptyColor="gray.200"
-                    color="blue.500"
-                    size="xl"
-                  />
-                ) : (
-                  " "
-                )}
-              </Box>
+              <Box>{isFetching ? <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" /> : " "}</Box>
             </>
           )}
           {show.isShow && show.type !== "del" && (
-            <Modal isOpen={show.isShow} onClose={onClose}>
+            <Modal
+              isOpen={show.isShow}
+              onClose={onClose}
+              allowPinchZoom={true}
+              isCentered
+              preserveScrollBarGap={true}
+              scrollBehavior="inside"
+              blockScrollOnMount={false}
+              initialFocusRef={initialRef}
+              finalFocusRef={finalRef}
+            >
               <ModalOverlay />
-              <ModalContent>
+              <ModalContent h="500px">
                 <ModalHeader>市场提交</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <Formik
-                    initialValues={initialValues}
-                    onSubmit={async values => onSubmit(values)}
-                    validationSchema={MarketSchema}
-                  >
+                  <Formik initialValues={initialValues} onSubmit={async values => onSubmit(values)} validationSchema={MarketSchema}>
                     {props => {
                       if (show.type === "edit") {
                         useEffect(() => {
-                          const fields = [
-                            "name",
-                            "type",
-                            "is_show",
-                            "address",
-                            "remark",
-                          ];
-                          fields.forEach(field =>
-                            props.setFieldValue(field, market[field], false)
-                          );
+                          const fields = ["name", "type", "is_show", "address", "remark"];
+                          fields.forEach(field => props.setFieldValue(field, market[field], false));
                         }, []);
                       }
 
                       return (
                         <Form>
-                          <VStack
-                            divider={<StackDivider borderColor="gray.200" />}
-                            spacing={4}
-                            align="stretch"
-                          >
+                          <VStack divider={<StackDivider borderColor="gray.200" />} spacing={4} align="stretch">
                             <Field name="name">
                               {({ field }) => (
-                                <FormControl
-                                  isRequired
-                                  variant="floating"
-                                  id="name"
-                                >
+                                <FormControl isRequired variant={show.type === "edit" ? "editfloating" : "floating"} id="name">
                                   <Input
                                     {...field}
+                                    ref={initialRef}
                                     isRequired
                                     isInvalid
                                     type="text"
                                     placeholder=""
+                                    size="md"
+                                    variant="filled"
                                   />
                                   <FormLabel htmlFor="name">名称</FormLabel>
                                   <ErrorMessage name="name" />
@@ -785,26 +685,15 @@ const Market = () => {
                                     <MenuButton
                                       as={Button}
                                       _hover={{
-                                        bg: useColorModeValue(
-                                          "gray.100",
-                                          "gray.700"
-                                        ),
+                                        bg: useColorModeValue("gray.100", "gray.700"),
                                       }}
                                       aria-label="Courses"
                                       onMouseEnter={onOpen}
                                       onMouseLeave={onSelectClose}
                                     >
-                                      选择市场类型{" "}
-                                      {isOpen ? (
-                                        <ChevronUpIcon />
-                                      ) : (
-                                        <ChevronDownIcon />
-                                      )}
+                                      选择市场类型 {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
                                     </MenuButton>
-                                    <MenuList
-                                      onMouseEnter={onOpen}
-                                      onMouseLeave={onSelectClose}
-                                    >
+                                    <MenuList onMouseEnter={onOpen} onMouseLeave={onSelectClose}>
                                       <MenuItem>产区</MenuItem>
                                       <MenuItem>销区</MenuItem>
                                     </MenuList>
@@ -816,11 +705,18 @@ const Market = () => {
                             <Field name="is_show">
                               {({ field }) => (
                                 <FormControl display="flex" alignItems="center">
-                                  <FormLabel htmlFor="is_show">
-                                    是否展示
-                                  </FormLabel>
+                                  <FormLabel htmlFor="is_show">是否展示</FormLabel>
                                   <Switch {...field} id="is_show" />
                                   <ErrorMessage name="is_show" />
+                                </FormControl>
+                              )}
+                            </Field>
+                            <Field name="remark">
+                              {({ field }) => (
+                                <FormControl variant={show.type === "edit" ? "editfloating" : "floating"} id="remark">
+                                  <Textarea {...field} isRequired isInvalid type="text" placeholder="" variant="filled" />
+                                  <FormLabel htmlFor="remark">备注</FormLabel>
+                                  <ErrorMessage name="remark" />
                                 </FormControl>
                               )}
                             </Field>
@@ -839,49 +735,21 @@ const Market = () => {
                                     <MenuButton
                                       as={Button}
                                       _hover={{
-                                        bg: useColorModeValue(
-                                          "gray.100",
-                                          "gray.700"
-                                        ),
+                                        bg: useColorModeValue("gray.100", "gray.700"),
                                       }}
                                       aria-label="Courses"
                                       onMouseEnter={onAddrOpen}
                                       onMouseLeave={onAddrClose}
                                     >
-                                      选择地址{" "}
-                                      {isAddrOpen ? (
-                                        <ChevronUpIcon />
-                                      ) : (
-                                        <ChevronDownIcon />
-                                      )}
+                                      选择地址 {isAddrOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
                                     </MenuButton>
-                                    <MenuList
-                                      onMouseEnter={onAddrOpen}
-                                      onMouseLeave={onAddrClose}
-                                    >
+                                    <MenuList onMouseEnter={onAddrOpen} onMouseLeave={onAddrClose} overflowY="auto" h="120px">
                                       {arr.map((v, i) => (
                                         <MenuItem key={i}>{v.label}</MenuItem>
                                       ))}
                                     </MenuList>
                                   </Menu>
                                   <ErrorMessage name="address" />
-                                </FormControl>
-                              )}
-                            </Field>
-                            {/* <Divider orientation="horizontal" /> */}
-
-                            <Field name="remark">
-                              {({ field }) => (
-                                <FormControl variant="floating" id="remark">
-                                  <Textarea
-                                    {...field}
-                                    isRequired
-                                    isInvalid
-                                    type="text"
-                                    placeholder=""
-                                  />
-                                  <FormLabel htmlFor="remark">备注</FormLabel>
-                                  <ErrorMessage name="remark" />
                                 </FormControl>
                               )}
                             </Field>
