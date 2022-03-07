@@ -1,18 +1,5 @@
 // Chakra imports
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  HStack,
-  Icon,
-  Input,
-  Link,
-  Switch,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, FormLabel, HStack, Icon, Input, Link, Switch, Text, useColorModeValue } from "@chakra-ui/react";
 import React, { useState, useCallback } from "react";
 import {
   // useQueryClient,
@@ -37,34 +24,23 @@ const SignUp = () => {
     password: "",
   });
 
-  const handValue = useCallback(
-    e => setUser({ ...user, [e.target.name]: e.target.value }),
-    [user.name, user.email, user.password]
-  );
+  const handValue = useCallback(e => setUser({ ...user, [e.target.name]: e.target.value }), [user.name, user.email, user.password]);
 
-  const userRegistration = useMutation(
-    (user: UserRegister) => userApi.create(user),
-    {
-      mutationKey: "userRegistration",
-      onSuccess: () => {
-        navigate.push("/");
-      },
-      onError: (err, variables) => {
-        console.log(err, variables);
-      },
-    }
-  );
+  const userRegistration = useMutation((user: UserRegister) => userApi.create(user), {
+    mutationKey: "userRegistration",
+    onSuccess: () => {
+      navigate.push("/");
+    },
+    onError: (err, variables) => {
+      console.log(err, variables);
+    },
+  });
 
   const handleSubmit = () => {
     userRegistration.mutate(user);
   };
   return (
-    <Flex
-      direction="column"
-      alignSelf="center"
-      justifySelf="center"
-      overflow="hidden"
-    >
+    <Flex direction="column" alignSelf="center" justifySelf="center" overflow="hidden">
       <Box
         position="absolute"
         minH={{ base: "70vh", md: "50vh" }}
@@ -81,27 +57,12 @@ const SignUp = () => {
         mx={{ md: "auto" }}
         mt={{ md: "14px" }}
       ></Box>
-      <Flex
-        direction="column"
-        textAlign="center"
-        justifyContent="center"
-        align="center"
-        mt="6.5rem"
-        mb="30px"
-      >
+      <Flex direction="column" textAlign="center" justifyContent="center" align="center" mt="6.5rem" mb="30px">
         <Text fontSize="4xl" color="white" fontWeight="bold">
           Welcome!
         </Text>
-        <Text
-          fontSize="md"
-          color="white"
-          fontWeight="normal"
-          mt="10px"
-          mb="26px"
-          w={{ base: "90%", sm: "60%", lg: "40%", xl: "30%" }}
-        >
-          Use these awesome forms to login or create new account in your project
-          for free.
+        <Text fontSize="md" color="white" fontWeight="normal" mt="10px" mb="26px" w={{ base: "90%", sm: "60%", lg: "40%", xl: "30%" }}>
+          Use these awesome forms to login or create new account in your project for free.
         </Text>
       </Flex>
       <Flex alignItems="center" justifyContent="center" mb="60px" mt="20px">
@@ -115,13 +76,7 @@ const SignUp = () => {
           bg={bgColor}
           boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)"
         >
-          <Text
-            fontSize="xl"
-            color={textColor}
-            fontWeight="bold"
-            textAlign="center"
-            mb="22px"
-          >
+          <Text fontSize="xl" color={textColor} fontWeight="bold" textAlign="center" mb="22px">
             Register With
           </Text>
           <HStack spacing="15px" justify="center" mb="22px">
@@ -137,12 +92,7 @@ const SignUp = () => {
               _hover={{ filter: "brightness(120%)", bg: bgIcons }}
             >
               <Link href="#">
-                <Icon
-                  as={FaFacebook}
-                  w="30px"
-                  h="30px"
-                  _hover={{ filter: "brightness(120%)" }}
-                />
+                <Icon as={FaFacebook} w="30px" h="30px" _hover={{ filter: "brightness(120%)" }} />
               </Link>
             </Flex>
             <Flex
@@ -157,12 +107,7 @@ const SignUp = () => {
               _hover={{ filter: "brightness(120%)", bg: bgIcons }}
             >
               <Link href="#">
-                <Icon
-                  as={FaApple}
-                  w="30px"
-                  h="30px"
-                  _hover={{ filter: "brightness(120%)" }}
-                />
+                <Icon as={FaApple} w="30px" h="30px" _hover={{ filter: "brightness(120%)" }} />
               </Link>
             </Flex>
             <Flex
@@ -177,22 +122,11 @@ const SignUp = () => {
               _hover={{ filter: "brightness(120%)", bg: bgIcons }}
             >
               <Link href="#">
-                <Icon
-                  as={FaGoogle}
-                  w="30px"
-                  h="30px"
-                  _hover={{ filter: "brightness(120%)" }}
-                />
+                <Icon as={FaGoogle} w="30px" h="30px" _hover={{ filter: "brightness(120%)" }} />
               </Link>
             </Flex>
           </HStack>
-          <Text
-            fontSize="lg"
-            color="gray.400"
-            fontWeight="bold"
-            textAlign="center"
-            mb="22px"
-          >
+          <Text fontSize="lg" color="gray.400" fontWeight="bold" textAlign="center" mb="22px">
             或者
           </Text>
           <FormControl variant="floating" isRequired>
@@ -271,22 +205,10 @@ const SignUp = () => {
           >
             注册
           </Button>
-          <Flex
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            maxW="100%"
-            mt="0px"
-          >
+          <Flex flexDirection="column" justifyContent="center" alignItems="center" maxW="100%" mt="0px">
             <Text color={textColor} fontWeight="medium">
               您已有账号?
-              <Link
-                color={titleColor}
-                as="span"
-                ms="5px"
-                href="#"
-                fontWeight="bold"
-              >
+              <Link color={titleColor} as="span" ms="5px" href="#" fontWeight="bold">
                 登录
               </Link>
             </Text>

@@ -89,17 +89,8 @@ export default function Sidebar() {
           description="This is the description for the dashboard."
           active={undefined}
         />
-        <NavItem
-          navSize={navSize}
-          icon={FaRss}
-          title="市场管理"
-          onClick={integrations.onToggle}
-        >
-          <Icon
-            as={MdKeyboardArrowRight}
-            ml="auto"
-            transform={integrations.isOpen && "rotate(90deg)"}
-          />
+        <NavItem navSize={navSize} icon={FaRss} title="市场管理" onClick={integrations.onToggle}>
+          <Icon as={MdKeyboardArrowRight} ml="auto" transform={integrations.isOpen && "rotate(90deg)"} />
         </NavItem>
         <Collapse in={integrations.isOpen}>
           <NavItem navSize={navSize} title="市场信息">
@@ -110,17 +101,8 @@ export default function Sidebar() {
             </NavLink>
           </NavItem>
         </Collapse>
-        <NavItem
-          navSize={navSize}
-          icon={HiCode}
-          title="信息管理"
-          onClick={integrationsOne.onToggle}
-        >
-          <Icon
-            as={MdKeyboardArrowRight}
-            ml="auto"
-            transform={integrationsOne.isOpen && "rotate(90deg)"}
-          />
+        <NavItem navSize={navSize} icon={HiCode} title="信息管理" onClick={integrationsOne.onToggle}>
+          <Icon as={MdKeyboardArrowRight} ml="auto" transform={integrationsOne.isOpen && "rotate(90deg)"} />
         </NavItem>
         <Collapse in={integrationsOne.isOpen}>
           <NavItem>
@@ -153,11 +135,7 @@ export default function Sidebar() {
   return (
     <>
       <SidebarContent />
-      <Drawer
-        isOpen={sidebar.isOpen}
-        onClose={sidebar.onClose}
-        placement="left"
-      >
+      <Drawer isOpen={sidebar.isOpen} onClose={sidebar.onClose} placement="left">
         <DrawerOverlay />
         <DrawerContent>
           <SidebarContent />

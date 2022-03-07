@@ -10,11 +10,7 @@ function EditMenu({ children, ...rest }) {
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
-      if (
-        !dropdownOpen ||
-        dropdown.current.contains(target) ||
-        trigger.current.contains(target)
-      ) {
+      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) {
         return;
       }
       setDropdownOpen(false);
@@ -37,15 +33,13 @@ function EditMenu({ children, ...rest }) {
     <div {...rest}>
       <button
         ref={trigger}
-        className={`rounded-full text-gray-400 hover:text-gray-500 ${
-          dropdownOpen && "bg-gray-100 text-gray-500"
-        }`}
+        className={`rounded-full text-gray-400 hover:text-gray-500 ${dropdownOpen && "bg-gray-100 text-gray-500"}`}
         aria-haspopup="true"
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
         <span className="sr-only">Menu</span>
-        <svg className="h-8 w-8 fill-current" viewBox="0 0 32 32">
+        <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
           <circle cx="16" cy="16" r="2" />
           <circle cx="10" cy="16" r="2" />
           <circle cx="22" cy="16" r="2" />
@@ -63,11 +57,7 @@ function EditMenu({ children, ...rest }) {
         leaveEnd="opacity-0"
         appear={undefined}
       >
-        <ul
-          ref={dropdown}
-          onFocus={() => setDropdownOpen(true)}
-          onBlur={() => setDropdownOpen(false)}
-        >
+        <ul ref={dropdown} onFocus={() => setDropdownOpen(true)} onBlur={() => setDropdownOpen(false)}>
           {children}
         </ul>
       </Transition>

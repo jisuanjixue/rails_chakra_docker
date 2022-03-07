@@ -18,15 +18,7 @@ import {
 import { Separator } from "@components/separator/Separator";
 
 export default function Configurator(props) {
-  const {
-    secondary,
-    isChecked,
-    isOpen,
-    onClose,
-    onTransparent,
-    onOpaque,
-    onSwitch,
-  } = props;
+  const { secondary, isChecked, isOpen, onClose, onTransparent, onOpaque, onSwitch } = props;
   const [switched, setSwitched] = useState(isChecked);
 
   const { colorMode, toggleColorMode } = useColorMode();
@@ -36,10 +28,7 @@ export default function Configurator(props) {
     fixedDisplay = "none";
   }
 
-  const bgButton = useColorModeValue(
-    "linear-gradient(81.62deg, #313860 2.25%, #151928 79.87%)",
-    "white"
-  );
+  const bgButton = useColorModeValue("linear-gradient(81.62deg, #313860 2.25%, #151928 79.87%)", "white");
   const colorButton = useColorModeValue("white", "gray.700");
   const secondaryButtonBg = useColorModeValue("white", "transparent");
   const secondaryButtonBorder = useColorModeValue("gray.700", "white");
@@ -103,11 +92,7 @@ export default function Configurator(props) {
                   </Button>
                 </Flex>
               </Box>
-              <Box
-                display={fixedDisplay}
-                justifyContent="space-between "
-                mb="16px"
-              >
+              <Box display={fixedDisplay} justifyContent="space-between " mb="16px">
                 <Text fontSize="md" fontWeight="600" mb="4px">
                   Navbar Fixed
                 </Text>
@@ -125,17 +110,11 @@ export default function Configurator(props) {
                   }}
                 />
               </Box>
-              <Flex
-                justifyContent="space-between"
-                alignItems="center"
-                mb="24px"
-              >
+              <Flex justifyContent="space-between" alignItems="center" mb="24px">
                 <Text fontSize="md" fontWeight="600" mb="4px">
                   Dark/Light
                 </Text>
-                <Button onClick={toggleColorMode}>
-                  Toggle {colorMode === "light" ? "Dark" : "Light"}
-                </Button>
+                <Button onClick={toggleColorMode}>Toggle {colorMode === "light" ? "Dark" : "Light"}</Button>
               </Flex>
 
               <Separator />
@@ -147,27 +126,12 @@ export default function Configurator(props) {
                   Choose between 2 different sidenav types.
                 </Text>
                 <Box>
-                  <Link
-                    href="https://www.creative-tim.com/product/purity-ui-dashboard"
-                    w="100%"
-                    mb="16px"
-                  >
-                    <Button
-                      w="100%"
-                      mb="16px"
-                      bg={bgButton}
-                      color={colorButton}
-                      fontSize="xs"
-                      variant="no-hover"
-                      px="30px"
-                    >
+                  <Link href="https://www.creative-tim.com/product/purity-ui-dashboard" w="100%" mb="16px">
+                    <Button w="100%" mb="16px" bg={bgButton} color={colorButton} fontSize="xs" variant="no-hover" px="30px">
                       Free Download
                     </Button>
                   </Link>
-                  <Link
-                    href="https://demos.creative-tim.com/docs-purity-ui-dashboard/"
-                    w="100%"
-                  >
+                  <Link href="https://demos.creative-tim.com/docs-purity-ui-dashboard/" w="100%">
                     <Button
                       w="100%"
                       bg={secondaryButtonBg}

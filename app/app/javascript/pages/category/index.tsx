@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useMemo,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import React, { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { useTable, useExpanded } from "react-table";
 import {
@@ -48,13 +42,7 @@ import {
   Td,
   TableCaption,
 } from "@chakra-ui/react";
-import {
-  AddIcon,
-  EditIcon,
-  DeleteIcon,
-  ChevronRightIcon,
-  ChevronDownIcon,
-} from "@chakra-ui/icons";
+import { AddIcon, EditIcon, DeleteIcon, ChevronRightIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import categoriesApi from "../../apis/category";
 
 const Category = () => {
@@ -85,56 +73,43 @@ const Category = () => {
   const queryClient = useQueryClient();
 
   // Mutations
-  const addCategory = useMutation(
-    (category: any) => categoriesApi.create(category),
-    {
-      mutationKey: "addCategory",
-      onMutate: async name => {
-        setCategory({ name: "", id: "" });
-        await queryClient.cancelQueries("categories");
-        const previousValue = queryClient.getQueryData("categories");
-        queryClient.setQueryData("categories", (old: any) => {
-          return {
-            ...old,
-            categories: [...old.categories, name],
-          };
-        });
-        return previousValue;
-      },
-      onError: (_err, _variables, previousValue: any) =>
-        queryClient.setQueryData("categories", previousValue),
-      onSettled: () => queryClient.invalidateQueries("categories"),
-    }
-  );
+  const addCategory = useMutation((category: any) => categoriesApi.create(category), {
+    mutationKey: "addCategory",
+    onMutate: async name => {
+      setCategory({ name: "", id: "" });
+      await queryClient.cancelQueries("categories");
+      const previousValue = queryClient.getQueryData("categories");
+      queryClient.setQueryData("categories", (old: any) => {
+        return {
+          ...old,
+          categories: [...old.categories, name],
+        };
+      });
+      return previousValue;
+    },
+    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("categories", previousValue),
+    onSettled: () => queryClient.invalidateQueries("categories"),
+  });
 
-  const updateCategory = useMutation(
-    (category: any) => categoriesApi.update(category),
-    {
-      mutationKey: "editCategory",
-      onMutate: async newCategory => {
-        await queryClient.cancelQueries(["categories", newCategory.id]);
-        // Snapshot the previous value
-        const previousValue = queryClient.getQueryData([
-          "categories",
-          newCategory.id,
-        ]);
-        // Optimistically update to the new value
-        queryClient.setQueryData(["categories", newCategory.id], newCategory);
-        // Return a context object with the snapshotted value
-        return { previousValue, newCategory };
-      },
-      onError: (err, newCategory, context: any) => {
-        queryClient.setQueryData(
-          ["categories", context.newCategory.id],
-          context.previousValue
-        );
-      },
-      // Always refetch after error or success:
-      onSettled: (newCategory: any) => {
-        queryClient.invalidateQueries(["categories", newCategory.id]);
-      },
-    }
-  );
+  const updateCategory = useMutation((category: any) => categoriesApi.update(category), {
+    mutationKey: "editCategory",
+    onMutate: async newCategory => {
+      await queryClient.cancelQueries(["categories", newCategory.id]);
+      // Snapshot the previous value
+      const previousValue = queryClient.getQueryData(["categories", newCategory.id]);
+      // Optimistically update to the new value
+      queryClient.setQueryData(["categories", newCategory.id], newCategory);
+      // Return a context object with the snapshotted value
+      return { previousValue, newCategory };
+    },
+    onError: (err, newCategory, context: any) => {
+      queryClient.setQueryData(["categories", context.newCategory.id], context.previousValue);
+    },
+    // Always refetch after error or success:
+    onSettled: (newCategory: any) => {
+      queryClient.invalidateQueries(["categories", newCategory.id]);
+    },
+  });
 
   const deleteCategory = useMutation((id: String) => categoriesApi.remove(id), {
     mutationKey: "delCategory",
@@ -151,8 +126,7 @@ const Category = () => {
       });
       return previousValue;
     },
-    onError: (_err, _variables, previousValue: any) =>
-      queryClient.setQueryData("categories", previousValue),
+    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("categories", previousValue),
     onSettled: () => queryClient.invalidateQueries("categories"),
   });
 
@@ -165,13 +139,7 @@ const Category = () => {
             isClosable: true,
             variant: "solid",
             render: () => (
-              <Alert
-                status="success"
-                variant="solid"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-              >
+              <Alert status="success" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
                 <AlertIcon boxSize="40px" mr={10} />
                 <AlertTitle mt={4} mb={1} fontSize="lg">
                   新增成功！
@@ -186,13 +154,7 @@ const Category = () => {
             isClosable: true,
             variant: "solid",
             render: () => (
-              <Alert
-                status="error"
-                variant="solid"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-              >
+              <Alert status="error" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
                 <AlertIcon boxSize="40px" mr={0} />
                 <AlertTitle mt={4} mb={1} fontSize="lg">
                   操作失败！
@@ -210,13 +172,7 @@ const Category = () => {
             isClosable: true,
             variant: "solid",
             render: () => (
-              <Alert
-                status="success"
-                variant="solid"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-              >
+              <Alert status="success" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
                 <AlertIcon boxSize="40px" mr={0} />
                 <AlertTitle mt={4} mb={1} fontSize="lg">
                   编辑成功！
@@ -231,13 +187,7 @@ const Category = () => {
             isClosable: true,
             variant: "solid",
             render: () => (
-              <Alert
-                status="error"
-                variant="solid"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-              >
+              <Alert status="error" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
                 <AlertIcon boxSize="40px" mr={0} />
                 <AlertTitle mt={4} mb={1} fontSize="lg">
                   操作失败！
@@ -284,13 +234,7 @@ const Category = () => {
     );
     return (
       <>
-        <Flex
-          w="full"
-          bg="gray.600"
-          p={50}
-          alignItems="center"
-          justifyContent="center"
-        >
+        <Flex w="full" bg="gray.600" p={50} alignItems="center" justifyContent="center">
           <Table
             w="full"
             display={{
@@ -386,9 +330,7 @@ const Category = () => {
                           }}
                         >
                           {cell.column.Cell.name === "defaultRenderer" ? (
-                            <Box className="text-sm text-gray-500">
-                              {cell.render("Cell")}
-                            </Box>
+                            <Box className="text-sm text-gray-500">{cell.render("Cell")}</Box>
                           ) : (
                             cell.render("Cell")
                           )}
@@ -409,10 +351,7 @@ const Category = () => {
     );
   };
 
-  const handValue = useCallback(
-    e => setCategory({ ...category, name: e.target.value }),
-    [category.name, category.id]
-  );
+  const handValue = useCallback(e => setCategory({ ...category, name: e.target.value }), [category.name, category.id]);
 
   const columns = useMemo(
     () => [
@@ -421,11 +360,7 @@ const Category = () => {
         id: "expander", // Make sure it has an ID
         Header: ({ getToggleAllRowsExpandedProps, isAllRowsExpanded }) => (
           <Box {...getToggleAllRowsExpandedProps()}>
-            {isAllRowsExpanded ? (
-              <ChevronDownIcon w={8} h={8} color="red.500" />
-            ) : (
-              <ChevronRightIcon w={8} h={8} color="red.500" />
-            )}
+            {isAllRowsExpanded ? <ChevronDownIcon w={8} h={8} color="red.500" /> : <ChevronRightIcon w={8} h={8} color="red.500" />}
           </Box>
         ),
         Cell: ({ row }) =>
@@ -439,11 +374,7 @@ const Category = () => {
                 },
               })}
             >
-              {row.isExpanded ? (
-                <ChevronDownIcon w={8} h={8} color="red.500" />
-              ) : (
-                <ChevronRightIcon w={8} h={8} color="red.500" />
-              )}
+              {row.isExpanded ? <ChevronDownIcon w={8} h={8} color="red.500" /> : <ChevronRightIcon w={8} h={8} color="red.500" />}
             </Box>
           ) : null,
       },
@@ -473,13 +404,7 @@ const Category = () => {
         columns: [
           {
             accessor: (originalRow, _) => (
-              <Button
-                colorScheme="blue"
-                leftIcon={<AddIcon />}
-                size="sm"
-                variant="solid"
-                onClick={() => handModal(originalRow.id, "add")}
-              >
+              <Button colorScheme="blue" leftIcon={<AddIcon />} size="sm" variant="solid" onClick={() => handModal(originalRow.id, "add")}>
                 新增
               </Button>
             ),
@@ -489,13 +414,7 @@ const Category = () => {
           },
           {
             accessor: (originalRow, _) => (
-              <Button
-                colorScheme="teal"
-                leftIcon={<EditIcon />}
-                size="sm"
-                variant="solid"
-                onClick={() => handEdit(originalRow, "edit")}
-              >
+              <Button colorScheme="teal" leftIcon={<EditIcon />} size="sm" variant="solid" onClick={() => handEdit(originalRow, "edit")}>
                 编辑
               </Button>
             ),
@@ -573,37 +492,17 @@ const Category = () => {
           ) : (
             <>
               <TableList columns={columns} data={tableData} />
-              <Box>
-                {isFetching ? (
-                  <Spinner
-                    thickness="4px"
-                    speed="0.65s"
-                    emptyColor="gray.200"
-                    color="blue.500"
-                    size="xl"
-                  />
-                ) : (
-                  " "
-                )}
-              </Box>
+              <Box>{isFetching ? <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" /> : " "}</Box>
             </>
           )}
           {show.isShow && show.type !== "del" && (
-            <Modal
-              isOpen={show.isShow && show.type !== "del"}
-              onClose={onClose}
-            >
+            <Modal isOpen={show.isShow && show.type !== "del"} onClose={onClose}>
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>类型提交</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <FormControl
-                    id="name"
-                    variant={show.type === "add" ? "floating" : "editfloating"}
-                    isInvalid={isError}
-                    isRequired
-                  >
+                  <FormControl id="name" variant={show.type === "add" ? "floating" : "editfloating"} isInvalid={isError} isRequired>
                     <Input
                       isRequired
                       isInvalid
@@ -616,28 +515,15 @@ const Category = () => {
                       placeholder=""
                     />
                     <FormLabel>类型名称</FormLabel>
-                    {!isError ? (
-                      <FormHelperText>填写不同名称类型</FormHelperText>
-                    ) : (
-                      <FormErrorMessage>必填</FormErrorMessage>
-                    )}
+                    {!isError ? <FormHelperText>填写不同名称类型</FormHelperText> : <FormErrorMessage>必填</FormErrorMessage>}
                   </FormControl>
                 </ModalBody>
 
                 <ModalFooter>
-                  <Button
-                    colorScheme="teal"
-                    variant="outline"
-                    mr={3}
-                    onClick={() => onClose()}
-                  >
+                  <Button colorScheme="teal" variant="outline" mr={3} onClick={() => onClose()}>
                     关闭
                   </Button>
-                  <Button
-                    variant="solid"
-                    colorScheme="blue"
-                    onClick={() => onSubmit()}
-                  >
+                  <Button variant="solid" colorScheme="blue" onClick={() => onSubmit()}>
                     提交
                   </Button>
                 </ModalFooter>

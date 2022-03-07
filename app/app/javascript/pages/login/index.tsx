@@ -1,17 +1,6 @@
 import React, { useState, useCallback } from "react";
 // Chakra imports
-import {
-  Box,
-  Flex,
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  Switch,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Flex, Button, FormControl, FormLabel, Heading, Input, Switch, Text, useColorModeValue } from "@chakra-ui/react";
 import { useQueryClient, useMutation } from "react-query";
 import userApi from "../../apis/user";
 import { UserLogin } from "../../types/user";
@@ -35,8 +24,7 @@ const SignIn = () => {
 
   const userLogin: any = useMutation((user: UserLogin) => userApi.login(user), {
     mutationKey: "userLogin",
-    onError: (_err, _variables, previousValue: any) =>
-      queryClient.setQueryData("currentUser", previousValue),
+    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("currentUser", previousValue),
     onSettled: () => queryClient.invalidateQueries("currentUser"),
   });
 
@@ -79,29 +67,12 @@ const SignIn = () => {
         mb="30px"
         pt={{ sm: "100px", md: "0px" }}
       >
-        <Flex
-          alignItems="center"
-          justifyContent="start"
-          style={{ userSelect: "none" }}
-          w={{ base: "100%", md: "50%", lg: "42%" }}
-        >
-          <Flex
-            direction="column"
-            w="100%"
-            background="transparent"
-            p="48px"
-            mt={{ md: "150px", lg: "80px" }}
-          >
+        <Flex alignItems="center" justifyContent="start" style={{ userSelect: "none" }} w={{ base: "100%", md: "50%", lg: "42%" }}>
+          <Flex direction="column" w="100%" background="transparent" p="48px" mt={{ md: "150px", lg: "80px" }}>
             <Heading color={titleColor} fontSize="32px" mb="10px">
               Welcome Back
             </Heading>
-            <Text
-              mb="36px"
-              ms="4px"
-              color={textColor}
-              fontWeight="bold"
-              fontSize="14px"
-            >
+            <Text mb="36px" ms="4px" color={textColor} fontWeight="bold" fontSize="14px">
               Enter your email and password to sign in
             </Text>
             <FormControl variant="floating" isRequired>
@@ -154,12 +125,7 @@ const SignIn = () => {
             </FormControl>
             <FormControl display="flex" alignItems="center">
               <Switch id="remember-login" colorScheme="teal" me="10px" />
-              <FormLabel
-                htmlFor="remember-login"
-                mb="0"
-                ms="1"
-                fontWeight="normal"
-              >
+              <FormLabel htmlFor="remember-login" mb="0" ms="1" fontWeight="normal">
                 Remember me
               </FormLabel>
             </FormControl>
@@ -201,36 +167,17 @@ const SignIn = () => {
             >
               微信登录
             </Button>
-            <Flex
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              maxW="100%"
-              mt="0px"
-            >
+            <Flex flexDirection="column" justifyContent="center" alignItems="center" maxW="100%" mt="0px">
               <Text color={textColor} fontWeight="medium">
                 您还没有账号?
-                <Box
-                  onClick={() => navigate.push("/auth/signup")}
-                  color={titleColor}
-                  as="span"
-                  ms="5px"
-                  fontWeight="bold"
-                >
+                <Box onClick={() => navigate.push("/auth/signup")} color={titleColor} as="span" ms="5px" fontWeight="bold">
                   注册
                 </Box>
               </Text>
             </Flex>
           </Flex>
         </Flex>
-        <Box
-          display={{ base: "none", md: "block" }}
-          overflowX="hidden"
-          h="100%"
-          w="40vw"
-          position="absolute"
-          right="0px"
-        >
+        <Box display={{ base: "none", md: "block" }} overflowX="hidden" h="100%" w="40vw" position="absolute" right="0px">
           <Box
             // bgImage={signInImage}
             w="100%"

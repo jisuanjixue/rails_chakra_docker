@@ -11,15 +11,7 @@ const BarChart = () => {
     getChartOptions(lineChartOptions);
   }, []);
 
-  return (
-    <ReactApexChart
-      options={chartOptions}
-      series={chartData}
-      type="area"
-      width="100%"
-      height="100%"
-    />
-  );
+  return <ReactApexChart options={chartOptions} series={chartData} type="area" width="100%" height="100%" />;
 };
 
 export default BarChart;

@@ -1,7 +1,6 @@
 import React, { useReducer, useMemo } from "react";
 import { UserContext } from "../controllers/ContextManager";
-
-const initialState = { user: {} };
+import { useConst } from "@chakra-ui/react";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -15,15 +14,15 @@ const reducer = (state, action) => {
 };
 
 const UserProvider = ({ children }) => {
+  const initialState = useConst({ user: {} });
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const contextValue = useMemo(() => {
     return { state, dispatch };
   }, [state, dispatch]);
 
-  return (
-    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
-  );
+  return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
 };
 
 export default UserProvider;

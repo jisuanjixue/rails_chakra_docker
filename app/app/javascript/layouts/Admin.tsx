@@ -1,12 +1,6 @@
 // Chakra imports
-import React, { useState, useRef, useContext } from "react";
-import {
-  Portal,
-  useDisclosure,
-  IconButton,
-  useColorModeValue,
-  useControllableState,
-} from "@chakra-ui/react";
+import React, { useState, useRef, useContext, forwardRef } from "react";
+import { Portal, useDisclosure, IconButton, useColorModeValue, useControllableState } from "@chakra-ui/react";
 import {
   useQuery,
   // useMutation
@@ -61,7 +55,7 @@ const AdminLayout = props => {
   const [sidebarVariant, setSidebarVariant] = useState("transparent");
   const [fixed, setFixed] = useState(false);
   // ref for main panel div
-  const mainPanel = React.createRef();
+  const mainPanel = forwardRef(null);
   // functions for changing the states from components
   const getRoute = () => {
     // console.log('2222', window.location.pathname)
@@ -79,13 +73,7 @@ const AdminLayout = props => {
       }
 
       if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
+        return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
       }
 
       return null;
@@ -106,9 +94,7 @@ const AdminLayout = props => {
           return categoryActiveRoute;
         }
       } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
+        if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
           return routes[i].name;
         }
       }
@@ -125,9 +111,7 @@ const AdminLayout = props => {
           return categoryActiveNavbar;
         }
       } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
+        if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
           if (routes[i].secondaryNavbar) {
             return routes[i].secondaryNavbar;
           }
@@ -182,11 +166,7 @@ const AdminLayout = props => {
         ) : null}
         <Footer />
         <Portal>
-          <FixedPlugin
-            secondary={getActiveNavbar(routes)}
-            fixed={fixed}
-            onOpen={onOpen}
-          />
+          <FixedPlugin secondary={getActiveNavbar(routes)} fixed={fixed} onOpen={onOpen} />
         </Portal>
         <Portal>
           <IconButton
@@ -203,9 +183,7 @@ const AdminLayout = props => {
             bottom="30px"
             borderRadius="50px"
             boxShadow="0 2px 12px 0 rgb(0 0 0 / 16%)"
-            onClick={() =>
-              siderbarOpen ? getSiderbarOpen(false) : getSiderbarOpen(true)
-            }
+            onClick={() => (siderbarOpen ? getSiderbarOpen(false) : getSiderbarOpen(true))}
           />
         </Portal>
         <Configurator

@@ -1,19 +1,6 @@
 import React from "react";
 // Chakra imports
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Icon,
-  Image,
-  Link,
-  Switch,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Avatar, AvatarGroup, Box, Button, Flex, Grid, Icon, Image, Link, Switch, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "@components/Card/Card";
 import CardBody from "@components/Card/CardBody";
@@ -28,14 +15,7 @@ import CardHeader from "@components/Card/CardHeader";
 // import ImageArchitect2 from "../../images/ImageArchitect2.png";
 // import ImageArchitect3 from "../../images/ImageArchitect3.png";
 // import ProfileBgImage from "../../images/ProfileBackground.png";
-import {
-  FaCube,
-  FaFacebook,
-  FaInstagram,
-  FaPenFancy,
-  FaPlus,
-  FaTwitter,
-} from "react-icons/fa";
+import { FaCube, FaFacebook, FaInstagram, FaPenFancy, FaPlus, FaTwitter } from "react-icons/fa";
 import { IoDocumentsSharp } from "react-icons/io5";
 
 function Profile() {
@@ -45,10 +25,7 @@ function Profile() {
     "hsla(0,0%,100%,.8)",
     "linear-gradient(112.83deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0) 110.84%)"
   );
-  const borderProfileColor = useColorModeValue(
-    "white",
-    "rgba(255, 255, 255, 0.31)"
-  );
+  const borderProfileColor = useColorModeValue("white", "rgba(255, 255, 255, 0.31)");
   const emailColor = useColorModeValue("gray.400", "gray.300");
 
   return (
@@ -101,35 +78,17 @@ function Profile() {
               w={{ sm: "100%" }}
               textAlign={{ sm: "center", md: "start" }}
             >
-              <Avatar
-                me={{ md: "22px" }}
-                src={""}
-                w="80px"
-                h="80px"
-                borderRadius="15px"
-              />
+              <Avatar me={{ md: "22px" }} src={""} w="80px" h="80px" borderRadius="15px" />
               <Flex direction="column" maxWidth="100%" my={{ sm: "14px" }}>
-                <Text
-                  fontSize={{ sm: "lg", lg: "xl" }}
-                  color={textColor}
-                  fontWeight="bold"
-                  ms={{ sm: "8px", md: "0px" }}
-                >
+                <Text fontSize={{ sm: "lg", lg: "xl" }} color={textColor} fontWeight="bold" ms={{ sm: "8px", md: "0px" }}>
                   Esthera Jackson
                 </Text>
-                <Text
-                  fontSize={{ sm: "sm", md: "md" }}
-                  color={emailColor}
-                  fontWeight="semibold"
-                >
+                <Text fontSize={{ sm: "sm", md: "md" }} color={emailColor} fontWeight="semibold">
                   esthera@simmmple.com
                 </Text>
               </Flex>
             </Flex>
-            <Flex
-              direction={{ sm: "column", lg: "row" }}
-              w={{ sm: "100%", md: "50%", lg: "auto" }}
-            >
+            <Flex direction={{ sm: "column", lg: "row" }} w={{ sm: "100%", md: "50%", lg: "auto" }}>
               <Button p="0px" bg="transparent" _hover={{ bg: "none" }}>
                 <Flex
                   align="center"
@@ -165,14 +124,7 @@ function Profile() {
                 </Flex>
               </Button>
               <Button p="0px" bg="transparent" _hover={{ bg: "none" }}>
-                <Flex
-                  align="center"
-                  w={{ lg: "135px" }}
-                  borderRadius="15px"
-                  justifyContent="center"
-                  py="10px"
-                  cursor="pointer"
-                >
+                <Flex align="center" w={{ lg: "135px" }} borderRadius="15px" justifyContent="center" py="10px" cursor="pointer">
                   <Icon as={FaPenFancy} me="6px" />
                   <Text fontSize="xs" color={textColor} fontWeight="bold">
                     PROJECTS
@@ -197,75 +149,40 @@ function Profile() {
               </Text>
               <Flex align="center" mb="20px">
                 <Switch colorScheme="teal" me="10px" />
-                <Text
-                  noOfLines={1}
-                  fontSize="md"
-                  color="gray.500"
-                  fontWeight="400"
-                >
+                <Text noOfLines={1} fontSize="md" color="gray.500" fontWeight="400">
                   Email me when someone follows me
                 </Text>
               </Flex>
               <Flex align="center" mb="20px">
                 <Switch colorScheme="teal" me="10px" />
-                <Text
-                  noOfLines={1}
-                  fontSize="md"
-                  color="gray.500"
-                  fontWeight="400"
-                >
+                <Text noOfLines={1} fontSize="md" color="gray.500" fontWeight="400">
                   Email me when someone answers on my post
                 </Text>
               </Flex>
               <Flex align="center" mb="20px">
                 <Switch colorScheme="teal" me="10px" />
-                <Text
-                  noOfLines={1}
-                  fontSize="md"
-                  color="gray.500"
-                  fontWeight="400"
-                >
+                <Text noOfLines={1} fontSize="md" color="gray.500" fontWeight="400">
                   Email me when someone mentions me
                 </Text>
               </Flex>
-              <Text
-                fontSize="sm"
-                color="gray.500"
-                fontWeight="600"
-                m="6px 0px 20px 0px"
-              >
+              <Text fontSize="sm" color="gray.500" fontWeight="600" m="6px 0px 20px 0px">
                 APPLICATION
               </Text>
               <Flex align="center" mb="20px">
                 <Switch colorScheme="teal" me="10px" />
-                <Text
-                  noOfLines={1}
-                  fontSize="md"
-                  color="gray.500"
-                  fontWeight="400"
-                >
+                <Text noOfLines={1} fontSize="md" color="gray.500" fontWeight="400">
                   New launches and projects
                 </Text>
               </Flex>
               <Flex align="center" mb="20px">
                 <Switch colorScheme="teal" me="10px" />
-                <Text
-                  noOfLines={1}
-                  fontSize="md"
-                  color="gray.500"
-                  fontWeight="400"
-                >
+                <Text noOfLines={1} fontSize="md" color="gray.500" fontWeight="400">
                   Monthly product changes
                 </Text>
               </Flex>
               <Flex align="center" mb="20px">
                 <Switch colorScheme="teal" me="10px" />
-                <Text
-                  noOfLines={1}
-                  fontSize="md"
-                  color="gray.500"
-                  fontWeight="400"
-                >
+                <Text noOfLines={1} fontSize="md" color="gray.500" fontWeight="400">
                   Subscribe to newsletter
                 </Text>
               </Flex>
@@ -281,18 +198,11 @@ function Profile() {
           <CardBody px="5px">
             <Flex direction="column">
               <Text fontSize="md" color="gray.500" fontWeight="400" mb="30px">
-                Hi, I’m Esthera Jackson, Decisions: If you can’t decide, the
-                answer is no. If two equally difficult paths, choose the one
-                more painful in the short term (pain avoidance is creating an
-                illusion of equality).
+                Hi, I’m Esthera Jackson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one
+                more painful in the short term (pain avoidance is creating an illusion of equality).
               </Text>
               <Flex align="center" mb="18px">
-                <Text
-                  fontSize="md"
-                  color={textColor}
-                  fontWeight="bold"
-                  me="10px"
-                >
+                <Text fontSize="md" color={textColor} fontWeight="bold" me="10px">
                   Full Name:{" "}
                 </Text>
                 <Text fontSize="md" color="gray.500" fontWeight="400">
@@ -300,12 +210,7 @@ function Profile() {
                 </Text>
               </Flex>
               <Flex align="center" mb="18px">
-                <Text
-                  fontSize="md"
-                  color={textColor}
-                  fontWeight="bold"
-                  me="10px"
-                >
+                <Text fontSize="md" color={textColor} fontWeight="bold" me="10px">
                   Mobile:{" "}
                 </Text>
                 <Text fontSize="md" color="gray.500" fontWeight="400">
@@ -313,12 +218,7 @@ function Profile() {
                 </Text>
               </Flex>
               <Flex align="center" mb="18px">
-                <Text
-                  fontSize="md"
-                  color={textColor}
-                  fontWeight="bold"
-                  me="10px"
-                >
+                <Text fontSize="md" color={textColor} fontWeight="bold" me="10px">
                   Email:{" "}
                 </Text>
                 <Text fontSize="md" color="gray.500" fontWeight="400">
@@ -326,12 +226,7 @@ function Profile() {
                 </Text>
               </Flex>
               <Flex align="center" mb="18px">
-                <Text
-                  fontSize="md"
-                  color={textColor}
-                  fontWeight="bold"
-                  me="10px"
-                >
+                <Text fontSize="md" color={textColor} fontWeight="bold" me="10px">
                   Location:{" "}
                 </Text>
                 <Text fontSize="md" color="gray.500" fontWeight="400">
@@ -339,40 +234,17 @@ function Profile() {
                 </Text>
               </Flex>
               <Flex align="center" mb="18px">
-                <Text
-                  fontSize="md"
-                  color={textColor}
-                  fontWeight="bold"
-                  me="10px"
-                >
+                <Text fontSize="md" color={textColor} fontWeight="bold" me="10px">
                   Social Media:{" "}
                 </Text>
                 <Flex>
-                  <Link
-                    href="#"
-                    color="teal.300"
-                    fontSize="lg"
-                    me="10px"
-                    _hover={{ color: "teal.300" }}
-                  >
+                  <Link href="#" color="teal.300" fontSize="lg" me="10px" _hover={{ color: "teal.300" }}>
                     <Icon as={FaFacebook} />
                   </Link>
-                  <Link
-                    href="#"
-                    color="teal.300"
-                    fontSize="lg"
-                    me="10px"
-                    _hover={{ color: "teal.300" }}
-                  >
+                  <Link href="#" color="teal.300" fontSize="lg" me="10px" _hover={{ color: "teal.300" }}>
                     <Icon as={FaInstagram} />
                   </Link>
-                  <Link
-                    href="#"
-                    color="teal.300"
-                    fontSize="lg"
-                    me="10px"
-                    _hover={{ color: "teal.300" }}
-                  >
+                  <Link href="#" color="teal.300" fontSize="lg" me="10px" _hover={{ color: "teal.300" }}>
                     <Icon as={FaTwitter} />
                   </Link>
                 </Flex>
@@ -390,13 +262,7 @@ function Profile() {
             <Flex direction="column" w="100%">
               <Flex justifyContent="space-between" mb="21px">
                 <Flex align="center">
-                  <Avatar
-                    src={""}
-                    w="50px"
-                    h="50px"
-                    borderRadius="15px"
-                    me="10px"
-                  />
+                  <Avatar src={""} w="50px" h="50px" borderRadius="15px" me="10px" />
                   <Flex direction="column">
                     <Text fontSize="sm" color={textColor} fontWeight="bold">
                       Sophie B.{" "}
@@ -407,25 +273,14 @@ function Profile() {
                   </Flex>
                 </Flex>
                 <Button p="0px" bg="transparent" variant="no-hover">
-                  <Text
-                    fontSize="sm"
-                    fontWeight="600"
-                    color="teal.300"
-                    alignSelf="center"
-                  >
+                  <Text fontSize="sm" fontWeight="600" color="teal.300" alignSelf="center">
                     REPLY
                   </Text>
                 </Button>
               </Flex>
               <Flex justifyContent="space-between" mb="21px">
                 <Flex align="center">
-                  <Avatar
-                    src={""}
-                    w="50px"
-                    h="50px"
-                    borderRadius="15px"
-                    me="10px"
-                  />
+                  <Avatar src={""} w="50px" h="50px" borderRadius="15px" me="10px" />
                   <Flex direction="column">
                     <Text fontSize="sm" color={textColor} fontWeight="bold">
                       Sophie B.{" "}
@@ -436,25 +291,14 @@ function Profile() {
                   </Flex>
                 </Flex>
                 <Button p="0px" bg="transparent" variant="no-hover">
-                  <Text
-                    fontSize="sm"
-                    fontWeight="600"
-                    color="teal.300"
-                    alignSelf="center"
-                  >
+                  <Text fontSize="sm" fontWeight="600" color="teal.300" alignSelf="center">
                     REPLY
                   </Text>
                 </Button>
               </Flex>
               <Flex justifyContent="space-between" mb="21px">
                 <Flex align="center">
-                  <Avatar
-                    src={""}
-                    w="50px"
-                    h="50px"
-                    borderRadius="15px"
-                    me="10px"
-                  />
+                  <Avatar src={""} w="50px" h="50px" borderRadius="15px" me="10px" />
                   <Flex direction="column">
                     <Text fontSize="sm" color={textColor} fontWeight="bold">
                       Sophie B.{" "}
@@ -465,25 +309,14 @@ function Profile() {
                   </Flex>
                 </Flex>
                 <Button p="0px" bg="transparent" variant="no-hover">
-                  <Text
-                    fontSize="sm"
-                    fontWeight="600"
-                    color="teal.300"
-                    alignSelf="center"
-                  >
+                  <Text fontSize="sm" fontWeight="600" color="teal.300" alignSelf="center">
                     REPLY
                   </Text>
                 </Button>
               </Flex>
               <Flex justifyContent="space-between" mb="21px">
                 <Flex align="center">
-                  <Avatar
-                    src={""}
-                    w="50px"
-                    h="50px"
-                    borderRadius="15px"
-                    me="10px"
-                  />
+                  <Avatar src={""} w="50px" h="50px" borderRadius="15px" me="10px" />
                   <Flex direction="column">
                     <Text fontSize="sm" color={textColor} fontWeight="bold">
                       Sophie B.{" "}
@@ -494,25 +327,14 @@ function Profile() {
                   </Flex>
                 </Flex>
                 <Button p="0px" bg="transparent" variant="no-hover">
-                  <Text
-                    fontSize="sm"
-                    fontWeight="600"
-                    color="teal.300"
-                    alignSelf="center"
-                  >
+                  <Text fontSize="sm" fontWeight="600" color="teal.300" alignSelf="center">
                     REPLY
                   </Text>
                 </Button>
               </Flex>
               <Flex justifyContent="space-between" mb="21px">
                 <Flex align="center">
-                  <Avatar
-                    src={""}
-                    w="50px"
-                    h="50px"
-                    borderRadius="15px"
-                    me="10px"
-                  />
+                  <Avatar src={""} w="50px" h="50px" borderRadius="15px" me="10px" />
                   <Flex direction="column">
                     <Text fontSize="sm" color={textColor} fontWeight="bold">
                       Sophie B.{" "}
@@ -523,12 +345,7 @@ function Profile() {
                   </Flex>
                 </Flex>
                 <Button p="0px" bg="transparent" variant="no-hover">
-                  <Text
-                    fontSize="sm"
-                    fontWeight="600"
-                    color="teal.300"
-                    alignSelf="center"
-                  >
+                  <Text fontSize="sm" fontWeight="600" color="teal.300" alignSelf="center">
                     REPLY
                   </Text>
                 </Button>
@@ -570,27 +387,14 @@ function Profile() {
                 <Text fontSize="md" color="gray.500" fontWeight="600" mb="10px">
                   Project #1
                 </Text>
-                <Text
-                  fontSize="xl"
-                  color={textColor}
-                  fontWeight="bold"
-                  mb="10px"
-                >
+                <Text fontSize="xl" color={textColor} fontWeight="bold" mb="10px">
                   Modern
                 </Text>
                 <Text fontSize="md" color="gray.500" fontWeight="400" mb="20px">
-                  As Uber works through a huge amount of internal management
-                  turmoil.
+                  As Uber works through a huge amount of internal management turmoil.
                 </Text>
                 <Flex justifyContent="space-between">
-                  <Button
-                    variant="outline"
-                    colorScheme="teal"
-                    minW="110px"
-                    h="36px"
-                    fontSize="xs"
-                    px="1.5rem"
-                  >
+                  <Button variant="outline" colorScheme="teal" minW="110px" h="36px" fontSize="xs" px="1.5rem">
                     VIEW PROJECT
                   </Button>
                   <AvatarGroup size="xs">
@@ -618,27 +422,14 @@ function Profile() {
                 <Text fontSize="md" color="gray.500" fontWeight="600" mb="10px">
                   Project #2
                 </Text>
-                <Text
-                  fontSize="xl"
-                  color={textColor}
-                  fontWeight="bold"
-                  mb="10px"
-                >
+                <Text fontSize="xl" color={textColor} fontWeight="bold" mb="10px">
                   Scandinavian
                 </Text>
                 <Text fontSize="md" color="gray.500" fontWeight="400" mb="20px">
-                  Music is something that every person has his or her own
-                  specific opinion about.
+                  Music is something that every person has his or her own specific opinion about.
                 </Text>
                 <Flex justifyContent="space-between">
-                  <Button
-                    variant="outline"
-                    colorScheme="teal"
-                    minW="110px"
-                    h="36px"
-                    fontSize="xs"
-                    px="1.5rem"
-                  >
+                  <Button variant="outline" colorScheme="teal" minW="110px" h="36px" fontSize="xs" px="1.5rem">
                     VIEW PROJECT
                   </Button>
                   <AvatarGroup size="xs">
@@ -666,27 +457,14 @@ function Profile() {
                 <Text fontSize="md" color="gray.500" fontWeight="600" mb="10px">
                   Project #3
                 </Text>
-                <Text
-                  fontSize="xl"
-                  color={textColor}
-                  fontWeight="bold"
-                  mb="10px"
-                >
+                <Text fontSize="xl" color={textColor} fontWeight="bold" mb="10px">
                   Minimalist
                 </Text>
                 <Text fontSize="md" color="gray.500" fontWeight="400" mb="20px">
-                  Different people have different taste, especially various
-                  types of music.
+                  Different people have different taste, especially various types of music.
                 </Text>
                 <Flex justifyContent="space-between">
-                  <Button
-                    variant="outline"
-                    colorScheme="teal"
-                    minW="110px"
-                    h="36px"
-                    fontSize="xs"
-                    px="1.5rem"
-                  >
+                  <Button variant="outline" colorScheme="teal" minW="110px" h="36px" fontSize="xs" px="1.5rem">
                     VIEW PROJECT
                   </Button>
                   <AvatarGroup size="xs">

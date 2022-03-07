@@ -33,13 +33,7 @@ function Header() {
             <Box className="flex"></Box>
 
             {/* Header: Right side */}
-            <Flex
-              justify="flex-end"
-              w="full"
-              maxW="824px"
-              align="center"
-              color="gray.400"
-            >
+            <Flex justify="flex-end" w="full" maxW="824px" align="center" color="gray.400">
               <HStack spacing="5" display={{ base: "none", md: "flex" }}>
                 <ChangeTheme />
                 <SearchModal />

@@ -34,14 +34,7 @@ import BarChart from "@components/Charts/BarChart";
 import LineChart from "@components/Charts/LineChart";
 import IconBox from "@components/Icons/IconBox";
 // Custom icons
-import {
-  CartIcon,
-  DocumentIcon,
-  GlobeIcon,
-  RocketIcon,
-  StatsIcon,
-  WalletIcon,
-} from "@components/icons/Icons";
+import { CartIcon, DocumentIcon, GlobeIcon, RocketIcon, StatsIcon, WalletIcon } from "@components/icons/Icons";
 import DashboardTableRow from "@components/Tables/DashboardTableRow";
 import TimelineRow from "@components/Tables/TimelineRow";
 // react icons
@@ -68,12 +61,7 @@ const Dashboard = () => {
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
               <Stat me="auto">
-                <StatLabel
-                  fontSize="sm"
-                  color="gray.400"
-                  fontWeight="bold"
-                  pb=".1rem"
-                >
+                <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem">
                   Today's Money
                 </StatLabel>
                 <Flex>
@@ -103,12 +91,7 @@ const Dashboard = () => {
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
               <Stat me="auto">
-                <StatLabel
-                  fontSize="sm"
-                  color="gray.400"
-                  fontWeight="bold"
-                  pb=".1rem"
-                >
+                <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem">
                   Today's Users
                 </StatLabel>
                 <Flex>
@@ -138,12 +121,7 @@ const Dashboard = () => {
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
               <Stat>
-                <StatLabel
-                  fontSize="sm"
-                  color="gray.400"
-                  fontWeight="bold"
-                  pb=".1rem"
-                >
+                <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem">
                   New Clients
                 </StatLabel>
                 <Flex>
@@ -174,12 +152,7 @@ const Dashboard = () => {
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
               <Stat me="auto">
-                <StatLabel
-                  fontSize="sm"
-                  color="gray.400"
-                  fontWeight="bold"
-                  pb=".1rem"
-                >
+                <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem">
                   Total Sales
                 </StatLabel>
                 <Flex>
@@ -206,44 +179,23 @@ const Dashboard = () => {
           </CardBody>
         </Card>
       </SimpleGrid>
-      <Grid
-        templateColumns={{ md: "1fr", lg: "1.8fr 1.2fr" }}
-        templateRows={{ md: "1fr auto", lg: "1fr" }}
-        my="26px"
-        gap="24px"
-      >
+      <Grid templateColumns={{ md: "1fr", lg: "1.8fr 1.2fr" }} templateRows={{ md: "1fr auto", lg: "1fr" }} my="26px" gap="24px">
         <Card minHeight="290.5px" p="1.2rem">
           <CardBody w="100%">
             <Flex flexDirection={{ sm: "column", lg: "row" }} w="100%">
-              <Flex
-                flexDirection="column"
-                h="100%"
-                lineHeight="1.6"
-                width={{ lg: "45%" }}
-              >
+              <Flex flexDirection="column" h="100%" lineHeight="1.6" width={{ lg: "45%" }}>
                 <Text fontSize="sm" color="gray.400" fontWeight="bold">
                   Built by developers
                 </Text>
-                <Text
-                  fontSize="lg"
-                  color={textColor}
-                  fontWeight="bold"
-                  pb=".5rem"
-                >
+                <Text fontSize="lg" color={textColor} fontWeight="bold" pb=".5rem">
                   Purity UI Dashboard
                 </Text>
                 <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                  From colors, cards, typography to complex elements, you will
-                  find the full documentation.
+                  From colors, cards, typography to complex elements, you will find the full documentation.
                 </Text>
                 <Spacer />
                 <Flex align="center">
-                  <Button
-                    p="0px"
-                    variant="no-hover"
-                    bg="transparent"
-                    my={{ sm: "1.5rem", lg: "0px" }}
-                  >
+                  <Button p="0px" variant="no-hover" bg="transparent" my={{ sm: "1.5rem", lg: "0px" }}>
                     <Text
                       fontSize="sm"
                       color={textColor}
@@ -270,19 +222,8 @@ const Dashboard = () => {
                 </Flex>
               </Flex>
               <Spacer />
-              <Flex
-                bg="teal.300"
-                align="center"
-                justify="center"
-                borderRadius="15px"
-                width={{ lg: "40%" }}
-                minHeight={{ sm: "250px" }}
-              >
-                <Image
-                  src={""}
-                  alt="chakra image"
-                  minWidth={{ md: "300px", lg: "auto" }}
-                />
+              <Flex bg="teal.300" align="center" justify="center" borderRadius="15px" width={{ lg: "40%" }} minHeight={{ sm: "250px" }}>
+                <Image src={""} alt="chakra image" minWidth={{ md: "300px", lg: "auto" }} />
               </Flex>
             </Flex>
           </CardBody>
@@ -308,31 +249,17 @@ const Dashboard = () => {
               ref={overlayRef}
             ></Box>
             <Portal containerRef={overlayRef}>
-              <Flex
-                flexDirection="column"
-                color="white"
-                p="1.5rem 1.2rem 0.3rem 1.2rem"
-                lineHeight="1.6"
-              >
+              <Flex flexDirection="column" color="white" p="1.5rem 1.2rem 0.3rem 1.2rem" lineHeight="1.6">
                 <Text fontSize="xl" fontWeight="bold" pb=".3rem">
                   Work with the rockets
                 </Text>
                 <Text fontSize="sm" fontWeight="normal" w={{ lg: "92%" }}>
-                  Wealth creation is a revolutionary recent positive-sum game.
-                  It is all about who takes the opportunity first.
+                  Wealth creation is a revolutionary recent positive-sum game. It is all about who takes the opportunity first.
                 </Text>
                 <Spacer />
-                <Flex
-                  align="center"
-                  mt={{ sm: "20px", lg: "40px", xl: "90px" }}
-                >
+                <Flex align="center" mt={{ sm: "20px", lg: "40px", xl: "90px" }}>
                   <Button p="0px" variant="no-hover" bg="transparent" mt="12px">
-                    <Text
-                      fontSize="sm"
-                      fontWeight="bold"
-                      _hover={{ me: "4px" }}
-                      transition="all .5s ease"
-                    >
+                    <Text fontSize="sm" fontWeight="bold" _hover={{ me: "4px" }} transition="all .5s ease">
                       Read more
                     </Text>
                     <Icon
@@ -363,18 +290,8 @@ const Dashboard = () => {
           <CardBody>
             <Flex direction="column" w="100%">
               <BarChart />
-              <Flex
-                direction="column"
-                mt="24px"
-                mb="36px"
-                alignSelf="flex-start"
-              >
-                <Text
-                  fontSize="lg"
-                  color={textColor}
-                  fontWeight="bold"
-                  mb="6px"
-                >
+              <Flex direction="column" mt="24px" mb="36px" alignSelf="flex-start">
+                <Text fontSize="lg" color={textColor} fontWeight="bold" mb="6px">
                   Active Users
                 </Text>
                 <Text fontSize="md" fontWeight="medium" color="gray.400">
@@ -387,127 +304,59 @@ const Dashboard = () => {
               <SimpleGrid gap={{ sm: "12px" }} columns={4}>
                 <Flex direction="column">
                   <Flex alignItems="center">
-                    <IconBox
-                      as="box"
-                      h={"30px"}
-                      w={"30px"}
-                      bg={iconTeal}
-                      me="6px"
-                    >
+                    <IconBox as="box" h={"30px"} w={"30px"} bg={iconTeal} me="6px">
                       <WalletIcon h={"15px"} w={"15px"} color={iconBoxInside} />
                     </IconBox>
                     <Text fontSize="sm" color="gray.400" fontWeight="semibold">
                       Users
                     </Text>
                   </Flex>
-                  <Text
-                    fontSize="lg"
-                    color={textColor}
-                    fontWeight="bold"
-                    mb="6px"
-                    my="6px"
-                  >
+                  <Text fontSize="lg" color={textColor} fontWeight="bold" mb="6px" my="6px">
                     32,984
                   </Text>
-                  <Progress
-                    colorScheme="teal"
-                    borderRadius="12px"
-                    h="5px"
-                    value={20}
-                  />
+                  <Progress colorScheme="teal" borderRadius="12px" h="5px" value={20} />
                 </Flex>
                 <Flex direction="column">
                   <Flex alignItems="center">
-                    <IconBox
-                      as="box"
-                      h={"30px"}
-                      w={"30px"}
-                      bg={iconTeal}
-                      me="6px"
-                    >
+                    <IconBox as="box" h={"30px"} w={"30px"} bg={iconTeal} me="6px">
                       <RocketIcon h={"15px"} w={"15px"} color={iconBoxInside} />
                     </IconBox>
                     <Text fontSize="sm" color="gray.400" fontWeight="semibold">
                       Clicks
                     </Text>
                   </Flex>
-                  <Text
-                    fontSize="lg"
-                    color={textColor}
-                    fontWeight="bold"
-                    mb="6px"
-                    my="6px"
-                  >
+                  <Text fontSize="lg" color={textColor} fontWeight="bold" mb="6px" my="6px">
                     2.42m
                   </Text>
-                  <Progress
-                    colorScheme="teal"
-                    borderRadius="12px"
-                    h="5px"
-                    value={90}
-                  />
+                  <Progress colorScheme="teal" borderRadius="12px" h="5px" value={90} />
                 </Flex>
                 <Flex direction="column">
                   <Flex alignItems="center">
-                    <IconBox
-                      as="box"
-                      h={"30px"}
-                      w={"30px"}
-                      bg={iconTeal}
-                      me="6px"
-                    >
+                    <IconBox as="box" h={"30px"} w={"30px"} bg={iconTeal} me="6px">
                       <CartIcon h={"15px"} w={"15px"} color={iconBoxInside} />
                     </IconBox>
                     <Text fontSize="sm" color="gray.400" fontWeight="semibold">
                       Sales
                     </Text>
                   </Flex>
-                  <Text
-                    fontSize="lg"
-                    color={textColor}
-                    fontWeight="bold"
-                    mb="6px"
-                    my="6px"
-                  >
+                  <Text fontSize="lg" color={textColor} fontWeight="bold" mb="6px" my="6px">
                     2,400$
                   </Text>
-                  <Progress
-                    colorScheme="teal"
-                    borderRadius="12px"
-                    h="5px"
-                    value={30}
-                  />
+                  <Progress colorScheme="teal" borderRadius="12px" h="5px" value={30} />
                 </Flex>
                 <Flex direction="column">
                   <Flex alignItems="center">
-                    <IconBox
-                      as="box"
-                      h={"30px"}
-                      w={"30px"}
-                      bg={iconTeal}
-                      me="6px"
-                    >
+                    <IconBox as="box" h={"30px"} w={"30px"} bg={iconTeal} me="6px">
                       <StatsIcon h={"15px"} w={"15px"} color={iconBoxInside} />
                     </IconBox>
                     <Text fontSize="sm" color="gray.400" fontWeight="semibold">
                       Items
                     </Text>
                   </Flex>
-                  <Text
-                    fontSize="lg"
-                    color={textColor}
-                    fontWeight="bold"
-                    mb="6px"
-                    my="6px"
-                  >
+                  <Text fontSize="lg" color={textColor} fontWeight="bold" mb="6px" my="6px">
                     320
                   </Text>
-                  <Progress
-                    colorScheme="teal"
-                    borderRadius="12px"
-                    h="5px"
-                    value={50}
-                  />
+                  <Progress colorScheme="teal" borderRadius="12px" h="5px" value={50} />
                 </Flex>
               </SimpleGrid>
             </Flex>
@@ -540,22 +389,11 @@ const Dashboard = () => {
         <Card p="16px" overflowX={{ sm: "scroll", xl: "hidden" }}>
           <CardHeader p="12px 0px 28px 0px">
             <Flex direction="column">
-              <Text
-                fontSize="lg"
-                color={textColor}
-                fontWeight="bold"
-                pb=".5rem"
-              >
+              <Text fontSize="lg" color={textColor} fontWeight="bold" pb=".5rem">
                 Projects
               </Text>
               <Flex align="center">
-                <Icon
-                  as={IoCheckmarkDoneCircleSharp}
-                  color="teal.300"
-                  w={4}
-                  h={4}
-                  pe="3px"
-                />
+                <Icon as={IoCheckmarkDoneCircleSharp} color="teal.300" w={4} h={4} pe="3px" />
                 <Text fontSize="sm" color="gray.400" fontWeight="normal">
                   <Text fontWeight="bold" as="span">
                     30 done
@@ -595,12 +433,7 @@ const Dashboard = () => {
         <Card maxH="100%">
           <CardHeader p="22px 0px 35px 14px">
             <Flex direction="column">
-              <Text
-                fontSize="lg"
-                color={textColor}
-                fontWeight="bold"
-                pb=".5rem"
-              >
+              <Text fontSize="lg" color={textColor} fontWeight="bold" pb=".5rem">
                 Orders overview
               </Text>
               <Text fontSize="sm" color="gray.400" fontWeight="normal">

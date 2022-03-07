@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import {
   Box,
   Button,
@@ -11,6 +11,7 @@ import {
   Collapse,
   useDisclosure,
   useControllableState,
+  useConst,
   // Spacer,
 } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -31,7 +32,7 @@ const Sidebar = props => {
   // const hamburgerColor = useColorModeValue("gray.500", "gray.200");
   // const btnRef: any = useRef();
   // this is for the rest of the collapses
-  const [state, setState] = useState({});
+  const state = useConst({});
   const mainPanel: any = useRef();
   const variantChange = "0.2s linear";
   // verifies if routeName is the one active (in browser input)
@@ -83,10 +84,9 @@ const Sidebar = props => {
                 setValue(prop.name);
                 onToggle();
               }}
+              key={key}
             >
-              {document.documentElement.dir === "rtl"
-                ? prop.rtlName
-                : prop.name}
+              {document.documentElement.dir === "rtl" ? prop.rtlName : prop.name}
             </Text>
             <Collapse in={value === prop.name && siderbarItem} animateOpacity>
               {createLinks(prop.views)}
@@ -132,21 +132,12 @@ const Sidebar = props => {
                 {typeof prop.icon === "string" ? (
                   <Icon>{prop.icon}</Icon>
                 ) : (
-                  <IconBox
-                    bg="teal.300"
-                    color="white"
-                    h="30px"
-                    w="30px"
-                    me="12px"
-                    transition={variantChange}
-                  >
+                  <IconBox bg="teal.300" color="white" h="30px" w="30px" me="12px" transition={variantChange}>
                     {prop.icon}
                   </IconBox>
                 )}
                 <Text color={activeColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                  {document.documentElement.dir === "rtl" ? prop.rtlName : prop.name}
                 </Text>
               </Flex>
             </Button>
@@ -183,21 +174,12 @@ const Sidebar = props => {
                 {typeof prop.icon === "string" ? (
                   <Icon>{prop.icon}</Icon>
                 ) : (
-                  <IconBox
-                    bg={inactiveBg}
-                    color="teal.300"
-                    h="30px"
-                    w="30px"
-                    me="12px"
-                    transition={variantChange}
-                  >
+                  <IconBox bg={inactiveBg} color="teal.300" h="30px" w="30px" me="12px" transition={variantChange}>
                     {prop.icon}
                   </IconBox>
                 )}
                 <Text color={inactiveColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                  {document.documentElement.dir === "rtl" ? prop.rtlName : prop.name}
                 </Text>
               </Flex>
             </Button>
