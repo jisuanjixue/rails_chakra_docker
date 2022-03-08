@@ -47,6 +47,8 @@ import {
   useColorModeValue,
   VStack,
   StackDivider,
+  useConst,
+  useControllableState,
 } from "@chakra-ui/react";
 import { AddIcon, EditIcon, DeleteIcon, ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -57,16 +59,22 @@ import { MarketInfo } from "../../types/market";
 import arr from "../../../../public/addr";
 
 const Market = () => {
+  const [firstList, setFirstList] = useControllableState({ defaultValue: [] });
+  const [secondList, setSecondList] = useControllableState({ defaultValue: [] });
+  // const [addrArr, setSecondList] = useControllableState({ defaultValue: [] });
+
   const { isOpen, onOpen, onClose: onSelectClose } = useDisclosure();
   const { isOpen: isAddrOpen, onOpen: onAddrOpen, onClose: onAddrClose } = useDisclosure();
-
-  const defaultData = {
+  const { isOpen: isFirstOpen, onOpen: onFirstOpen, onClose: onFirstClose } = useDisclosure();
+  const { isOpen: isSecondOpen, onOpen: onSecondOpen, onClose: onSecondClose } = useDisclosure();
+  const defaultItem = useConst({ label: "", value: "" });
+  const defaultData = useConst({
     name: "",
     type: "",
     is_show: false,
-    address: [],
+    address: [defaultItem, defaultItem, defaultItem],
     remark: "",
-  };
+  });
 
   const [market, setMarket] = useState<MarketInfo>(defaultData);
   const [marketId, setMarketId] = useState("");
@@ -76,14 +84,6 @@ const Market = () => {
   const cancelRef: any = useRef();
   const initialRef: any = useRef();
   const finalRef: any = useRef();
-
-  const initialValues: MarketInfo = {
-    name: "",
-    type: "",
-    is_show: false,
-    address: [],
-    remark: "",
-  };
 
   const MarketSchema = Yup.object().shape({
     name: Yup.string()
@@ -352,7 +352,6 @@ const Market = () => {
       keys: [(row: any) => row.values[id]],
     });
   };
-
   // Let the table remove the filter if the string is empty
   fuzzyTextFilterFn.autoRemove = val => !val;
 
@@ -478,10 +477,6 @@ const Market = () => {
     });
   };
 
-  // This is an autoRemove method on the filter function that
-  // when given the new filter value and returns true, the filter
-  // will be automatically removed. Normally this is just an undefined
-  // check, but here, we want to remove the filter if it's not a number
   filterGreaterThan.autoRemove = val => typeof val !== "number";
 
   const columns = useMemo(
@@ -600,6 +595,32 @@ const Market = () => {
     []
   );
 
+  const handItem = (item: any, type) => {
+    market.address[type] = item;
+    if (type === 0) {
+      const arr = item.children.length === 1 ? item.children[0].children : item.children;
+      setFirstList(arr);
+      onFirstOpen();
+    } else if (type === 1) {
+      if (item.children) {
+        onSecondOpen();
+        setSecondList(item.children);
+      } else {
+        market.address[2] = defaultItem;
+        onAddrClose();
+        onFirstClose();
+      }
+    } else {
+      onAddrClose();
+      onFirstClose();
+      onSecondClose();
+    }
+    setMarket({ ...market });
+  };
+
+  const addrString = market.address.map(item => item.label).join("");
+  console.log("🚀 ~ file: index.tsx ~ line 622 ~ Market ~ addrString", addrString);
+
   return (
     <>
       <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }}>
@@ -638,17 +659,17 @@ const Market = () => {
               allowPinchZoom={true}
               isCentered
               preserveScrollBarGap={true}
-              scrollBehavior="inside"
+              scrollBehavior="outside"
               blockScrollOnMount={false}
               initialFocusRef={initialRef}
               finalFocusRef={finalRef}
             >
               <ModalOverlay />
-              <ModalContent h="500px">
+              <ModalContent h="650px">
                 <ModalHeader>市场提交</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <Formik initialValues={initialValues} onSubmit={async values => onSubmit(values)} validationSchema={MarketSchema}>
+                  <Formik initialValues={defaultData} onSubmit={async values => onSubmit(values)} validationSchema={MarketSchema}>
                     {props => {
                       if (show.type === "edit") {
                         useEffect(() => {
@@ -691,11 +712,11 @@ const Market = () => {
                                       onMouseEnter={onOpen}
                                       onMouseLeave={onSelectClose}
                                     >
-                                      选择市场类型 {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                                      {market.type ? market.type : "选择市场类型"} {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
                                     </MenuButton>
                                     <MenuList onMouseEnter={onOpen} onMouseLeave={onSelectClose}>
-                                      <MenuItem>产区</MenuItem>
-                                      <MenuItem>销区</MenuItem>
+                                      <MenuItem onClick={() => setMarket({ ...market, type: "产区" })}>产区</MenuItem>
+                                      <MenuItem onClick={() => setMarket({ ...market, type: "销区" })}>销区</MenuItem>
                                     </MenuList>
                                   </Menu>
                                   <ErrorMessage name="type" />
@@ -714,7 +735,7 @@ const Market = () => {
                             <Field name="remark">
                               {({ field }) => (
                                 <FormControl variant={show.type === "edit" ? "editfloating" : "floating"} id="remark">
-                                  <Textarea {...field} isRequired isInvalid type="text" placeholder="" variant="filled" />
+                                  <Textarea {...field} type="text" placeholder="" variant="filled" />
                                   <FormLabel htmlFor="remark">备注</FormLabel>
                                   <ErrorMessage name="remark" />
                                 </FormControl>
@@ -730,7 +751,9 @@ const Market = () => {
                                     }}
                                     isOpen={isAddrOpen}
                                     matchWidth={true}
-                                    boundary="scrollParent"
+                                    boundary="clippingParents"
+                                    computePositionOnMount={true}
+                                    strategy="fixed"
                                   >
                                     <MenuButton
                                       as={Button}
@@ -741,13 +764,35 @@ const Market = () => {
                                       onMouseEnter={onAddrOpen}
                                       onMouseLeave={onAddrClose}
                                     >
-                                      选择地址 {isAddrOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                                      {addrString ? addrString : "选择地址"}
+                                      {isAddrOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
                                     </MenuButton>
-                                    <MenuList onMouseEnter={onAddrOpen} onMouseLeave={onAddrClose} overflowY="auto" h="120px">
+                                    {/* onMouseLeave={onAddrClose} */}
+                                    <MenuList onMouseEnter={onAddrOpen} overflowY="auto" h="150px">
                                       {arr.map((v, i) => (
-                                        <MenuItem key={i}>{v.label}</MenuItem>
+                                        <MenuItem key={i} onClick={() => handItem(v, 0)}>
+                                          {v.label}
+                                        </MenuItem>
                                       ))}
                                     </MenuList>
+                                    {isFirstOpen && (
+                                      <MenuList pos="absolute" top={isSecondOpen ? "40px" : "-5px"} left="116px" overflowY="auto" h="150px">
+                                        {firstList.map((v: any, i) => (
+                                          <MenuItem key={i} onClick={() => handItem(v, 1)}>
+                                            {v.label}
+                                          </MenuItem>
+                                        ))}
+                                      </MenuList>
+                                    )}
+                                    {isSecondOpen && (
+                                      <MenuList pos="absolute" top="-5px" left="340px" overflowY="auto" h="150px">
+                                        {secondList.map((v: any, i) => (
+                                          <MenuItem key={i} onClick={() => handItem(v, 2)}>
+                                            {v.label}
+                                          </MenuItem>
+                                        ))}
+                                      </MenuList>
+                                    )}
                                   </Menu>
                                   <ErrorMessage name="address" />
                                 </FormControl>

@@ -18,7 +18,7 @@ class Market < ApplicationRecord
 
   serialize :address, Array
 
-  enum type: { p_area: "p_area", s_area: "s_area" }, _default: "p_area"
+  enum type: { p_area: "产区", s_area: "销区" }, _default: "产区"
 
   validates :name, uniqueness: true, presence: true, length: { maximum: 60 }
   validates :type, presence: true
