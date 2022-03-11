@@ -20,7 +20,7 @@ module App
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-
+    config.read_encrypted_secrets = true
     config.generators do |g|
       g.test_framework(:test_unit, fixture: false)
     end

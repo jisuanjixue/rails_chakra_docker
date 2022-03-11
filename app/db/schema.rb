@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_04_012519) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_11_022244) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -62,12 +65,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_012519) do
 
   create_table "markets", force: :cascade do |t|
     t.string "name"
-    t.string "type"
+    t.string "area"
     t.boolean "is_show", default: true
-    t.string "address", default: "--- []\n", null: false
     t.text "remark"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "address", default: [], array: true
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -75,7 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_012519) do
     t.string "phone"
     t.text "description"
     t.string "avatar"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"

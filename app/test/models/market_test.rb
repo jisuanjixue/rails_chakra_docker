@@ -4,12 +4,12 @@
 #
 # Table name: markets
 #
-#  id         :integer          not null, primary key
-#  address    :string           default([]), not null
+#  id         :bigint           not null, primary key
+#  address    :string           default([]), is an Array
+#  area       :string
 #  is_show    :boolean          default(TRUE)
 #  name       :string
 #  remark     :text
-#  type       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

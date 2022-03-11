@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { matchSorter } from "match-sorter";
 import { useTable, useFilters, useGlobalFilter, useAsyncDebounce, useExpanded } from "react-table";
@@ -36,8 +36,6 @@ import {
   FormControl,
   TableCaption,
   Input,
-  Switch,
-  Textarea,
   Text,
   Menu,
   MenuList,
@@ -49,9 +47,12 @@ import {
   StackDivider,
   useConst,
   useControllableState,
+  Stack,
+  Switch,
+  Textarea,
 } from "@chakra-ui/react";
 import { AddIcon, EditIcon, DeleteIcon, ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import marketApi from "../../apis/market";
@@ -61,22 +62,21 @@ import arr from "../../../../public/addr";
 const Market = () => {
   const [firstList, setFirstList] = useControllableState({ defaultValue: [] });
   const [secondList, setSecondList] = useControllableState({ defaultValue: [] });
-  // const [addrArr, setSecondList] = useControllableState({ defaultValue: [] });
 
   const { isOpen, onOpen, onClose: onSelectClose } = useDisclosure();
   const { isOpen: isAddrOpen, onOpen: onAddrOpen, onClose: onAddrClose } = useDisclosure();
   const { isOpen: isFirstOpen, onOpen: onFirstOpen, onClose: onFirstClose } = useDisclosure();
   const { isOpen: isSecondOpen, onOpen: onSecondOpen, onClose: onSecondClose } = useDisclosure();
   const defaultItem = useConst({ label: "", value: "" });
-  const defaultData = useConst({
+  const defaultData = useConst<MarketInfo>({
     name: "",
-    type: "",
+    area: "",
     is_show: false,
     address: [defaultItem, defaultItem, defaultItem],
     remark: "",
   });
 
-  const [market, setMarket] = useState<MarketInfo>(defaultData);
+  // const [market, setMarket] = useState<MarketInfo>(defaultData);
   const [marketId, setMarketId] = useState("");
   const [show, setShow] = useState({ isShow: false, type: "" });
   const toast = useToast();
@@ -84,8 +84,9 @@ const Market = () => {
   const cancelRef: any = useRef();
   const initialRef: any = useRef();
   const finalRef: any = useRef();
+  const areas = ["产区", "销区"];
 
-  const MarketSchema = Yup.object().shape({
+  const MarketSchema = Yup.object({
     name: Yup.string()
       .min(1, "太短了")
       .max(10, "太长了!")
@@ -94,9 +95,16 @@ const Market = () => {
           必填
         </Text>
       ),
-    type: Yup.string().required("必选"),
-    is_show: Yup.boolean().required("必选"),
-    address: Yup.array().required("必选"),
+    area: Yup.string().required("必选").oneOf(areas),
+    is_show: Yup.boolean().default(false).equals([true]),
+    address: Yup.array()
+      .of(
+        Yup.object().shape({
+          label: Yup.string().required("地名必有"),
+          value: Yup.string().required("地区编码必有"),
+        })
+      )
+      .min(3, "至少3个地址"),
   });
 
   const queryClient = useQueryClient();
@@ -114,83 +122,9 @@ const Market = () => {
   };
 
   const { status, data, error, isFetching, isRefetching } = fetchMarkets();
-  const tableData = data?.markets.data;
+  const tableData = data?.markets;
 
-  // Mutations
-  const addMarket = useMutation((market: any) => marketApi.create(market), {
-    mutationKey: "addMarket",
-    onMutate: async data => {
-      await queryClient.cancelQueries("markets");
-      const previousValue = queryClient.getQueryData("markets");
-      queryClient.setQueryData("markets", (old: any) => {
-        return {
-          ...old,
-          markets: [...old.markets, data],
-        };
-      });
-      return previousValue;
-    },
-    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("markets", previousValue),
-    onSettled: () => queryClient.invalidateQueries("markets"),
-  });
-
-  const updateMarket = useMutation((market: any) => marketApi.update(market), {
-    mutationKey: "updateMarket",
-    onMutate: async newMarket => {
-      await queryClient.cancelQueries(["categories", newMarket.id]);
-      // Snapshot the previous value
-      const previousValue = queryClient.getQueryData(["categories", newMarket.id]);
-      // Optimistically update to the new value
-      queryClient.setQueryData(["categories", newMarket.id], newMarket);
-      // Return a context object with the snapshotted value
-      return { previousValue, newMarket };
-    },
-    onError: (err, newMarket, context: any) => {
-      queryClient.setQueryData(["categories", context.newMarket.id], context.previousValue);
-    },
-    // Always refetch after error or success:
-    onSettled: (newMarket: any) => {
-      queryClient.invalidateQueries(["categories", newMarket.id]);
-    },
-  });
-
-  const deleteMarket = useMutation((id: String) => marketApi.remove(id), {
-    mutationKey: "deleteMarket",
-    onMutate: async id => {
-      await queryClient.cancelQueries(["categories", id]);
-      const previousValue: any = queryClient.getQueryData("categories");
-      const updateValue = [...previousValue.categories];
-      const removeDeleted = updateValue.filter(f => f.id !== id);
-      queryClient.setQueryData("categories", (old: any) => {
-        return {
-          ...old,
-          categories: removeDeleted,
-        };
-      });
-      return previousValue;
-    },
-    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("categories", previousValue),
-    onSettled: () => queryClient.invalidateQueries("categories"),
-  });
-
-  const handDelSubmit = () => {
-    deleteMarket.mutate(marketId);
-  };
-
-  const onClose = () => {
-    setShow({ isShow: false, type: "" });
-  };
-
-  const flatArr = (arr: any) => {
-    return Object.entries(arr).flat();
-  };
-
-  useEffect(() => {
-    // const newArr = flatArr(pcaa[86]);
-    // console.log(newArr);
-  }, []);
-
-  const onSubmit = values => {
+  const onSave = values => {
     if (show.type === "add") {
       addMarket.mutate(values, {
         onSuccess: () => {
@@ -262,8 +196,96 @@ const Market = () => {
     }
   };
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    const saveData = {
+      ...formik.values,
+      address: formik.values.address.map(v => v.value),
+    };
+    onSave(saveData);
+  };
+
+  const formik = useFormik({
+    initialValues: defaultData,
+    onSubmit: () => { },
+    onReset: () => {
+      console.log("eeee");
+    },
+    validationSchema: MarketSchema,
+  });
+
+  // Mutations
+  const addMarket = useMutation((market: any) => marketApi.create(market), {
+    mutationKey: "addMarket",
+    onMutate: async data => {
+      await queryClient.cancelQueries("markets");
+      const previousValue = queryClient.getQueryData("markets");
+      queryClient.setQueryData("markets", (old: any) => {
+
+        return {
+          ...old,
+          markets: old.markets.concat([data]),
+        };
+      });
+      return previousValue;
+    },
+    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("markets", previousValue),
+    onSettled: () => queryClient.invalidateQueries("markets"),
+  });
+
+  const updateMarket = useMutation((market: any) => marketApi.update(market), {
+    mutationKey: "updateMarket",
+    onMutate: async newMarket => {
+      await queryClient.cancelQueries(["categories", newMarket.id]);
+      // Snapshot the previous value
+      const previousValue = queryClient.getQueryData(["categories", newMarket.id]);
+      // Optimistically update to the new value
+      queryClient.setQueryData(["categories", newMarket.id], newMarket);
+      // Return a context object with the snapshotted value
+      return { previousValue, newMarket };
+    },
+    onError: (err, newMarket, context: any) => {
+      queryClient.setQueryData(["categories", context.newMarket.id], context.previousValue);
+    },
+    // Always refetch after error or success:
+    onSettled: (newMarket: any) => {
+      queryClient.invalidateQueries(["categories", newMarket.id]);
+    },
+  });
+
+  const deleteMarket = useMutation((id: String) => marketApi.remove(id), {
+    mutationKey: "deleteMarket",
+    onMutate: async id => {
+      await queryClient.cancelQueries(["categories", id]);
+      const previousValue: any = queryClient.getQueryData("categories");
+      const updateValue = [...previousValue.categories];
+      const removeDeleted = updateValue.filter(f => f.id !== id);
+      queryClient.setQueryData("categories", (old: any) => {
+        return {
+          ...old,
+          categories: removeDeleted,
+        };
+      });
+      return previousValue;
+    },
+    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("categories", previousValue),
+    onSettled: () => queryClient.invalidateQueries("categories"),
+  });
+
+  const handDelSubmit = () => {
+    deleteMarket.mutate(marketId);
+  };
+
+  const onClose = () => {
+    setShow({ isShow: false, type: "" });
+  };
+
+  const flatArr = (arr: any) => {
+    return Object.entries(arr).flat();
+  };
+
   const handModal = type => {
-    setMarket({ ...market });
+    // setMarket({ ...market });
     setShow({ isShow: true, type });
   };
 
@@ -273,8 +295,11 @@ const Market = () => {
   };
 
   const handEdit = (row, type) => {
+    // const fields = ["name", "type", "is_show", "address", "remark"];
+    // fields.forEach(field => formik.setFieldValue(field, market[field], false));
+
     setMarketId(row.id);
-    setMarket({ ...market, ...row });
+    // setMarket({ ...market, ...row });
     setShow({ isShow: true, type });
   };
 
@@ -402,69 +427,61 @@ const Market = () => {
     );
     return (
       <>
-        <Box className="flex flex-col mt-4">
-          <Box className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <Box className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-              <Box className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
-                <Table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
-                  <TableCaption>市场列表</TableCaption>
-                  <Thead className="bg-gray-50">
-                    {headerGroups.map((headerGroup, i) => (
-                      <Tr {...headerGroup.getHeaderGroupProps()} key={i}>
-                        {headerGroup.headers.map((column, index) => (
-                          <Th
-                            scope="col"
-                            className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group"
-                            {...column.getHeaderProps()}
-                            key={index}
-                          >
-                            {column.render("Header")}
-                            {/* Render the columns filter UI */}
-                            <Box>{column.canFilter ? column.render("Filter") : null}</Box>
-                          </Th>
-                        ))}
-                      </Tr>
-                    ))}
-                    <Tr>
-                      <Th
-                        colSpan={visibleColumns.length}
-                        style={{
-                          textAlign: "left",
-                        }}
-                      >
-                        {/* <GlobalFilter
+        <Table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
+          <TableCaption>市场列表</TableCaption>
+          <Thead className="bg-gray-50">
+            {headerGroups.map((headerGroup, i) => (
+              <Tr {...headerGroup.getHeaderGroupProps()} key={i}>
+                {headerGroup.headers.map((column, index) => (
+                  <Th
+                    scope="col"
+                    className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group"
+                    {...column.getHeaderProps()}
+                    key={index}
+                  >
+                    {column.render("Header")}
+                    {/* Render the columns filter UI */}
+                    <Box>{column.canFilter ? column.render("Filter") : null}</Box>
+                  </Th>
+                ))}
+              </Tr>
+            ))}
+            <Tr>
+              <Th
+                colSpan={visibleColumns.length}
+                style={{
+                  textAlign: "left",
+                }}
+              >
+                {/* <GlobalFilter
                           preGlobalFilteredRows={preGlobalFilteredRows}
                           globalFilter={state.globalFilter}
                           setGlobalFilter={setGlobalFilter}
                         /> */}
-                      </Th>
-                    </Tr>
-                  </Thead>
-                  <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
-                    {rows.map((row, i) => {
-                      prepareRow(row);
-                      return (
-                        <tr {...row.getRowProps()} key={i}>
-                          {row.cells.map((cell, index) => {
-                            return (
-                              <td {...cell.getCellProps()} className="px-6 py-4 whitespace-nowrap" role="cell" key={index}>
-                                {cell.column.Cell.name === "defaultRenderer" ? (
-                                  <div className="text-sm text-gray-500">{cell.render("Cell")}</div>
-                                ) : (
-                                  cell.render("Cell")
-                                )}
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </Table>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+              </Th>
+            </Tr>
+          </Thead>
+          <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
+            {rows.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} key={i}>
+                  {row.cells.map((cell, index) => {
+                    return (
+                      <td {...cell.getCellProps()} className="px-6 py-4 whitespace-nowrap" role="cell" key={index}>
+                        {cell.column.Cell.name === "defaultRenderer" ? (
+                          <div className="text-sm text-gray-500">{cell.render("Cell")}</div>
+                        ) : (
+                          cell.render("Cell")
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
       </>
     );
   };
@@ -503,10 +520,10 @@ const Market = () => {
             类型
           </Heading>
         ),
-        id: "type",
+        id: "area",
         columns: [
           {
-            accessor: "type",
+            accessor: "area",
             width: 30,
             minWidth: 10,
             filter: "fuzzyText",
@@ -595,8 +612,11 @@ const Market = () => {
     []
   );
 
+  const { name, area, remark, is_show, address } = formik.values;
+
   const handItem = (item: any, type) => {
-    market.address[type] = item;
+    address[type] = { value: item.value, label: item.label };
+    formik.setFieldValue("address", address, false);
     if (type === 0) {
       const arr = item.children.length === 1 ? item.children[0].children : item.children;
       setFirstList(arr);
@@ -606,7 +626,7 @@ const Market = () => {
         onSecondOpen();
         setSecondList(item.children);
       } else {
-        market.address[2] = defaultItem;
+        address[2] = defaultItem;
         onAddrClose();
         onFirstClose();
       }
@@ -615,11 +635,9 @@ const Market = () => {
       onFirstClose();
       onSecondClose();
     }
-    setMarket({ ...market });
   };
 
-  const addrString = market.address.map(item => item.label).join("");
-  console.log("🚀 ~ file: index.tsx ~ line 622 ~ Market ~ addrString", addrString);
+  const addrString = address.map(item => item.label).join("");
 
   return (
     <>
@@ -669,140 +687,130 @@ const Market = () => {
                 <ModalHeader>市场提交</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <Formik initialValues={defaultData} onSubmit={async values => onSubmit(values)} validationSchema={MarketSchema}>
-                    {props => {
-                      if (show.type === "edit") {
-                        useEffect(() => {
-                          const fields = ["name", "type", "is_show", "address", "remark"];
-                          fields.forEach(field => props.setFieldValue(field, market[field], false));
-                        }, []);
-                      }
-
-                      return (
-                        <Form>
-                          <VStack divider={<StackDivider borderColor="gray.200" />} spacing={4} align="stretch">
-                            <Field name="name">
-                              {({ field }) => (
-                                <FormControl isRequired variant={show.type === "edit" ? "editfloating" : "floating"} id="name">
-                                  <Input
-                                    {...field}
-                                    ref={initialRef}
-                                    isRequired
-                                    isInvalid
-                                    type="text"
-                                    placeholder=""
-                                    size="md"
-                                    variant="filled"
-                                  />
-                                  <FormLabel htmlFor="name">名称</FormLabel>
-                                  <ErrorMessage name="name" />
-                                </FormControl>
-                              )}
-                            </Field>
-                            <Field name="type">
-                              {() => (
-                                <FormControl isRequired>
-                                  <Menu isOpen={isOpen}>
-                                    <MenuButton
-                                      as={Button}
-                                      _hover={{
-                                        bg: useColorModeValue("gray.100", "gray.700"),
-                                      }}
-                                      aria-label="Courses"
-                                      onMouseEnter={onOpen}
-                                      onMouseLeave={onSelectClose}
-                                    >
-                                      {market.type ? market.type : "选择市场类型"} {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                                    </MenuButton>
-                                    <MenuList onMouseEnter={onOpen} onMouseLeave={onSelectClose}>
-                                      <MenuItem onClick={() => setMarket({ ...market, type: "产区" })}>产区</MenuItem>
-                                      <MenuItem onClick={() => setMarket({ ...market, type: "销区" })}>销区</MenuItem>
-                                    </MenuList>
-                                  </Menu>
-                                  <ErrorMessage name="type" />
-                                </FormControl>
-                              )}
-                            </Field>
-                            <Field name="is_show">
-                              {({ field }) => (
-                                <FormControl display="flex" alignItems="center">
-                                  <FormLabel htmlFor="is_show">是否展示</FormLabel>
-                                  <Switch {...field} id="is_show" />
-                                  <ErrorMessage name="is_show" />
-                                </FormControl>
-                              )}
-                            </Field>
-                            <Field name="remark">
-                              {({ field }) => (
-                                <FormControl variant={show.type === "edit" ? "editfloating" : "floating"} id="remark">
-                                  <Textarea {...field} type="text" placeholder="" variant="filled" />
-                                  <FormLabel htmlFor="remark">备注</FormLabel>
-                                  <ErrorMessage name="remark" />
-                                </FormControl>
-                              )}
-                            </Field>
-                            <Field name="address">
-                              {() => (
-                                <FormControl isRequired>
-                                  <Menu
-                                    eventListeners={{
-                                      scroll: true,
-                                      resize: true,
-                                    }}
-                                    isOpen={isAddrOpen}
-                                    matchWidth={true}
-                                    boundary="clippingParents"
-                                    computePositionOnMount={true}
-                                    strategy="fixed"
-                                  >
-                                    <MenuButton
-                                      as={Button}
-                                      _hover={{
-                                        bg: useColorModeValue("gray.100", "gray.700"),
-                                      }}
-                                      aria-label="Courses"
-                                      onMouseEnter={onAddrOpen}
-                                      onMouseLeave={onAddrClose}
-                                    >
-                                      {addrString ? addrString : "选择地址"}
-                                      {isAddrOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                                    </MenuButton>
-                                    {/* onMouseLeave={onAddrClose} */}
-                                    <MenuList onMouseEnter={onAddrOpen} overflowY="auto" h="150px">
-                                      {arr.map((v, i) => (
-                                        <MenuItem key={i} onClick={() => handItem(v, 0)}>
-                                          {v.label}
-                                        </MenuItem>
-                                      ))}
-                                    </MenuList>
-                                    {isFirstOpen && (
-                                      <MenuList pos="absolute" top={isSecondOpen ? "40px" : "-5px"} left="116px" overflowY="auto" h="150px">
-                                        {firstList.map((v: any, i) => (
-                                          <MenuItem key={i} onClick={() => handItem(v, 1)}>
-                                            {v.label}
-                                          </MenuItem>
-                                        ))}
-                                      </MenuList>
-                                    )}
-                                    {isSecondOpen && (
-                                      <MenuList pos="absolute" top="-5px" left="340px" overflowY="auto" h="150px">
-                                        {secondList.map((v: any, i) => (
-                                          <MenuItem key={i} onClick={() => handItem(v, 2)}>
-                                            {v.label}
-                                          </MenuItem>
-                                        ))}
-                                      </MenuList>
-                                    )}
-                                  </Menu>
-                                  <ErrorMessage name="address" />
-                                </FormControl>
-                              )}
-                            </Field>
-                          </VStack>
-                        </Form>
-                      );
-                    }}
-                  </Formik>
+                  <Box as="form">
+                    <VStack divider={<StackDivider borderColor="gray.200" />} spacing={4} align="stretch">
+                      <FormControl isRequired variant={show.type === "edit" ? "editfloating" : "floating"} id="name">
+                        <Input
+                          ref={initialRef}
+                          isRequired
+                          name="name"
+                          isInvalid
+                          onChange={formik.handleChange}
+                          value={name}
+                          type="text"
+                          placeholder=" "
+                          size="md"
+                          variant="filled"
+                        />
+                        <FormLabel>名称</FormLabel>
+                      </FormControl>
+                      <FormControl isRequired>
+                        <Menu isOpen={isOpen}>
+                          <MenuButton
+                            as={Button}
+                            _hover={{
+                              bg: useColorModeValue("gray.100", "gray.700"),
+                            }}
+                            aria-label="Courses"
+                            onMouseEnter={onOpen}
+                            onMouseLeave={onSelectClose}
+                          >
+                            {area ? area : "选择市场类型"} {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                          </MenuButton>
+                          <MenuList onMouseEnter={onOpen} onMouseLeave={onSelectClose}>
+                            {areas.map((item, i) => (
+                              <MenuItem key={i} value={area} onClick={() => formik.setFieldValue("area", item, false)}>
+                                {item}
+                              </MenuItem>
+                            ))}
+                          </MenuList>
+                        </Menu>
+                      </FormControl>
+                      <FormControl display="flex" alignItems="center">
+                        <FormLabel htmlFor="is_show">是否展示</FormLabel>
+                        <Switch
+                          onChange={e => formik.setFieldValue("is_show", e.target.checked, false)}
+                          id="is_show"
+                          isInvalid
+                          isRequired
+                          value={is_show ? "1" : "0"}
+                        />
+                      </FormControl>
+                      <FormControl variant={show.type === "edit" ? "editfloating" : "floating"} id="remark">
+                        <Textarea onChange={formik.handleChange} value={remark} type="text" placeholder=" " variant="filled" />
+                        <FormLabel htmlFor="remark">备注</FormLabel>
+                      </FormControl>
+                      <FormControl isRequired>
+                        <Menu
+                          eventListeners={{
+                            scroll: true,
+                            resize: true,
+                          }}
+                          isOpen={isAddrOpen}
+                          matchWidth={true}
+                          boundary="clippingParents"
+                          computePositionOnMount={true}
+                          strategy="fixed"
+                        >
+                          <MenuButton
+                            as={Button}
+                            _hover={{
+                              bg: useColorModeValue("gray.100", "gray.700"),
+                            }}
+                            aria-label="Courses"
+                            onMouseEnter={onAddrOpen}
+                            onMouseLeave={onAddrClose}
+                          >
+                            {addrString ? addrString : "选择地址"}
+                            {isAddrOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                          </MenuButton>
+                          <MenuList onMouseEnter={onAddrOpen} overflowY="auto" h="150px">
+                            {arr.map((v, i) => (
+                              <MenuItem key={i} onClick={() => handItem(v, 0)}>
+                                {v.label}
+                              </MenuItem>
+                            ))}
+                          </MenuList>
+                          {isFirstOpen && (
+                            <MenuList pos="absolute" top={isSecondOpen ? "40px" : "-5px"} left="116px" overflowY="auto" h="150px">
+                              {firstList.map((v: any, i) => (
+                                <MenuItem key={i} onClick={() => handItem(v, 1)}>
+                                  {v.label}
+                                </MenuItem>
+                              ))}
+                            </MenuList>
+                          )}
+                          {isSecondOpen && (
+                            <MenuList pos="absolute" top="-5px" left="340px" overflowY="auto" h="150px">
+                              {secondList.map((v: any, i) => (
+                                <MenuItem key={i} onClick={() => handItem(v, 2)}>
+                                  {v.label}
+                                </MenuItem>
+                              ))}
+                            </MenuList>
+                          )}
+                        </Menu>
+                      </FormControl>
+                      <Stack direction="row" spacing={10} align="center" justify="flex-end" mt="100px">
+                        <Button
+                          isLoading={formik.isSubmitting}
+                          // disabled={formik.isSubmitting}
+                          loadingText="Loading"
+                          colorScheme="blue"
+                          variant="solid"
+                          spinnerPlacement="start"
+                          size="lg"
+                          type="button"
+                          onClick={e => handleSubmit(e)}
+                        >
+                          提交
+                        </Button>
+                        <Button colorScheme="blue" variant="outline" spinnerPlacement="end" size="lg">
+                          重置
+                        </Button>
+                      </Stack>
+                    </VStack>
+                  </Box>
                 </ModalBody>
               </ModalContent>
             </Modal>

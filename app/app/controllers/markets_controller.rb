@@ -6,10 +6,8 @@ class MarketsController < ApplicationController
   def index
     markets = Market.all
     render(
-      json: {
-        status: { code: 200, message: "获取成功" },
-        markets: MarketSerializer.new(markets).serializable_hash
-      }
+      status: :ok,
+      json: { markets: }
 )
   end
 
@@ -17,11 +15,9 @@ class MarketsController < ApplicationController
     market = Market.new(market_params)
     if market.save
       render(
-        json: {
-          status: { code: 200, message: "创建成功" },
-          data: { market: MarketSerializer.new(market).serializable_hash }
-        }
-)
+        status: :ok,
+        json: { data: market }
+      )
     else
       error = market.errors.full_messages.to_sentence
       render(status: :unprocessable_entity, json: { error: })
@@ -37,7 +33,7 @@ class MarketsController < ApplicationController
   private
 
     def market_params
-      params.require(:market).permit(:name, :id, :type, :is_show, :address, :remark)
+      params.require(:market).permit(:name, :area, :is_show, :address, :remark)
     end
 
     def find_params

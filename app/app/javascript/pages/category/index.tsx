@@ -512,9 +512,9 @@ const Category = () => {
                       type="text"
                       size="md"
                       variant="filled"
-                      placeholder=""
+                      placeholder=" "
                     />
-                    <FormLabel>类型名称</FormLabel>
+                    <FormLabel htmlFor="name">类型名称</FormLabel>
                     {!isError ? <FormHelperText>填写不同名称类型</FormHelperText> : <FormErrorMessage>必填</FormErrorMessage>}
                   </FormControl>
                 </ModalBody>

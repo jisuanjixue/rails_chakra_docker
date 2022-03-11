@@ -1,5 +1,5 @@
 const activeLabelStyles = {
-  transform: "scale(0.85) translateY(-24px) translateX(-10px)",
+  transform: "scale(0.85) translateY(-24px)",
 };
 
 const labelStyle = {
@@ -11,6 +11,7 @@ const labelStyle = {
   mx: 3,
   px: 1,
   my: 2,
+  transformOrigin: "left top",
 };
 
 export const inputStyles = {
@@ -24,6 +25,10 @@ export const inputStyles = {
                 ...activeLabelStyles,
                 backgroundColor: "white",
               },
+            },
+            "input:not(:placeholder-shown) + label, .chakra-select__wrapper + label": {
+              ...activeLabelStyles,
+              backgroundColor: "white",
             },
             label: {
               backgroundColor: "gray.30",

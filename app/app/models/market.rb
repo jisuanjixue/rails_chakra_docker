@@ -4,23 +4,20 @@
 #
 # Table name: markets
 #
-#  id         :integer          not null, primary key
-#  address    :string           default([]), not null
+#  id         :bigint           not null, primary key
+#  address    :string           default([]), is an Array
+#  area       :string
 #  is_show    :boolean          default(TRUE)
 #  name       :string
 #  remark     :text
-#  type       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 class Market < ApplicationRecord
-  attr_accessor :id, :name, :type, :is_show, :address, :remark
-
-  serialize :address, Array
-
-  enum type: { p_area: "产区", s_area: "销区" }, _default: "产区"
+  enum area: { p_area: '0', s_area: '1' }
 
   validates :name, uniqueness: true, presence: true, length: { maximum: 60 }
-  validates :type, presence: true
+  validates :area, presence: true
   validates :is_show, presence: true
+  validates :address, presence: true
 end

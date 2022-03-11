@@ -1,6 +1,6 @@
 interface MarketInfo {
   name: string;
-  type: string;
+  area: string;
   is_show: boolean;
   address: any[];
   remark: string;
