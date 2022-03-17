@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useRef } from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
-import { matchSorter } from "match-sorter";
-import { useTable, useFilters, useGlobalFilter, useAsyncDebounce, useExpanded } from "react-table";
+import { useTable, useGlobalFilter, usePagination, useSortBy } from "react-table";
 import {
   Flex,
   Modal,
@@ -26,12 +25,15 @@ import {
   AlertDialogCloseButton,
   CircularProgress,
   CloseButton,
+  Select,
   Heading,
   Container,
   Table,
+  Icon,
   Thead,
   Tr,
   Th,
+  Td,
   FormLabel,
   FormControl,
   TableCaption,
@@ -50,8 +52,15 @@ import {
   Stack,
   Switch,
   Textarea,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
 } from "@chakra-ui/react";
 import { AddIcon, EditIcon, DeleteIcon, ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { TiArrowSortedDown, TiArrowSortedUp, TiArrowUnsorted } from "react-icons/ti";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -121,8 +130,9 @@ const Market = () => {
     );
   };
 
-  const { status, data, error, isFetching, isRefetching } = fetchMarkets();
-  const tableData = data?.markets;
+  //isRefetching
+  const { status, data, error, isFetching } = fetchMarkets();
+  const tableData = useMemo(() => data?.markets, [status === "success", data]);
 
   const onSave = values => {
     if (show.type === "add") {
@@ -207,10 +217,8 @@ const Market = () => {
 
   const formik = useFormik({
     initialValues: defaultData,
-    onSubmit: () => { },
-    onReset: () => {
-      console.log("eeee");
-    },
+    onSubmit: () => {},
+    onReset: () => {},
     validationSchema: MarketSchema,
   });
 
@@ -221,7 +229,6 @@ const Market = () => {
       await queryClient.cancelQueries("markets");
       const previousValue = queryClient.getQueryData("markets");
       queryClient.setQueryData("markets", (old: any) => {
-
         return {
           ...old,
           markets: old.markets.concat([data]),
@@ -280,10 +287,6 @@ const Market = () => {
     setShow({ isShow: false, type: "" });
   };
 
-  const flatArr = (arr: any) => {
-    return Object.entries(arr).flat();
-  };
-
   const handModal = type => {
     // setMarket({ ...market });
     setShow({ isShow: true, type });
@@ -295,206 +298,171 @@ const Market = () => {
   };
 
   const handEdit = (row, type) => {
-    // const fields = ["name", "type", "is_show", "address", "remark"];
-    // fields.forEach(field => formik.setFieldValue(field, market[field], false));
-
     setMarketId(row.id);
     // setMarket({ ...market, ...row });
     setShow({ isShow: true, type });
   };
 
-  // Define a default UI for filtering
-  const GlobalFilter = ({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) => {
-    const count = preGlobalFilteredRows.length;
-    const [value, setValue] = useState(globalFilter);
-    const onChange = useAsyncDebounce(value => {
-      setGlobalFilter(value || undefined);
-    }, 200);
-    return (
-      <span>
-        Search:{" "}
-        <input
-          value={value || ""}
-          onChange={e => {
-            setValue(e.target.value);
-            onChange(e.target.value);
-          }}
-          placeholder={`${count} records...`}
-          style={{
-            fontSize: "1.1rem",
-            border: "0",
-          }}
-        />
-      </span>
-    );
-  };
-
-  const DefaultColumnFilter = ({ column: { filterValue, preFilteredRows, setFilter } }) => {
-    const count = preFilteredRows.length;
-
-    return (
-      <input
-        value={filterValue || ""}
-        onChange={e => {
-          setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
-        }}
-        placeholder={`Search ${count} records...`}
-      />
-    );
-  };
-
-  const SelectColumnFilter = ({ column: { filterValue, setFilter, preFilteredRows, id } }) => {
-    // Calculate the options for filtering
-    // using the preFilteredRows
-    const options = React.useMemo(() => {
-      const options = new Set();
-      preFilteredRows.forEach(row => {
-        options.add(row.values[id]);
-      });
-      return [...options.values()];
-    }, [id, preFilteredRows]);
-
-    // Render a multi-select box
-    return (
-      <select
-        value={filterValue}
-        onChange={e => {
-          setFilter(e.target.value || undefined);
-        }}
-      >
-        <option value="">All</option>
-        {options.map((option, i) => (
-          <option key={i} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    );
-  };
-
-  const fuzzyTextFilterFn = (rows, id, filterValue) => {
-    return matchSorter(rows, filterValue, {
-      keys: [(row: any) => row.values[id]],
-    });
-  };
-  // Let the table remove the filter if the string is empty
-  fuzzyTextFilterFn.autoRemove = val => !val;
-
   const TableList = ({ columns: marketColumns, data }) => {
-    const filterTypes = useMemo(
-      () => ({
-        // Add a new fuzzyTextFilterFn filter type.
-        fuzzyText: fuzzyTextFilterFn,
-        // Or, override the default text filter to use
-        // "startWith"
-        text: (rows, id, filterValue) => {
-          return rows.filter(row => {
-            const rowValue = row.values[id];
-            return rowValue !== undefined ? String(rowValue).toLowerCase().startsWith(String(filterValue).toLowerCase()) : true;
-          });
+    const { getTableProps, getTableBodyProps, headerGroups, page, gotoPage, pageCount, prepareRow, nextPage, previousPage, canNextPage, canPreviousPage, setPageSize, setGlobalFilter, state } =
+      useTable(
+        {
+          columns: marketColumns,
+          data,
         },
-      }),
-      []
-    );
+        useGlobalFilter,
+        useSortBy,
+        usePagination
+      );
+    const createPages = count => {
+      const arrPageCount = [];
 
-    const defaultColumn = React.useMemo(
-      () => ({
-        // Let's set up our default Filter UI
-        Filter: DefaultColumnFilter,
-      }),
-      []
-    );
-    const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      rows,
-      prepareRow,
-      state,
-      visibleColumns,
-      preGlobalFilteredRows,
-      setGlobalFilter,
-    } = useTable(
-      {
-        columns: marketColumns,
-        data,
-        defaultColumn, // Be sure to pass the defaultColumn option
-        filterTypes,
-      },
-      useFilters, // useFilters!
-      useGlobalFilter, // useGlobalFilter!
-      useExpanded
-    );
+      for (let i = 1; i <= count; i++) {
+        arrPageCount.push(i);
+      }
+
+      return arrPageCount;
+    };
+
+    const { pageIndex, pageSize } = state;
     return (
       <>
-        <Table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
-          <TableCaption>市场列表</TableCaption>
-          <Thead className="bg-gray-50">
-            {headerGroups.map((headerGroup, i) => (
-              <Tr {...headerGroup.getHeaderGroupProps()} key={i}>
-                {headerGroup.headers.map((column, index) => (
-                  <Th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group"
-                    {...column.getHeaderProps()}
-                    key={index}
-                  >
-                    {column.render("Header")}
-                    {/* Render the columns filter UI */}
-                    <Box>{column.canFilter ? column.render("Filter") : null}</Box>
-                  </Th>
-                ))}
-              </Tr>
-            ))}
-            <Tr>
-              <Th
-                colSpan={visibleColumns.length}
-                style={{
-                  textAlign: "left",
+        <Flex direction="column" w="100%" overflowX={{ sm: "scroll", lg: "hidden" }}>
+          <Flex justify="space-between" align="center" w="100%" px="22px">
+            <Stack direction={{ sm: "column", md: "row" }} spacing={{ sm: "4px", md: "12px" }} align="center" me="12px" my="24px" minW={{ sm: "100px", md: "200px" }}>
+              <Select value={pageSize} onChange={e => setPageSize(Number(e.target.value))} color="gray.500" size="sm" borderRadius="12px" maxW="75px" cursor="pointer">
+                <option>5</option>
+                <option>10</option>
+                <option>15</option>
+                <option>20</option>
+                <option>25</option>
+              </Select>
+              <Text fontSize="xs" color="gray.400" fontWeight="normal">
+                entries per page
+              </Text>
+            </Stack>
+            <Input type="text" placeholder="Search..." minW="75px" maxW="175px" fontSize="sm" _focus={{ borderColor: "teal.300" }} onChange={e => setGlobalFilter(e.target.value)} />
+          </Flex>
+          <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
+            <TableCaption>市场列表</TableCaption>
+            <Thead>
+              {headerGroups.map((headerGroup, i) => (
+                <Tr {...headerGroup.getHeaderGroupProps()} key={i}>
+                  {headerGroup.headers.map((column, index) => (
+                    <Th scope="col" {...column.getHeaderProps(column.getSortByToggleProps())} key={index} pe="0px">
+                      <Flex justify="space-between" align="center" fontSize={{ sm: "10px", lg: "12px" }} color="gray.400">
+                        {column.render("Header")}
+                        <Icon
+                          w={{ sm: "10px", md: "14px" }}
+                          h={{ sm: "10px", md: "14px" }}
+                          color={columns.isSorted ? "gray.500" : "gray.400"}
+                          float="right"
+                          as={column.isSorted ? (column.isSortedDesc ? TiArrowSortedDown : TiArrowSortedUp) : TiArrowUnsorted}
+                        />
+                      </Flex>
+                    </Th>
+                  ))}
+                </Tr>
+              ))}
+            </Thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row, i) => {
+                prepareRow(row);
+                return (
+                  <Tr {...row.getRowProps()} key={i}>
+                    {row.cells.map(cell => {
+                      return (
+                        <Td {...cell.getCellProps()} fontSize={{ sm: "14px" }}>
+                          {cell.render("Cell")}
+                        </Td>
+                      );
+                    })}
+                  </Tr>
+                );
+              })}
+            </tbody>
+          </Table>
+          <Flex direction={{ sm: "column", md: "row" }} justify="space-between" align="center" w="100%" px={{ md: "22px" }}>
+            <Text fontSize="sm" color="gray.500" fontWeight="normal" mb={{ sm: "24px", md: "0px" }}>
+              Showing {pageSize * pageIndex + 1} to {pageSize * (pageIndex + 1) <= tableData.length ? pageSize * (pageIndex + 1) : tableData.length} of {tableData.length} entries
+            </Text>
+            <Stack direction="row" alignSelf="flex-end" spacing="4px" ms="auto">
+              <Button
+                variant="no-hover"
+                onClick={() => previousPage()}
+                transition="all .5s ease"
+                w="40px"
+                h="40px"
+                borderRadius="50%"
+                bg="#fff"
+                border="1px solid lightgray"
+                display={pageSize === 5 ? "none" : canPreviousPage ? "flex" : "none"}
+                _hover={{
+                  bg: "gray.200",
+                  opacity: "0.7",
+                  borderColor: "gray.500",
                 }}
               >
-                {/* <GlobalFilter
-                          preGlobalFilteredRows={preGlobalFilteredRows}
-                          globalFilter={state.globalFilter}
-                          setGlobalFilter={setGlobalFilter}
-                        /> */}
-              </Th>
-            </Tr>
-          </Thead>
-          <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
-            {rows.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={i}>
-                  {row.cells.map((cell, index) => {
-                    return (
-                      <td {...cell.getCellProps()} className="px-6 py-4 whitespace-nowrap" role="cell" key={index}>
-                        {cell.column.Cell.name === "defaultRenderer" ? (
-                          <div className="text-sm text-gray-500">{cell.render("Cell")}</div>
-                        ) : (
-                          cell.render("Cell")
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+                <Icon as={GrFormPrevious} w="16px" h="16px" color="gray.400" />
+              </Button>
+              {pageSize === 5 ? (
+                <NumberInput max={pageCount - 1} min={1} w="75px" mx="6px" defaultValue="1" onChange={e => gotoPage(e)}>
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper onClick={() => nextPage()} />
+                    <NumberDecrementStepper onClick={() => previousPage()} />
+                  </NumberInputStepper>
+                </NumberInput>
+              ) : (
+                createPages(pageCount).map((pageNumber, i) => {
+                  return (
+                    <Button
+                      variant="no-hover"
+                      transition="all .5s ease"
+                      onClick={() => gotoPage(pageNumber - 1)}
+                      w="40px"
+                      h="40px"
+                      borderRadius="160px"
+                      bg={pageNumber === pageIndex + 1 ? "teal.300" : "#fff"}
+                      border="1px solid lightgray"
+                      _hover={{
+                        bg: "gray.200",
+                        opacity: "0.7",
+                        borderColor: "gray.500",
+                      }}
+                      key={i}
+                    >
+                      <Text fontSize="xs" color={pageNumber === pageIndex + 1 ? "#fff" : "gray.600"}>
+                        {pageNumber}
+                      </Text>
+                    </Button>
+                  );
+                })
+              )}
+              <Button
+                variant="no-hover"
+                onClick={() => nextPage()}
+                transition="all .5s ease"
+                w="40px"
+                h="40px"
+                borderRadius="160px"
+                bg="#fff"
+                border="1px solid lightgray"
+                display={pageSize === 5 ? "none" : canNextPage ? "flex" : "none"}
+                _hover={{
+                  bg: "gray.200",
+                  opacity: "0.7",
+                  borderColor: "gray.500",
+                }}
+              >
+                <Icon as={GrFormNext} w="16px" h="16px" color="gray.400" />
+              </Button>
+            </Stack>
+          </Flex>
+        </Flex>
       </>
     );
   };
-
-  // Define a custom filter filter function!
-  const filterGreaterThan = (rows, id, filterValue) => {
-    return rows.filter(row => {
-      const rowValue = row.values[id];
-      return rowValue >= filterValue;
-    });
-  };
-
-  filterGreaterThan.autoRemove = val => typeof val !== "number";
 
   const columns = useMemo(
     () => [
@@ -510,7 +478,6 @@ const Market = () => {
             accessor: "name",
             width: 20,
             minWidth: 10,
-            filter: "fuzzyText",
           },
         ],
       },
@@ -526,7 +493,6 @@ const Market = () => {
             accessor: "area",
             width: 30,
             minWidth: 10,
-            filter: "fuzzyText",
           },
         ],
       },
@@ -542,8 +508,6 @@ const Market = () => {
             accessor: "is_show",
             width: 30,
             minWidth: 10,
-            Filter: SelectColumnFilter,
-            filter: "includes",
           },
         ],
       },
@@ -643,15 +607,7 @@ const Market = () => {
     <>
       <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }}>
         <Container maxW="container.xl">
-          <Button
-            mt={5}
-            onClick={() => handModal("add")}
-            colorScheme="blue"
-            variant="solid"
-            leftIcon={<AddIcon />}
-            size="md"
-            ref={finalRef}
-          >
+          <Button mt={5} onClick={() => handModal("add")} colorScheme="blue" variant="solid" leftIcon={<AddIcon />} size="md" ref={finalRef}>
             新增
           </Button>
           {status === "loading" ? (
@@ -690,18 +646,7 @@ const Market = () => {
                   <Box as="form">
                     <VStack divider={<StackDivider borderColor="gray.200" />} spacing={4} align="stretch">
                       <FormControl isRequired variant={show.type === "edit" ? "editfloating" : "floating"} id="name">
-                        <Input
-                          ref={initialRef}
-                          isRequired
-                          name="name"
-                          isInvalid
-                          onChange={formik.handleChange}
-                          value={name}
-                          type="text"
-                          placeholder=" "
-                          size="md"
-                          variant="filled"
-                        />
+                        <Input ref={initialRef} isRequired name="name" isInvalid onChange={formik.handleChange} value={name} type="text" placeholder=" " size="md" variant="filled" />
                         <FormLabel>名称</FormLabel>
                       </FormControl>
                       <FormControl isRequired>
@@ -728,17 +673,11 @@ const Market = () => {
                       </FormControl>
                       <FormControl display="flex" alignItems="center">
                         <FormLabel htmlFor="is_show">是否展示</FormLabel>
-                        <Switch
-                          onChange={e => formik.setFieldValue("is_show", e.target.checked, false)}
-                          id="is_show"
-                          isInvalid
-                          isRequired
-                          value={is_show ? "1" : "0"}
-                        />
+                        <Switch onChange={e => formik.setFieldValue("is_show", e.target.checked, false)} id="is_show" isInvalid isRequired value={is_show} />
                       </FormControl>
                       <FormControl variant={show.type === "edit" ? "editfloating" : "floating"} id="remark">
-                        <Textarea onChange={formik.handleChange} value={remark} type="text" placeholder=" " variant="filled" />
-                        <FormLabel htmlFor="remark">备注</FormLabel>
+                        <Textarea onChange={formik.handleChange} name="remark" value={remark} type="text" placeholder="  " variant="filled" />
+                        <FormLabel>备注</FormLabel>
                       </FormControl>
                       <FormControl isRequired>
                         <Menu
@@ -815,13 +754,7 @@ const Market = () => {
               </ModalContent>
             </Modal>
           )}
-          <AlertDialog
-            motionPreset="slideInBottom"
-            leastDestructiveRef={cancelRef}
-            onClose={onClose}
-            isOpen={show.isShow && show.type === "del"}
-            isCentered
-          >
+          <AlertDialog motionPreset="slideInBottom" leastDestructiveRef={cancelRef} onClose={onClose} isOpen={show.isShow && show.type === "del"} isCentered>
             <AlertDialogOverlay />
             <AlertDialogContent>
               <AlertDialogHeader>删除提示?</AlertDialogHeader>

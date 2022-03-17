@@ -1,5 +1,5 @@
 const activeLabelStyles = {
-  transform: "scale(0.85) translateY(-24px)",
+  transform: "scale(0.85) translateY(-24px) translateX(-10px)",
 };
 
 const labelStyle = {
@@ -10,8 +10,19 @@ const labelStyle = {
   pointerEvents: "none",
   mx: 3,
   px: 1,
-  my: 2,
+  my: 3,
   transformOrigin: "left top",
+};
+
+const noinputStyles = {
+  "input:not(:placeholder-shown) + label, .chakra-select__wrapper + label": {
+    ...activeLabelStyles,
+    backgroundColor: "white",
+  },
+  "textarea:not(:placeholder-shown) + label, .chakra-select__wrapper + label": {
+    ...activeLabelStyles,
+    backgroundColor: "white",
+  },
 };
 
 export const inputStyles = {
@@ -26,10 +37,7 @@ export const inputStyles = {
                 backgroundColor: "white",
               },
             },
-            "input:not(:placeholder-shown) + label, .chakra-select__wrapper + label": {
-              ...activeLabelStyles,
-              backgroundColor: "white",
-            },
+            ...noinputStyles,
             label: {
               backgroundColor: "gray.30",
               ...labelStyle,
@@ -43,6 +51,7 @@ export const inputStyles = {
                 backgroundColor: "white",
               },
             },
+            ...noinputStyles,
             label: {
               backgroundColor: "white",
               ...labelStyle,

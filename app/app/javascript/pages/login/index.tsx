@@ -12,14 +12,12 @@ const SignIn = () => {
   // Chakra color mode
   const titleColor = useColorModeValue("teal.300", "teal.200");
   const textColor = useColorModeValue("gray.400", "white");
+  const bgColor = useColorModeValue("white", "gray.700");
   const defaultUser = { login: "", password: "", password_confirmation: "" };
   const navigate = useHistory();
   const [user, setUser] = useState<UserLogin>(defaultUser);
 
-  const handValue = useCallback(
-    e => setUser({ ...user, [e.target.name]: e.target.value }),
-    [user.login, user.password, user.password_confirmation]
-  );
+  const handValue = useCallback(e => setUser({ ...user, [e.target.name]: e.target.value }), [user.login, user.password, user.password_confirmation]);
   const queryClient = useQueryClient();
 
   const userLogin: any = useMutation((user: UserLogin) => userApi.login(user), {
@@ -58,51 +56,34 @@ const SignIn = () => {
   };
   return (
     <Flex position="relative" mb="40px">
-      <Flex
-        h={{ sm: "initial", md: "75vh", lg: "85vh" }}
-        w="100%"
-        maxW="1044px"
-        mx="auto"
-        justifyContent="space-between"
-        mb="30px"
-        pt={{ sm: "100px", md: "0px" }}
-      >
-        <Flex alignItems="center" justifyContent="start" style={{ userSelect: "none" }} w={{ base: "100%", md: "50%", lg: "42%" }}>
-          <Flex direction="column" w="100%" background="transparent" p="48px" mt={{ md: "150px", lg: "80px" }}>
+      <Flex h={{ sm: "initial", md: "75vh", lg: "85vh" }} w="100%" maxW="1044px" mx="auto" justifyContent="space-between" mb="30px" pt={{ sm: "100px", md: "0px" }}>
+        <Flex alignItems="center" justifyContent="start" style={{ userSelect: "none" }} mb="60px" mt="20px" w={{ base: "100%", md: "100%", lg: "102%" }}>
+          <Flex
+            direction="column"
+            w="440px"
+            height="620px"
+            background="transparent"
+            borderRadius="15px"
+            p="40px"
+            mt={{ sm: "80px", md: "120px", lg: "200px", xl: "140px" }}
+            mx={{ base: "100px", md: "150px", lg: "80px" }}
+            bg={bgColor}
+            boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)"
+          >
             <Heading color={titleColor} fontSize="32px" mb="10px">
-              Welcome Back
+              欢迎回来
             </Heading>
             <Text mb="36px" ms="4px" color={textColor} fontWeight="bold" fontSize="14px">
-              Enter your email and password to sign in
+              填入你的用户名或邮箱和密码
             </Text>
             <FormControl variant="floating" isRequired>
-              <Input
-                borderRadius="15px"
-                mb="24px"
-                fontSize="sm"
-                type="text"
-                placeholder=""
-                size="lg"
-                value={user.login}
-                name="login"
-                onChange={e => handValue(e)}
-              />
-              <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+              <Input autoFocus={true} borderRadius="15px" fontSize="sm" mb="36px" variant="filled" type="text" placeholder=" " size="lg" value={user.login} name="login" onChange={e => handValue(e)} />
+              <FormLabel ms="4px" fontSize="sm" fontWeight="normal" htmlFor="login">
                 用户名或是电子邮件
               </FormLabel>
             </FormControl>
             <FormControl variant="floating" isRequired>
-              <Input
-                borderRadius="15px"
-                mb="36px"
-                fontSize="sm"
-                type="password"
-                placeholder=""
-                size="lg"
-                value={user.password}
-                name="password"
-                onChange={e => handValue(e)}
-              />
+              <Input borderRadius="15px" mb="36px" variant="filled" fontSize="sm" type="password" placeholder=" " size="lg" value={user.password} name="password" onChange={e => handValue(e)} />
               <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
                 密码
               </FormLabel>
@@ -113,11 +94,12 @@ const SignIn = () => {
                 mb="36px"
                 fontSize="sm"
                 type="password"
-                placeholder=""
+                placeholder=" "
                 size="lg"
                 value={user.password_confirmation}
                 name="password_confirmation"
                 onChange={e => handValue(e)}
+                variant="filled"
               />
               <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
                 密码确认
@@ -126,7 +108,7 @@ const SignIn = () => {
             <FormControl display="flex" alignItems="center">
               <Switch id="remember-login" colorScheme="teal" me="10px" />
               <FormLabel htmlFor="remember-login" mb="0" ms="1" fontWeight="normal">
-                Remember me
+                记住我
               </FormLabel>
             </FormControl>
             <Button
@@ -135,7 +117,7 @@ const SignIn = () => {
               bg="teal.300"
               w="100%"
               h="45"
-              mb="20px"
+              mb="10px"
               color="white"
               mt="20px"
               _hover={{
@@ -146,7 +128,7 @@ const SignIn = () => {
               }}
               onClick={() => handleSubmit()}
             >
-              登录
+              <Box fontSize="18px">登录</Box>
             </Button>
             <Button
               fontSize="10px"
@@ -156,7 +138,7 @@ const SignIn = () => {
               h="45"
               mb="20px"
               color="white"
-              mt="20px"
+              mt="10px"
               _hover={{
                 bg: "teal.200",
               }}
@@ -165,7 +147,7 @@ const SignIn = () => {
               }}
               onClick={() => handWechatLogin()}
             >
-              微信登录
+              <Box fontSize="18px">微信登录</Box>
             </Button>
             <Flex flexDirection="column" justifyContent="center" alignItems="center" maxW="100%" mt="0px">
               <Text color={textColor} fontWeight="medium">

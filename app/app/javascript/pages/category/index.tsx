@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect, useRef } from "react";
+import React, { useState, useMemo, useCallback, useRef } from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { useTable, useExpanded } from "react-table";
 import {
@@ -50,6 +50,7 @@ const Category = () => {
   const [show, setShow] = useState({ isShow: false, type: "" });
   const toast = useToast();
   const cancelRef: any = useRef();
+  const initialRef: any = useRef();
   const isError = category.name === "";
 
   const fetchCategories = () => {
@@ -68,7 +69,7 @@ const Category = () => {
   const { status, data, error, isFetching, isRefetching } = fetchCategories();
   const tableData = data?.categories;
 
-  useEffect(() => {}, [category.name, category.id]);
+  // useEffect(() => { }, [category.name, category.id]);
 
   const queryClient = useQueryClient();
 
@@ -265,12 +266,7 @@ const Category = () => {
               {headerGroups.map((headerGroup, index) => (
                 <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
                   {headerGroup.headers.map((column, i) => (
-                    <Th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group"
-                      {...column.getHeaderProps()}
-                      key={i}
-                    >
+                    <Th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group" {...column.getHeaderProps()} key={i}>
                       {column.render("Header")}
                     </Th>
                   ))}
@@ -329,11 +325,7 @@ const Category = () => {
                             fontFamily: "heading",
                           }}
                         >
-                          {cell.column.Cell.name === "defaultRenderer" ? (
-                            <Box className="text-sm text-gray-500">{cell.render("Cell")}</Box>
-                          ) : (
-                            cell.render("Cell")
-                          )}
+                          {cell.column.Cell.name === "defaultRenderer" ? <Box className="text-sm text-gray-500">{cell.render("Cell")}</Box> : cell.render("Cell")}
                         </Td>
                       );
                     })}
@@ -359,9 +351,7 @@ const Category = () => {
         // Build our expander column
         id: "expander", // Make sure it has an ID
         Header: ({ getToggleAllRowsExpandedProps, isAllRowsExpanded }) => (
-          <Box {...getToggleAllRowsExpandedProps()}>
-            {isAllRowsExpanded ? <ChevronDownIcon w={8} h={8} color="red.500" /> : <ChevronRightIcon w={8} h={8} color="red.500" />}
-          </Box>
+          <Box {...getToggleAllRowsExpandedProps()}>{isAllRowsExpanded ? <ChevronDownIcon w={8} h={8} color="red.500" /> : <ChevronRightIcon w={8} h={8} color="red.500" />}</Box>
         ),
         Cell: ({ row }) =>
           // Use the row.canExpand and row.getToggleRowExpandedProps prop getter
@@ -425,13 +415,7 @@ const Category = () => {
           {
             Header: "",
             accessor: (originalRow, _) => (
-              <Button
-                colorScheme="red"
-                size="sm"
-                leftIcon={<DeleteIcon />}
-                variant="solid"
-                onClick={() => handModal(originalRow.id, "del")}
-              >
+              <Button colorScheme="red" size="sm" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handModal(originalRow.id, "del")}>
                 删除
               </Button>
             ),
@@ -496,7 +480,7 @@ const Category = () => {
             </>
           )}
           {show.isShow && show.type !== "del" && (
-            <Modal isOpen={show.isShow && show.type !== "del"} onClose={onClose}>
+            <Modal isOpen={show.isShow && show.type !== "del"} onClose={onClose} initialFocusRef={initialRef}>
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>类型提交</ModalHeader>
@@ -504,6 +488,7 @@ const Category = () => {
                 <ModalBody>
                   <FormControl id="name" variant={show.type === "add" ? "floating" : "editfloating"} isInvalid={isError} isRequired>
                     <Input
+                      ref={initialRef}
                       isRequired
                       isInvalid
                       errorBorderColor="crimson"
@@ -530,13 +515,7 @@ const Category = () => {
               </ModalContent>
             </Modal>
           )}
-          <AlertDialog
-            motionPreset="slideInBottom"
-            leastDestructiveRef={cancelRef}
-            onClose={onClose}
-            isOpen={show.isShow && show.type === "del"}
-            isCentered
-          >
+          <AlertDialog motionPreset="slideInBottom" leastDestructiveRef={cancelRef} onClose={onClose} isOpen={show.isShow && show.type === "del"} isCentered>
             <AlertDialogOverlay />
             <AlertDialogContent>
               <AlertDialogHeader>删除提示?</AlertDialogHeader>

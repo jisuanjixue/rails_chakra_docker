@@ -59,23 +59,14 @@ const SignUp = () => {
       ></Box>
       <Flex direction="column" textAlign="center" justifyContent="center" align="center" mt="6.5rem" mb="30px">
         <Text fontSize="4xl" color="white" fontWeight="bold">
-          Welcome!
+          欢迎!
         </Text>
         <Text fontSize="md" color="white" fontWeight="normal" mt="10px" mb="26px" w={{ base: "90%", sm: "60%", lg: "40%", xl: "30%" }}>
-          Use these awesome forms to login or create new account in your project for free.
+          使用这些很棒的表单免费登录或在您的项目中创建新帐户。
         </Text>
       </Flex>
       <Flex alignItems="center" justifyContent="center" mb="60px" mt="20px">
-        <Flex
-          direction="column"
-          w="445px"
-          background="transparent"
-          borderRadius="15px"
-          p="40px"
-          mx={{ base: "100px" }}
-          bg={bgColor}
-          boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)"
-        >
+        <Flex direction="column" w="445px" background="transparent" borderRadius="15px" p="40px" mx={{ base: "100px" }} bg={bgColor} boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)">
           <Text fontSize="xl" color={textColor} fontWeight="bold" textAlign="center" mb="22px">
             Register With
           </Text>
@@ -132,58 +123,38 @@ const SignUp = () => {
           <FormControl variant="floating" isRequired>
             <Input
               fontSize="sm"
+              autoFocus={true}
               ms="4px"
               borderRadius="15px"
               type="text"
-              placeholder=""
+              placeholder=" "
               mb="24px"
               size="lg"
               value={user.name}
               name="name"
               onChange={e => handValue(e)}
+              variant="filled"
             />
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+            <FormLabel fontSize="sm" fontWeight="normal">
               昵称
             </FormLabel>
           </FormControl>
           <FormControl variant="floating" isRequired>
-            <Input
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              type="email"
-              placeholder=""
-              mb="24px"
-              size="lg"
-              value={user.email}
-              name="email"
-              onChange={e => handValue(e)}
-            />
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+            <Input fontSize="sm" ms="4px" borderRadius="15px" type="email" placeholder=" " mb="24px" size="lg" value={user.email} name="email" variant="filled" onChange={e => handValue(e)} />
+            <FormLabel fontSize="sm" fontWeight="normal">
               电子邮件
             </FormLabel>
           </FormControl>
           <FormControl variant="floating" isRequired>
-            <Input
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              type="password"
-              placeholder=""
-              mb="24px"
-              size="lg"
-              value={user.password}
-              name="password"
-              onChange={e => handValue(e)}
-            />
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+            <Input fontSize="sm" ms="4px" borderRadius="15px" type="password" placeholder=" " mb="24px" size="lg" value={user.password} name="password" variant="filled" onChange={e => handValue(e)} />
+            <FormLabel fontSize="sm" fontWeight="normal">
               密码
             </FormLabel>
           </FormControl>
           <FormControl display="flex" alignItems="center" mb="24px">
             <Switch id="remember-login" colorScheme="teal" me="10px" />
             <FormLabel htmlFor="remember-login" mb="0" fontWeight="normal">
-              Remember me
+              记住我
             </FormLabel>
           </FormControl>
           <Button
@@ -203,14 +174,14 @@ const SignUp = () => {
             }}
             onClick={() => handleSubmit()}
           >
-            注册
+            <Box fontSize="18px">注册</Box>
           </Button>
           <Flex flexDirection="column" justifyContent="center" alignItems="center" maxW="100%" mt="0px">
             <Text color={textColor} fontWeight="medium">
               您已有账号?
-              <Link color={titleColor} as="span" ms="5px" href="#" fontWeight="bold">
+              <Box onClick={() => navigate.push("/auth/signin")} color={titleColor} as="span" ms="5px" fontWeight="bold">
                 登录
-              </Link>
+              </Box>
             </Text>
           </Flex>
         </Flex>

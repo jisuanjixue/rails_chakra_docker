@@ -14,10 +14,10 @@
 #  updated_at :datetime         not null
 #
 class Market < ApplicationRecord
-  enum area: { p_area: '0', s_area: '1' }
+  # enum area: { p_area: '0', s_area: '1' }
 
   validates :name, uniqueness: true, presence: true, length: { maximum: 60 }
   validates :area, presence: true
   validates :is_show, presence: true
-  validates :address, presence: true
+  # validates :address, presence: true
 end

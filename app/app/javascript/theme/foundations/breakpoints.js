@@ -2,8 +2,9 @@
 import { createBreakpoints } from "@chakra-ui/theme-tools";
 // 2. Update the breakpoints as key-value pairs
 export const breakpoints = createBreakpoints({
-  sm: "320px",
-  md: "768px",
-  lg: "960px",
-  xl: "1200px",
+  sm: "1024px",
+  md: "1280px",
+  lg: "1440px",
+  xl: "1920px",
+  "2xl": "1536px",
 });

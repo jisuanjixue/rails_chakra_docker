@@ -6,7 +6,7 @@ class CreateMarkets < ActiveRecord::Migration[7.0]
       t.string(:name)
       t.string(:type)
       t.boolean(:is_show, default: true)
-      t.string(:address, default: [].to_yaml, null: false)
+      t.string(:address, array: true, default: [])
       t.text(:remark)
 
       t.timestamps
