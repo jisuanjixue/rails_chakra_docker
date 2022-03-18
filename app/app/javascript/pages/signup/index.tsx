@@ -1,5 +1,5 @@
 // Chakra imports
-import { Box, Button, Flex, FormControl, FormLabel, HStack, Icon, Input, Link, Switch, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, FormLabel, HStack, Icon, Input, Link, Switch, Text, useColorModeValue, useToast } from "@chakra-ui/react";
 import React, { useState, useCallback } from "react";
 import {
   // useQueryClient,
@@ -11,13 +11,16 @@ import { UserRegister } from "../../types/user";
 // Assets
 // import BgSignUp from "../../images/BgSignUp.png";
 import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
+import Alter from "@components/alerts/Alter";
 
 const SignUp = () => {
+  const toast = useToast();
   const titleColor = useColorModeValue("teal.300", "teal.200");
   const textColor = useColorModeValue("gray.700", "white");
   const bgColor = useColorModeValue("white", "gray.700");
   const bgIcons = useColorModeValue("teal.200", "rgba(255, 255, 255, 0.5)");
   const navigate = useHistory();
+  const mainTeal = useColorModeValue("teal.300", "teal.300");
   const [user, setUser] = useState<UserRegister>({
     name: "",
     email: "",
@@ -29,10 +32,30 @@ const SignUp = () => {
   const userRegistration = useMutation((user: UserRegister) => userApi.create(user), {
     mutationKey: "userRegistration",
     onSuccess: () => {
-      navigate.push("/");
+      navigate.push("/auth/signin");
     },
-    onError: (err, variables) => {
-      console.log(err, variables);
+    onError: (error, variables) => {
+      const { message } = error.response.data.status;
+      if (message.includes("Email has already been taken") || message.includes("Name has already been taken")) {
+        const title = `${variables.email}已被注册` || `${variables.name}已被注册`;
+        toast({
+          position: "top",
+          isClosable: true,
+          variant: "solid",
+          render: () => <Alter title={title} titleColor={mainTeal} textColor={mainTeal} text="请使用另一个邮箱注册" icon="check-circle" />,
+        });
+      }
+
+      if (message.includes("Name has already been taken")) {
+        const title = `${variables.name}已被注册`;
+        toast({
+          position: "top",
+          isClosable: true,
+          variant: "solid",
+          render: () => <Alter title={title} titleColor={mainTeal} textColor={mainTeal} text="请使用另一个昵称注册" icon="check-circle" />,
+        });
+      }
+      // navigate.push("/auth/signup");
     },
   });
 

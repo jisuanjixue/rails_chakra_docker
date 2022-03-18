@@ -13,6 +13,7 @@ import {
   ModalCloseButton,
   Button,
   Box,
+  ButtonGroup,
   Alert,
   AlertIcon,
   AlertTitle,
@@ -24,7 +25,6 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   AlertDialogCloseButton,
-  CircularProgress,
   CloseButton,
   Spinner,
   FormControl,
@@ -41,6 +41,8 @@ import {
   Th,
   Td,
   TableCaption,
+  SkeletonCircle,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { AddIcon, EditIcon, DeleteIcon, ChevronRightIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import categoriesApi from "../../apis/category";
@@ -67,7 +69,7 @@ const Category = () => {
   };
 
   const { status, data, error, isFetching, isRefetching } = fetchCategories();
-  const tableData = data?.categories;
+  const tableData = useMemo(() => data?.categories, [status === "success", data]);
 
   // useEffect(() => { }, [category.name, category.id]);
 
@@ -219,14 +221,7 @@ const Category = () => {
   };
 
   const TableList = ({ columns: userColumns, data }) => {
-    const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      rows,
-      prepareRow,
-      state: { expanded },
-    } = useTable(
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
       {
         columns: userColumns,
         data,
@@ -235,11 +230,11 @@ const Category = () => {
     );
     return (
       <>
-        <Flex w="full" bg="gray.600" p={50} alignItems="center" justifyContent="center">
+        <Flex direction="column" w="full" bg="gray.600" p={50} alignItems="center" justifyContent="center" overflowX={{ sm: "scroll", lg: "hidden" }}>
           <Table
             w="full"
             display={{
-              base: "block",
+              sm: "block",
               md: "table",
             }}
             sx={{
@@ -247,14 +242,14 @@ const Category = () => {
                 display: "table",
               },
             }}
-            bg={useColorModeValue("white", "gray.800")}
+            bg={useColorModeValue("white", "gray.500")}
             {...getTableProps()}
             variant="simple"
           >
             <TableCaption>系统类型</TableCaption>
             <Thead
               display={{
-                base: "none",
+                sm: "none",
                 md: "table-header-group",
               }}
               sx={{
@@ -266,8 +261,10 @@ const Category = () => {
               {headerGroups.map((headerGroup, index) => (
                 <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
                   {headerGroup.headers.map((column, i) => (
-                    <Th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase group" {...column.getHeaderProps()} key={i}>
-                      {column.render("Header")}
+                    <Th scope="col" pe="0px" {...column.getHeaderProps()} key={i}>
+                      <Flex justify="space-between" align="center" fontSize={{ sm: "10px", lg: "12px" }} color="gray.400">
+                        {column.render("Header")}
+                      </Flex>
                     </Th>
                   ))}
                 </Tr>
@@ -276,8 +273,8 @@ const Category = () => {
             <Tbody
               {...getTableBodyProps()}
               display={{
-                base: "block",
-                lg: "table-row-group",
+                sm: "block",
+                md: "table-header-group",
               }}
               sx={{
                 "@media print": {
@@ -292,7 +289,7 @@ const Category = () => {
                     {...row.getRowProps()}
                     key={i}
                     display={{
-                      base: "grid",
+                      sm: "grid",
                       md: "table-row",
                     }}
                     sx={{
@@ -309,23 +306,23 @@ const Category = () => {
                           {...cell.getCellProps()}
                           role="cell"
                           key={index}
-                          // display={{
-                          //   base: 'table-cell',
-                          //   md: 'none',
-                          // }}
+                          display={{
+                            sm: "table-cell",
+                            md: "table-cell",
+                          }}
                           sx={{
                             "@media print": {
-                              display: "none",
+                              display: "table-cell",
                             },
                             textTransform: "uppercase",
-                            color: useColorModeValue("gray.400", "gray.400"),
-                            fontSize: "xs",
+                            color: useColorModeValue("gray.800", "gray.400"),
+                            fontSize: "xl",
                             fontWeight: "bold",
                             letterSpacing: "wider",
                             fontFamily: "heading",
                           }}
                         >
-                          {cell.column.Cell.name === "defaultRenderer" ? <Box className="text-sm text-gray-500">{cell.render("Cell")}</Box> : cell.render("Cell")}
+                          {cell.column.Cell.name === "defaultRenderer" ? <Box>{cell.render("Cell")}</Box> : cell.render("Cell")}
                         </Td>
                       );
                     })}
@@ -393,33 +390,20 @@ const Category = () => {
         id: "caozuo",
         columns: [
           {
-            accessor: (originalRow, _) => (
-              <Button colorScheme="blue" leftIcon={<AddIcon />} size="sm" variant="solid" onClick={() => handModal(originalRow.id, "add")}>
-                新增
-              </Button>
+            accessor: originalRow => (
+              <ButtonGroup variant="solid" size="sm" spacing={3}>
+                <Button colorScheme="blue" leftIcon={<AddIcon />} size="sm" variant="solid" onClick={() => handModal(originalRow.id, "add")}>
+                  新增
+                </Button>
+                <Button colorScheme="teal" leftIcon={<EditIcon />} size="sm" variant="solid" onClick={() => handEdit(originalRow, "edit")}>
+                  编辑
+                </Button>
+                <Button colorScheme="red" size="sm" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handModal(originalRow.id, "del")}>
+                  删除
+                </Button>
+              </ButtonGroup>
             ),
-            id: "add",
-            width: 1,
-            minWidth: 0,
-          },
-          {
-            accessor: (originalRow, _) => (
-              <Button colorScheme="teal" leftIcon={<EditIcon />} size="sm" variant="solid" onClick={() => handEdit(originalRow, "edit")}>
-                编辑
-              </Button>
-            ),
-            id: "edit",
-            width: 1,
-            minWidth: 0,
-          },
-          {
-            Header: "",
-            accessor: (originalRow, _) => (
-              <Button colorScheme="red" size="sm" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handModal(originalRow.id, "del")}>
-                删除
-              </Button>
-            ),
-            id: "del",
+            id: "caozuo",
             width: 1,
             minWidth: 0,
           },
@@ -464,7 +448,10 @@ const Category = () => {
             新增顶级类型
           </Button>
           {status === "loading" ? (
-            <CircularProgress isIndeterminate color="green.300" />
+            <Box padding="6" boxShadow="lg" bg="white">
+              <SkeletonCircle size="10" />
+              <SkeletonText mt="4" noOfLines={4} spacing="4" />
+            </Box>
           ) : status === "error" ? (
             <Box>
               <Alert status="error">

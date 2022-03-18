@@ -32,9 +32,7 @@ const AuthLayout = () => {
           return categoryActiveRoute;
         }
       } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
+        if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
           return routes[i].name;
         }
       }
@@ -51,9 +49,7 @@ const AuthLayout = () => {
           return categoryActiveNavbar;
         }
       } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
+        if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
           if (routes[i].secondaryNavbar) {
             return routes[i].secondaryNavbar;
           }
@@ -74,13 +70,7 @@ const AuthLayout = () => {
       }
 
       if (prop.layout === "/auth") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
+        return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
       }
 
       return null;
@@ -91,10 +81,7 @@ const AuthLayout = () => {
   return (
     <Box ref={navRef} w="100%">
       <Portal containerRef={navRef}>
-        <AuthNavbar
-          secondary={getActiveNavbar(routes)}
-          logoText="PURITY UI DASHBOARD"
-        />
+        <AuthNavbar secondary={getActiveNavbar(routes)} logoText="PURITY UI DASHBOARD" />
       </Portal>
       <Box w="100%">
         <Box ref={wrapper} w="100%">

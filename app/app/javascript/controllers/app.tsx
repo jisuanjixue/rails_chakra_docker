@@ -12,7 +12,6 @@ import AdminLayout from "../layouts/Admin";
 const App = () => {
   // const bg = useColorModeValue("white", "gray.800");
   handInterceptor();
-
   return (
     <ChakraProvider theme={theme} resetCSS={false}>
       <Fonts />
@@ -24,7 +23,6 @@ const App = () => {
             <Redirect from={`/`} to="/admin/dashboard" />
           </Switch>
         </HashRouter>
-        ,
       </UserProvider>
     </ChakraProvider>
   );

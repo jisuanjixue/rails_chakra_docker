@@ -68,15 +68,7 @@ const Dashboard = () => {
                   <StatNumber fontSize="lg" color={textColor}>
                     $53,000
                   </StatNumber>
-                  <StatHelpText
-                    alignSelf="flex-end"
-                    justifySelf="flex-end"
-                    m="0px"
-                    color="green.400"
-                    fontWeight="bold"
-                    ps="3px"
-                    fontSize="md"
-                  >
+                  <StatHelpText alignSelf="flex-end" justifySelf="flex-end" m="0px" color="green.400" fontWeight="bold" ps="3px" fontSize="md">
                     +55%
                   </StatHelpText>
                 </Flex>
@@ -98,15 +90,7 @@ const Dashboard = () => {
                   <StatNumber fontSize="lg" color={textColor}>
                     2,300
                   </StatNumber>
-                  <StatHelpText
-                    alignSelf="flex-end"
-                    justifySelf="flex-end"
-                    m="0px"
-                    color="green.400"
-                    fontWeight="bold"
-                    ps="3px"
-                    fontSize="md"
-                  >
+                  <StatHelpText alignSelf="flex-end" justifySelf="flex-end" m="0px" color="green.400" fontWeight="bold" ps="3px" fontSize="md">
                     +5%
                   </StatHelpText>
                 </Flex>
@@ -128,15 +112,7 @@ const Dashboard = () => {
                   <StatNumber fontSize="lg" color={textColor}>
                     +3,020
                   </StatNumber>
-                  <StatHelpText
-                    alignSelf="flex-end"
-                    justifySelf="flex-end"
-                    m="0px"
-                    color="red.500"
-                    fontWeight="bold"
-                    ps="3px"
-                    fontSize="md"
-                  >
+                  <StatHelpText alignSelf="flex-end" justifySelf="flex-end" m="0px" color="red.500" fontWeight="bold" ps="3px" fontSize="md">
                     -14%
                   </StatHelpText>
                 </Flex>
@@ -159,15 +135,7 @@ const Dashboard = () => {
                   <StatNumber fontSize="lg" color={textColor} fontWeight="bold">
                     $173,000
                   </StatNumber>
-                  <StatHelpText
-                    alignSelf="flex-end"
-                    justifySelf="flex-end"
-                    m="0px"
-                    color="green.400"
-                    fontWeight="bold"
-                    ps="3px"
-                    fontSize="md"
-                  >
+                  <StatHelpText alignSelf="flex-end" justifySelf="flex-end" m="0px" color="green.400" fontWeight="bold" ps="3px" fontSize="md">
                     +8%
                   </StatHelpText>
                 </Flex>
@@ -196,28 +164,10 @@ const Dashboard = () => {
                 <Spacer />
                 <Flex align="center">
                   <Button p="0px" variant="no-hover" bg="transparent" my={{ sm: "1.5rem", lg: "0px" }}>
-                    <Text
-                      fontSize="sm"
-                      color={textColor}
-                      fontWeight="bold"
-                      cursor="pointer"
-                      transition="all .5s ease"
-                      my={{ sm: "1.5rem", lg: "0px" }}
-                      _hover={{ me: "4px" }}
-                    >
+                    <Text fontSize="sm" color={textColor} fontWeight="bold" cursor="pointer" transition="all .5s ease" my={{ sm: "1.5rem", lg: "0px" }} _hover={{ me: "4px" }}>
                       Read more
                     </Text>
-                    <Icon
-                      as={BsArrowRight}
-                      w="20px"
-                      h="20px"
-                      fontSize="2xl"
-                      transition="all .5s ease"
-                      mx=".3rem"
-                      cursor="pointer"
-                      pt="4px"
-                      _hover={{ transform: "translateX(20%)" }}
-                    />
+                    <Icon as={BsArrowRight} w="20px" h="20px" fontSize="2xl" transition="all .5s ease" mx=".3rem" cursor="pointer" pt="4px" _hover={{ transform: "translateX(20%)" }} />
                   </Button>
                 </Flex>
               </Flex>
@@ -229,25 +179,8 @@ const Dashboard = () => {
           </CardBody>
         </Card>
         <Card maxHeight="290.5px" p="1rem">
-          <CardBody
-            p="0px"
-            backgroundImage={""}
-            bgPosition="center"
-            bgRepeat="no-repeat"
-            w="100%"
-            h={{ sm: "200px", lg: "100%" }}
-            bgSize="cover"
-            position="relative"
-            borderRadius="15px"
-          >
-            <Box
-              bg="linear-gradient(360deg, rgba(49, 56, 96, 0.16) 0%, rgba(21, 25, 40, 0.88) 100%)"
-              w="100%"
-              position="absolute"
-              h="inherit"
-              borderRadius="inherit"
-              ref={overlayRef}
-            ></Box>
+          <CardBody p="0px" backgroundImage={""} bgPosition="center" bgRepeat="no-repeat" w="100%" h={{ sm: "200px", lg: "100%" }} bgSize="cover" position="relative" borderRadius="15px">
+            <Box bg="linear-gradient(360deg, rgba(49, 56, 96, 0.16) 0%, rgba(21, 25, 40, 0.88) 100%)" w="100%" position="absolute" h="inherit" borderRadius="inherit" ref={overlayRef}></Box>
             <Portal containerRef={overlayRef}>
               <Flex flexDirection="column" color="white" p="1.5rem 1.2rem 0.3rem 1.2rem" lineHeight="1.6">
                 <Text fontSize="xl" fontWeight="bold" pb=".3rem">
@@ -262,17 +195,7 @@ const Dashboard = () => {
                     <Text fontSize="sm" fontWeight="bold" _hover={{ me: "4px" }} transition="all .5s ease">
                       Read more
                     </Text>
-                    <Icon
-                      as={BsArrowRight}
-                      w="20px"
-                      h="20px"
-                      fontSize="xl"
-                      transition="all .5s ease"
-                      mx=".3rem"
-                      cursor="pointer"
-                      _hover={{ transform: "translateX(20%)" }}
-                      pt="4px"
-                    />
+                    <Icon as={BsArrowRight} w="20px" h="20px" fontSize="xl" transition="all .5s ease" mx=".3rem" cursor="pointer" _hover={{ transform: "translateX(20%)" }} pt="4px" />
                   </Button>
                 </Flex>
               </Flex>
@@ -280,12 +203,7 @@ const Dashboard = () => {
           </CardBody>
         </Card>
       </Grid>
-      <Grid
-        templateColumns={{ sm: "1fr", lg: "1.3fr 1.7fr" }}
-        templateRows={{ sm: "repeat(2, 1fr)", lg: "1fr" }}
-        gap="24px"
-        mb={{ lg: "26px" }}
-      >
+      <Grid templateColumns={{ sm: "1fr", lg: "1.3fr 1.7fr" }} templateRows={{ sm: "repeat(2, 1fr)", lg: "1fr" }} gap="24px" mb={{ lg: "26px" }}>
         <Card p="16px">
           <CardBody>
             <Flex direction="column" w="100%">
@@ -381,11 +299,7 @@ const Dashboard = () => {
           </Box>
         </Card>
       </Grid>
-      <Grid
-        templateColumns={{ sm: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }}
-        templateRows={{ sm: "1fr auto", md: "1fr", lg: "1fr" }}
-        gap="24px"
-      >
+      <Grid templateColumns={{ sm: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }} templateRows={{ sm: "1fr auto", md: "1fr", lg: "1fr" }} gap="24px">
         <Card p="16px" overflowX={{ sm: "scroll", xl: "hidden" }}>
           <CardHeader p="12px 0px 28px 0px">
             <Flex direction="column">
@@ -416,16 +330,7 @@ const Dashboard = () => {
             </Thead>
             <Tbody>
               {dashboardTableData.map((row, i) => {
-                return (
-                  <DashboardTableRow
-                    name={row.name}
-                    logo={row.logo}
-                    members={row.members}
-                    budget={row.budget}
-                    progression={row.progression}
-                    key={i}
-                  />
-                );
+                return <DashboardTableRow name={row.name} logo={row.logo} members={row.members} budget={row.budget} progression={row.progression} key={i} />;
               })}
             </Tbody>
           </Table>
@@ -447,17 +352,7 @@ const Dashboard = () => {
           <CardBody ps="20px" pe="0px" mb="31px" position="relative">
             <Flex direction="column">
               {timelineData.map((row, index, arr) => {
-                return (
-                  <TimelineRow
-                    logo={row.logo}
-                    title={row.title}
-                    date={row.date}
-                    color={row.color}
-                    index={index}
-                    key={index}
-                    arrLength={arr.length}
-                  />
-                );
+                return <TimelineRow logo={row.logo} title={row.title} date={row.date} color={row.color} index={index} key={index} arrLength={arr.length} />;
               })}
             </Flex>
           </CardBody>

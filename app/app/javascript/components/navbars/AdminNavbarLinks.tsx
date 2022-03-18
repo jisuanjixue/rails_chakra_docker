@@ -64,11 +64,7 @@ const HeaderLinks = props => {
   }
   const settingsRef: any = React.useRef();
   // const { isOpen, onToggle } = useDisclosure();
-  const {
-    isOpen: isModal,
-    onOpen: openModal,
-    onClose: closeModal,
-  } = useDisclosure();
+  const { isOpen: isModal, onOpen: openModal, onClose: closeModal } = useDisclosure();
   const queryClient = useQueryClient();
   const navigate = useHistory();
   const { state, dispatch } = useContext(UserContext);
@@ -83,7 +79,7 @@ const HeaderLinks = props => {
   const logoutUser = useMutation(() => userApi.logout(), {
     onSuccess: data => {
       if (data.status === 200) {
-        navigate.push("/");
+        navigate.push("/auth/signin");
         localStorage.removeItem("token");
       }
     },
@@ -93,18 +89,12 @@ const HeaderLinks = props => {
     logoutUser.mutate();
   };
 
-  const handValue = useCallback(
-    e => setUser({ ...user, name: e.target.value }),
-    [user.name, user.id]
-  );
+  const handValue = useCallback(e => setUser({ ...user, name: e.target.value }), [user.name, user.id]);
 
   const updateUserInfo = useMutation((user: UserInfo) => userApi.update(user), {
     mutationKey: "editUser",
     onError: (_err, _user, context: any) => {
-      queryClient.setQueryData(
-        ["currentUser", context.user.id],
-        context.previousValue
-      );
+      queryClient.setQueryData(["currentUser", context.user.id], context.previousValue);
     },
     // Always refetch after error or success:
     onSettled: (user: any) => {
@@ -120,37 +110,16 @@ const HeaderLinks = props => {
       },
     });
     if (updateUserInfo.isSuccess) {
-      return (
-        <Alter
-          titleColor={mainTeal}
-          textColor={mainTeal}
-          title="操作成功"
-          text="信息已更新"
-          icon="check-circle"
-        />
-      );
+      return <Alter titleColor={mainTeal} textColor={mainTeal} title="操作成功" text="信息已更新" icon="check-circle" />;
     }
 
     if (updateUserInfo.isError) {
-      return (
-        <Alter
-          titleColor={mainTeal}
-          textColor={mainTeal}
-          title="操作失败"
-          text="你的信息没有更新"
-          icon="check-circle"
-        />
-      );
+      return <Alter titleColor={mainTeal} textColor={mainTeal} title="操作失败" text="你的信息没有更新" icon="check-circle" />;
     }
   };
 
   return (
-    <Flex
-      pe={{ sm: "0px", md: "16px" }}
-      w={{ sm: "100%", md: "auto" }}
-      alignItems="center"
-      flexDirection="row"
-    >
+    <Flex pe={{ sm: "0px", md: "16px" }} w={{ sm: "100%", md: "auto" }} alignItems="center" flexDirection="row">
       <InputGroup
         cursor="pointer"
         bg={inputBg}
@@ -187,26 +156,11 @@ const HeaderLinks = props => {
             ></IconButton>
           }
         />
-        <Input
-          fontSize="xs"
-          py="11px"
-          color={mainText}
-          placeholder="Type here..."
-          borderRadius="inherit"
-        />
+        <Input fontSize="xs" py="11px" color={mainText} placeholder="Type here..." borderRadius="inherit" />
       </InputGroup>
       {user.id ? (
         <Menu>
-          <MenuButton
-            px={4}
-            py={2}
-            transition="all 0.2s"
-            borderRadius="md"
-            borderWidth="1px"
-            _hover={{ bg: "gray.400" }}
-            _expanded={{ bg: "blue.400" }}
-            _focus={{ boxShadow: "outline" }}
-          >
+          <MenuButton px={4} py={2} transition="all 0.2s" borderRadius="md" borderWidth="1px" _hover={{ bg: "gray.400" }} _expanded={{ bg: "blue.400" }} _focus={{ boxShadow: "outline" }}>
             {user.name}
           </MenuButton>
           {/* <SlideFade in={isOpen} offsetY="20px"> */}
@@ -226,33 +180,15 @@ const HeaderLinks = props => {
             me={{ sm: "2px", md: "16px" }}
             color={navbarIcon}
             variant="transparent-with-icon"
-            rightIcon={
-              <ProfileIcon color={navbarIcon} w="22px" h="22px" me="0px" />
-            }
-            leftIcon={
-              <ProfileIcon color={navbarIcon} w="22px" h="22px" me="0px" />
-            }
+            rightIcon={<ProfileIcon color={navbarIcon} w="22px" h="22px" me="0px" />}
+            leftIcon={<ProfileIcon color={navbarIcon} w="22px" h="22px" me="0px" />}
           >
             <Text display={{ sm: "none", md: "flex" }}>登录</Text>
           </Button>
         </NavLink>
       )}
-      <SidebarResponsive
-        logoText={logoText}
-        secondary={secondary}
-        routes={routes}
-        {...rest}
-      />
-      <SettingsIcon
-        cursor="pointer"
-        ms={{ base: "16px", xl: "0px" }}
-        me="16px"
-        ref={settingsRef}
-        onClick={onOpen}
-        color={navbarIcon}
-        w="18px"
-        h="18px"
-      />
+      <SidebarResponsive logoText={logoText} secondary={secondary} routes={routes} {...rest} />
+      <SettingsIcon cursor="pointer" ms={{ base: "16px", xl: "0px" }} me="16px" ref={settingsRef} onClick={onOpen} color={navbarIcon} w="18px" h="18px" />
       <Menu>
         <MenuButton>
           <BellIcon color={navbarIcon} w="18px" h="18px" />
@@ -295,29 +231,10 @@ const HeaderLinks = props => {
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <FormControl
-              id="name"
-              variant="floating"
-              isInvalid={isError}
-              isRequired
-            >
-              <Input
-                isRequired
-                isInvalid
-                errorBorderColor="crimson"
-                value={user.name}
-                onChange={event => handValue(event)}
-                type="text"
-                size="md"
-                variant="filled"
-                placeholder=""
-              />
+            <FormControl id="name" variant="floating" isInvalid={isError} isRequired>
+              <Input isRequired isInvalid errorBorderColor="crimson" value={user.name} onChange={event => handValue(event)} type="text" size="md" variant="filled" placeholder="" />
               <FormLabel>用户昵称</FormLabel>
-              {!isError ? (
-                <FormHelperText>填写不同的昵称</FormHelperText>
-              ) : (
-                <FormErrorMessage>必填</FormErrorMessage>
-              )}
+              {!isError ? <FormHelperText>填写不同的昵称</FormHelperText> : <FormErrorMessage>必填</FormErrorMessage>}
             </FormControl>
           </ModalBody>
           <ModalFooter>
