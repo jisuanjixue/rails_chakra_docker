@@ -242,7 +242,7 @@ const Category = () => {
                 display: "table",
               },
             }}
-            bg={useColorModeValue("white", "gray.500")}
+            bg={useColorModeValue("white", "gray.800")}
             {...getTableProps()}
             variant="simple"
           >
@@ -315,7 +315,7 @@ const Category = () => {
                               display: "table-cell",
                             },
                             textTransform: "uppercase",
-                            color: useColorModeValue("gray.800", "gray.400"),
+                            color: useColorModeValue("gray.400", "gray.400"),
                             fontSize: "xl",
                             fontWeight: "bold",
                             letterSpacing: "wider",
