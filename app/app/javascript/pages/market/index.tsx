@@ -73,22 +73,21 @@ import arr from "../../../../public/addr";
 const Market = () => {
   const [firstList, setFirstList] = useControllableState({ defaultValue: [] });
   const [secondList, setSecondList] = useControllableState({ defaultValue: [] });
+  const [marketId, setMarketId] = useControllableState({ defaultValue: "" });
 
   const { isOpen, onOpen, onClose: onSelectClose } = useDisclosure();
   const { isOpen: isAddrOpen, onOpen: onAddrOpen, onClose: onAddrClose } = useDisclosure();
   const { isOpen: isFirstOpen, onOpen: onFirstOpen, onClose: onFirstClose } = useDisclosure();
   const { isOpen: isSecondOpen, onOpen: onSecondOpen, onClose: onSecondClose } = useDisclosure();
-  const defaultItem = useConst({ label: "", value: "" });
   const defaultData = useConst<MarketInfo>({
     name: "",
     area: "",
     is_show: false,
-    address: [defaultItem, defaultItem, defaultItem],
+    address: [],
     remark: "",
   });
 
   // const [market, setMarket] = useState<MarketInfo>(defaultData);
-  const [marketId, setMarketId] = useState("");
   const [show, setShow] = useState({ isShow: false, type: "" });
   const toast = useToast();
 
@@ -108,14 +107,7 @@ const Market = () => {
       ),
     area: Yup.string().required("必选").oneOf(areas),
     is_show: Yup.boolean().default(false).equals([true]),
-    address: Yup.array()
-      .of(
-        Yup.object().shape({
-          label: Yup.string().required("地名必有"),
-          value: Yup.string().required("地区编码必有"),
-        })
-      )
-      .min(3, "至少3个地址"),
+    address: Yup.array().min(3, "至少3个地址"),
   });
 
   const queryClient = useQueryClient();
@@ -143,30 +135,19 @@ const Market = () => {
           toast({
             position: "top",
             isClosable: true,
+            title: "新增成功！",
+            status: "success",
             variant: "solid",
-            render: () => (
-              <Alert status="success" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
-                <AlertIcon boxSize="40px" mr={0} />
-                <AlertTitle mt={4} mb={1} fontSize="lg">
-                  新增成功！
-                </AlertTitle>
-              </Alert>
-            ),
           });
+          setShow({ isShow: false, type: "" });
         },
         onError: () => {
           toast({
             position: "top",
             isClosable: true,
             variant: "solid",
-            render: () => (
-              <Alert status="error" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
-                <AlertIcon boxSize="40px" mr={0} />
-                <AlertTitle mt={4} mb={1} fontSize="lg">
-                  新增失败！
-                </AlertTitle>
-              </Alert>
-            ),
+            title: "新增失败！",
+            status: "error",
           });
         },
       });
@@ -177,29 +158,18 @@ const Market = () => {
             position: "top",
             isClosable: true,
             variant: "solid",
-            render: () => (
-              <Alert status="success" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
-                <AlertIcon boxSize="40px" mr={0} />
-                <AlertTitle mt={4} mb={1} fontSize="lg">
-                  编辑成功！
-                </AlertTitle>
-              </Alert>
-            ),
+            title: "编辑成功 ！",
+            status: "success",
           });
+          setShow({ isShow: false, type: "" });
         },
         onError: () => {
           toast({
             position: "top",
             isClosable: true,
             variant: "solid",
-            render: () => (
-              <Alert status="error" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
-                <AlertIcon boxSize="40px" mr={0} />
-                <AlertTitle mt={4} mb={1} fontSize="lg">
-                  编辑失败！
-                </AlertTitle>
-              </Alert>
-            ),
+            title: "编辑失败！",
+            status: "error",
           });
         },
       });
@@ -210,11 +180,7 @@ const Market = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const saveData = {
-      ...formik.values,
-      address: formik.values.address.map(v => v.value),
-    };
-    onSave(saveData);
+    onSave(formik.values);
   };
 
   const formik = useFormik({
@@ -245,44 +211,75 @@ const Market = () => {
   const updateMarket = useMutation((market: any) => marketApi.update(market), {
     mutationKey: "updateMarket",
     onMutate: async newMarket => {
-      await queryClient.cancelQueries(["categories", newMarket.id]);
+      await queryClient.cancelQueries(["markets", newMarket.id]);
       // Snapshot the previous value
-      const previousValue = queryClient.getQueryData(["categories", newMarket.id]);
+      const previousValue = queryClient.getQueryData(["markets", newMarket.id]);
       // Optimistically update to the new value
-      queryClient.setQueryData(["categories", newMarket.id], newMarket);
+      queryClient.setQueryData(["markets", newMarket.id], newMarket);
       // Return a context object with the snapshotted value
       return { previousValue, newMarket };
     },
     onError: (err, newMarket, context: any) => {
-      queryClient.setQueryData(["categories", context.newMarket.id], context.previousValue);
+      queryClient.setQueryData(["markets", context.newMarket.id], context.previousValue);
     },
     // Always refetch after error or success:
     onSettled: (newMarket: any) => {
-      queryClient.invalidateQueries(["categories", newMarket.id]);
+      queryClient.invalidateQueries(["markets", newMarket.id]);
     },
   });
 
   const deleteMarket = useMutation((id: String) => marketApi.remove(id), {
     mutationKey: "deleteMarket",
     onMutate: async id => {
-      await queryClient.cancelQueries(["categories", id]);
-      const previousValue: any = queryClient.getQueryData("categories");
-      const updateValue = [...previousValue.categories];
+      await queryClient.cancelQueries(["markets", id]);
+      const previousValue: any = queryClient.getQueryData("markets");
+      const updateValue = [...previousValue.markets];
       const removeDeleted = updateValue.filter(f => f.id !== id);
-      queryClient.setQueryData("categories", (old: any) => {
+      queryClient.setQueryData("markets", (old: any) => {
         return {
           ...old,
-          categories: removeDeleted,
+          markets: removeDeleted,
         };
       });
       return previousValue;
     },
-    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("categories", previousValue),
-    onSettled: () => queryClient.invalidateQueries("categories"),
+    onError: (_err, _variables, previousValue: any) => queryClient.setQueryData("markets", previousValue),
+    onSettled: () => queryClient.invalidateQueries("markets"),
   });
 
+  const getFullAddress = address => {
+    if (address.length > 0) {
+      const provice: any = arr.find(f => f.value === address[0]);
+      const city: any = provice?.children.find(f => f.value === address[1]);
+      const district = city?.children.find(f => f.value === address[2]);
+      return `${provice?.label}${city?.label}${district?.label}`;
+    }
+
+    return "";
+  };
+
   const handDelSubmit = () => {
-    deleteMarket.mutate(marketId);
+    deleteMarket.mutate(marketId, {
+      onSuccess: () => {
+        toast({
+          position: "top",
+          isClosable: true,
+          variant: "solid",
+          title: "删除成功！",
+          status: "success",
+        });
+        setShow({ isShow: false, type: "" });
+      },
+      onError: () => {
+        toast({
+          position: "top",
+          isClosable: true,
+          variant: "solid",
+          title: "删除失败！",
+          status: "success",
+        });
+      },
+    });
   };
 
   const onClose = () => {
@@ -290,7 +287,6 @@ const Market = () => {
   };
 
   const handModal = type => {
-    // setMarket({ ...market });
     setShow({ isShow: true, type });
   };
 
@@ -300,8 +296,7 @@ const Market = () => {
   };
 
   const handEdit = (row, type) => {
-    setMarketId(row.id);
-    // setMarket({ ...market, ...row });
+    formik.setValues({ ...row });
     setShow({ isShow: true, type });
   };
 
@@ -376,7 +371,7 @@ const Market = () => {
                 <Tr {...headerGroup.getHeaderGroupProps()} key={i}>
                   {headerGroup.headers.map((column, index) => (
                     <Th scope="col" {...column.getHeaderProps(column.getSortByToggleProps())} key={index} pe="0px">
-                      <Flex justify="space-between" align="center" fontSize={{ sm: "10px", lg: "12px" }} color="gray.400">
+                      <Flex justify="flex-start" align="center" fontSize={{ sm: "10px", lg: "12px" }} color="gray.400">
                         {column.render("Header")}
                         <Icon
                           w={{ sm: "10px", md: "14px" }}
@@ -545,13 +540,6 @@ const Market = () => {
         ),
         id: "name",
         accessor: "name",
-        // columns: [
-        //   {
-        //     accessor: "name",
-        //     width: 20,
-        //     minWidth: 10,
-        //   },
-        // ],
       },
       {
         Header: () => (
@@ -561,13 +549,6 @@ const Market = () => {
         ),
         id: "area",
         accessor: "area",
-        // columns: [
-        //   {
-        //     accessor: "area",
-        //     width: 30,
-        //     minWidth: 10,
-        //   },
-        // ],
       },
       {
         Header: () => (
@@ -576,14 +557,7 @@ const Market = () => {
           </Heading>
         ),
         id: "isShow",
-        accessor: "is_show",
-        // columns: [
-        //   {
-        //     accessor: "is_show",
-        //     width: 30,
-        //     minWidth: 10,
-        //   },
-        // ],
+        accessor: originalRow => (originalRow.is_show ? "是" : "否"),
       },
       {
         Header: () => (
@@ -592,14 +566,7 @@ const Market = () => {
           </Heading>
         ),
         id: "address",
-        accessor: "address",
-        // columns: [
-        //   {
-        //     accessor: "address",
-        //     width: 30,
-        //     minWidth: 10,
-        //   },
-        // ],
+        accessor: originalRow => getFullAddress(originalRow.address),
       },
       {
         Header: () => (
@@ -609,13 +576,6 @@ const Market = () => {
         ),
         id: "remark",
         accessor: "remark",
-        // columns: [
-        //   {
-        //     accessor: "remark",
-        //     width: 30,
-        //     minWidth: 10,
-        //   },
-        // ],
       },
       {
         Header: () => (
@@ -626,40 +586,14 @@ const Market = () => {
         id: "action",
         accessor: originalRow => (
           <ButtonGroup variant="solid" size="sm" spacing={3}>
-            <Button colorScheme="blue" leftIcon={<AddIcon />} size="sm" variant="solid" onClick={() => handModal(originalRow.id, "add")}>
-              新增
-            </Button>
             <Button colorScheme="teal" leftIcon={<EditIcon />} size="sm" variant="solid" onClick={() => handEdit(originalRow, "edit")}>
               编辑
             </Button>
-            <Button colorScheme="red" size="sm" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handModal(originalRow.id, "del")}>
+            <Button colorScheme="red" size="sm" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handDel(originalRow.id, "del")}>
               删除
             </Button>
           </ButtonGroup>
         ),
-        // columns: [
-        //   {
-        //     accessor: originalRow => (
-        //       <Button colorScheme="teal" leftIcon={<EditIcon />} size="sm" variant="solid" onClick={() => handEdit(originalRow, "edit")}>
-        //         编辑
-        //       </Button>
-        //     ),
-        //     id: "edit",
-        //     width: 20,
-        //     minWidth: 10,
-        //   },
-        //   {
-        //     Header: "",
-        //     accessor: originalRow => (
-        //       <Button colorScheme="red" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handDel(originalRow.id, "del")}>
-        //         删除
-        //       </Button>
-        //     ),
-        //     id: "del",
-        //     width: 20,
-        //     minWidth: 10,
-        //   },
-        // ],
       },
     ],
     []
@@ -668,7 +602,7 @@ const Market = () => {
   const { name, area, remark, is_show, address } = formik.values;
 
   const handItem = (item: any, type) => {
-    address[type] = { value: item.value, label: item.label };
+    address[type] = item.value;
     formik.setFieldValue("address", address, false);
     if (type === 0) {
       const arr = item.children.length === 1 ? item.children[0].children : item.children;
@@ -679,7 +613,7 @@ const Market = () => {
         onSecondOpen();
         setSecondList(item.children);
       } else {
-        address[2] = defaultItem;
+        address[2] = "";
         onAddrClose();
         onFirstClose();
       }
@@ -690,7 +624,7 @@ const Market = () => {
     }
   };
 
-  const addrString = address.map(item => item.label).join("");
+  const addrString = getFullAddress(address);
 
   return (
     <>
@@ -761,8 +695,19 @@ const Market = () => {
                         </Menu>
                       </FormControl>
                       <FormControl display="flex" alignItems="center">
-                        <FormLabel htmlFor="is_show">是否展示</FormLabel>
-                        <Switch onChange={e => formik.setFieldValue("is_show", e.target.checked, false)} id="is_show" isInvalid isRequired value={is_show} />
+                        <FormLabel htmlFor="is_show" mb="0">
+                          是否展示
+                        </FormLabel>
+                        <Switch
+                          onChange={e => {
+                            formik.setFieldValue("is_show", e.target.checked, false);
+                          }}
+                          id="is_show"
+                          isChecked={is_show}
+                          isInvalid
+                          isRequired
+                          value={is_show ? 1 : 0}
+                        />
                       </FormControl>
                       <FormControl variant={show.type === "edit" ? "editfloating" : "floating"} id="remark">
                         <Textarea onChange={formik.handleChange} name="remark" value={remark} type="text" placeholder="  " variant="filled" />

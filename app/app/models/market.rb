@@ -18,6 +18,6 @@ class Market < ApplicationRecord
 
   validates :name, uniqueness: true, presence: true, length: { maximum: 60 }
   validates :area, presence: true
-  validates :is_show, presence: true
+  validates :is_show, inclusion: { in: [ true, false ] }
   # validates :address, presence: true
 end
