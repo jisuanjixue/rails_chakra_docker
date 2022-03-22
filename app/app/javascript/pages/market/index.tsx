@@ -13,9 +13,6 @@ import {
   Spinner,
   useToast,
   Box,
-  Alert,
-  AlertIcon,
-  AlertTitle,
   AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
@@ -23,9 +20,6 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   AlertDialogCloseButton,
-  CircularProgress,
-  CloseButton,
-  Select,
   Heading,
   ButtonGroup,
   Container,
@@ -59,9 +53,14 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  SkeletonCircle,
+  SkeletonText,
+  IconButton,
+  Tooltip,
+  Select,
 } from "@chakra-ui/react";
-import { AddIcon, EditIcon, DeleteIcon, ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { AddIcon, EditIcon, DeleteIcon, ChevronDownIcon, ChevronUpIcon, ArrowRightIcon, ArrowLeftIcon, ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
+import { BsLightningFill } from "react-icons/bs";
 import { TiArrowSortedDown, TiArrowSortedUp, TiArrowUnsorted } from "react-icons/ti";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -69,6 +68,7 @@ import * as Yup from "yup";
 import marketApi from "../../apis/market";
 import { MarketInfo } from "../../types/market";
 import arr from "../../../../public/addr";
+import Alter from "@components/alerts/Alter";
 
 const Market = () => {
   const [firstList, setFirstList] = useControllableState({ defaultValue: [] });
@@ -125,7 +125,7 @@ const Market = () => {
   };
 
   //isRefetching
-  const { status, data, error, isFetching } = fetchMarkets();
+  const { status, data, isFetching } = fetchMarkets();
   const tableData = useMemo(() => data?.markets, [status === "success", data]);
 
   const onSave = values => {
@@ -250,8 +250,9 @@ const Market = () => {
   const getFullAddress = address => {
     if (address.length > 0) {
       const provice: any = arr.find(f => f.value === address[0]);
-      const city: any = provice?.children.find(f => f.value === address[1]);
-      const district = city?.children.find(f => f.value === address[2]);
+      const proviceData = address.length === 2 ? provice?.children[0]?.children : provice?.children;
+      const city: any = proviceData.find(f => f.value === address[1]);
+      const district = address.length === 2 ? { label: "" } : city?.children.find(f => f.value === address[2]);
       return `${provice?.label}${city?.label}${district?.label}`;
     }
 
@@ -301,42 +302,37 @@ const Market = () => {
   };
 
   const TableList = ({ columns: marketColumns, data }) => {
-    const { getTableProps, getTableBodyProps, headerGroups, page, gotoPage, pageCount, prepareRow, nextPage, previousPage, canNextPage, canPreviousPage, setPageSize, setGlobalFilter, state } =
-      useTable(
-        {
-          columns: marketColumns,
-          data,
-        },
-        useGlobalFilter,
-        useSortBy,
-        usePagination
-      );
-    const createPages = count => {
-      const arrPageCount = [];
-
-      for (let i = 1; i <= count; i++) {
-        arrPageCount.push(i);
-      }
-
-      return arrPageCount;
-    };
+    const {
+      getTableProps,
+      getTableBodyProps,
+      headerGroups,
+      page,
+      gotoPage,
+      pageCount,
+      prepareRow,
+      pageOptions,
+      nextPage,
+      previousPage,
+      canNextPage,
+      canPreviousPage,
+      setPageSize,
+      setGlobalFilter,
+      state,
+    } = useTable(
+      {
+        columns: marketColumns,
+        data,
+      },
+      useGlobalFilter,
+      useSortBy,
+      usePagination
+    );
 
     const { pageIndex, pageSize } = state;
     return (
       <>
         <Flex justify="space-between" align="center" w="100%" px="22px">
-          <Stack direction={{ sm: "column", md: "row" }} spacing={{ sm: "4px", md: "12px" }} align="center" me="12px" my="24px" minW={{ sm: "100px", md: "200px" }}>
-            <Select value={pageSize} onChange={e => setPageSize(Number(e.target.value))} color="gray.500" size="sm" borderRadius="12px" maxW="75px" cursor="pointer">
-              <option>5</option>
-              <option>10</option>
-              <option>15</option>
-              <option>20</option>
-              <option>25</option>
-            </Select>
-            <Text fontSize="xs" color="gray.400" fontWeight="normal">
-              entries per page
-            </Text>
-          </Stack>
+          <Stack direction={{ sm: "column", md: "row" }} spacing={{ sm: "4px", md: "12px" }} align="center" me="12px" my="24px" minW={{ sm: "100px", md: "200px" }} />
           <Input type="text" placeholder="Search..." minW="75px" maxW="175px" fontSize="sm" _focus={{ borderColor: "teal.300" }} onChange={e => setGlobalFilter(e.target.value)} />
         </Flex>
         <Flex direction="column" w="full" bg="gray.600" alignItems="center" justifyContent="center" overflowX={{ sm: "scroll", lg: "hidden" }}>
@@ -354,8 +350,12 @@ const Market = () => {
             bg={useColorModeValue("white", "gray.800")}
             mb="24px"
             {...getTableProps()}
+            shadow="base"
+            rounded="lg"
+            colorScheme="teal"
+            size="md"
           >
-            <TableCaption>市场列表</TableCaption>
+            <TableCaption>市场信息</TableCaption>
             <Thead
               display={{
                 sm: "none",
@@ -449,82 +449,69 @@ const Market = () => {
             </Tbody>
           </Table>
         </Flex>
-        <Flex direction={{ sm: "column", md: "row" }} justify="space-between" align="center" w="100%" px={{ md: "22px" }}>
-          <Text fontSize="sm" color="gray.500" fontWeight="normal" mb={{ sm: "24px", md: "0px" }}>
-            Showing {pageSize * pageIndex + 1} to {pageSize * (pageIndex + 1) <= tableData.length ? pageSize * (pageIndex + 1) : tableData.length} of {tableData.length} entries
-          </Text>
-          <Stack direction="row" alignSelf="flex-end" spacing="4px" ms="auto">
-            <Button
-              variant="no-hover"
-              onClick={() => previousPage()}
-              transition="all .5s ease"
-              w="40px"
-              h="40px"
-              borderRadius="50%"
-              bg="#fff"
-              border="1px solid lightgray"
-              display={pageSize === 5 ? "none" : canPreviousPage ? "flex" : "none"}
-              _hover={{
-                bg: "gray.200",
-                opacity: "0.7",
-                borderColor: "gray.500",
+        <Flex justifyContent="space-between" m={4} alignItems="center">
+          <Flex>
+            <Tooltip label="First Page">
+              <IconButton onClick={() => gotoPage(0)} isDisabled={!canPreviousPage} icon={<ArrowLeftIcon h={3} w={3} />} mr={4} aria-label="pageBtn" />
+            </Tooltip>
+            <Tooltip label="Previous Page">
+              <IconButton onClick={previousPage} isDisabled={!canPreviousPage} icon={<ChevronLeftIcon h={6} w={6} />} aria-label="pageBtn" />
+            </Tooltip>
+          </Flex>
+
+          <Flex alignItems="center">
+            <Text flexShrink="0" mr={8}>
+              Page
+              <Text fontWeight="bold" as="span">
+                {pageIndex + 1}
+              </Text>
+              of
+              <Text fontWeight="bold" as="span">
+                {pageOptions.length}
+              </Text>
+            </Text>
+            <Text flexShrink="0">Go to page:</Text>{" "}
+            <NumberInput
+              ml={2}
+              mr={8}
+              w={28}
+              min={1}
+              max={pageOptions.length}
+              onChange={(value: number) => {
+                const page = value ? value - 1 : 0;
+                gotoPage(page);
+              }}
+              defaultValue={pageIndex + 1}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            <Select
+              w={32}
+              value={pageSize}
+              onChange={e => {
+                setPageSize(Number(e.target.value));
               }}
             >
-              <Icon as={GrFormPrevious} w="16px" h="16px" color="gray.400" />
-            </Button>
-            {pageSize === 5 ? (
-              <NumberInput max={pageCount - 1} min={1} w="75px" mx="6px" defaultValue="1" onChange={e => gotoPage(e)}>
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper onClick={() => nextPage()} />
-                  <NumberDecrementStepper onClick={() => previousPage()} />
-                </NumberInputStepper>
-              </NumberInput>
-            ) : (
-              createPages(pageCount).map((pageNumber, i) => {
-                return (
-                  <Button
-                    variant="no-hover"
-                    transition="all .5s ease"
-                    onClick={() => gotoPage(pageNumber - 1)}
-                    w="40px"
-                    h="40px"
-                    borderRadius="160px"
-                    bg={pageNumber === pageIndex + 1 ? "teal.300" : "#fff"}
-                    border="1px solid lightgray"
-                    _hover={{
-                      bg: "gray.200",
-                      opacity: "0.7",
-                      borderColor: "gray.500",
-                    }}
-                    key={i}
-                  >
-                    <Text fontSize="xs" color={pageNumber === pageIndex + 1 ? "#fff" : "gray.600"}>
-                      {pageNumber}
-                    </Text>
-                  </Button>
-                );
-              })
-            )}
-            <Button
-              variant="no-hover"
-              onClick={() => nextPage()}
-              transition="all .5s ease"
-              w="40px"
-              h="40px"
-              borderRadius="160px"
-              bg="#fff"
-              border="1px solid lightgray"
-              display={pageSize === 5 ? "none" : canNextPage ? "flex" : "none"}
-              _hover={{
-                bg: "gray.200",
-                opacity: "0.7",
-                borderColor: "gray.500",
-              }}
-            >
-              <Icon as={GrFormNext} w="16px" h="16px" color="gray.400" />
-            </Button>
-          </Stack>
+              {[10, 20, 30, 40, 50].map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </Select>
+          </Flex>
+
+          <Flex>
+            <Tooltip label="Next Page">
+              <IconButton onClick={nextPage} isDisabled={!canNextPage} icon={<ChevronRightIcon h={6} w={6} />} aria-label="nextBtn" />
+            </Tooltip>
+            <Tooltip label="Last Page">
+              <IconButton onClick={() => gotoPage(pageCount - 1)} isDisabled={!canNextPage} icon={<ArrowRightIcon h={3} w={3} />} ml={4} aria-label="lastBtn" />
+            </Tooltip>
+          </Flex>
         </Flex>
       </>
     );
@@ -613,7 +600,6 @@ const Market = () => {
         onSecondOpen();
         setSecondList(item.children);
       } else {
-        address[2] = "";
         onAddrClose();
         onFirstClose();
       }
@@ -634,15 +620,12 @@ const Market = () => {
             新增
           </Button>
           {status === "loading" ? (
-            <CircularProgress isIndeterminate color="green.300" />
-          ) : status === "error" ? (
-            <Box>
-              <Alert status="error">
-                <AlertIcon />
-                <AlertTitle mr={2}>{error.message}</AlertTitle>
-                <CloseButton position="absolute" right="8px" top="8px" />
-              </Alert>
+            <Box padding="6" boxShadow="lg" bg="white">
+              <SkeletonCircle size="10" />
+              <SkeletonText mt="4" noOfLines={4} spacing="4" />
             </Box>
+          ) : status === "error" ? (
+            <Alter title="加载出错" titleColor="red" text="市场列表加载出错" textColor="red" icon={BsLightningFill} />
           ) : (
             <>
               <TableList columns={columns} data={tableData} />
@@ -681,13 +664,20 @@ const Market = () => {
                             }}
                             aria-label="Courses"
                             onMouseEnter={onOpen}
-                            onMouseLeave={onSelectClose}
+                            // onMouseLeave={onSelectClose}
                           >
                             {area ? area : "选择市场类型"} {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
                           </MenuButton>
-                          <MenuList onMouseEnter={onOpen} onMouseLeave={onSelectClose}>
+                          <MenuList onMouseLeave={onSelectClose}>
                             {areas.map((item, i) => (
-                              <MenuItem key={i} value={area} onClick={() => formik.setFieldValue("area", item, false)}>
+                              <MenuItem
+                                key={i}
+                                value={area}
+                                onClick={() => {
+                                  formik.setFieldValue("area", item, false);
+                                  onSelectClose();
+                                }}
+                              >
                                 {item}
                               </MenuItem>
                             ))}
@@ -795,10 +785,10 @@ const Market = () => {
               <AlertDialogCloseButton />
               <AlertDialogBody>您确定要删除这条数据吗？</AlertDialogBody>
               <AlertDialogFooter>
-                <Button ref={cancelRef} onClick={() => handDelSubmit()}>
+                <Button colorScheme="red" ref={cancelRef} onClick={() => handDelSubmit()}>
                   确定
                 </Button>
-                <Button colorScheme="red" ml={3} onClick={() => onClose()}>
+                <Button ml={3} onClick={() => onClose()}>
                   取消
                 </Button>
               </AlertDialogFooter>

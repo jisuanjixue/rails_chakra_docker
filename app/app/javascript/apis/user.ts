@@ -5,7 +5,7 @@ const create = data => request.post("/signup", { user: data });
 const queryMe = () => request.get("/current_user");
 const login = data => request.post("/login", { user: data });
 const logout = () => request.delete("/logout");
-const update = data => request.patch("/signup", data);
+const update = data => request.patch("/profile/update", data);
 const wechatLogin = () => request.post("/auth/wechat");
 const remove = data => request.delete("/users", data);
 

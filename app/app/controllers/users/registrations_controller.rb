@@ -3,8 +3,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :authenticate_user!,  only: [:update_resource]
 
-  #  before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
   respond_to :json
 
   # GET /resource/sign_up
@@ -57,18 +55,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
   private
-
-    # def update_resource(resource, params)
-    #   resource.update_without_password(params)
-    # end
-
-    # def after_update_path_for(_resource)
-    #   root_path
-    # end
-
-    # def configure_account_update_params
-    #   devise_parameter_sanitizer.permit(:account_update, keys: [:name])
-    # end
 
     def respond_with(resource, _opts = {})
       if resource.persisted?

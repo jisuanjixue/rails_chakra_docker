@@ -7,7 +7,7 @@ class CategoryController < ApplicationController
     categories = []
     root_list = Category.roots
     root_list.each do |item|
-      child_arr = Category.with_ancestor(item.id)
+      child_arr = item.children
       new_item = { name: item.name, id: item.id, parent_id: item.parent_id, subRows: arr_map(child_arr) }
       categories << new_item
     end
@@ -61,7 +61,7 @@ class CategoryController < ApplicationController
 
     def arr_map(arr)
       arr.map do |child|
-        two_child_arr = Category.with_ancestor(child.id)
+        two_child_arr = child.children
         { name: child.name, id: child.id, parent_id: child.parent_id, subRows: arr_map(two_child_arr) }
       end
     end

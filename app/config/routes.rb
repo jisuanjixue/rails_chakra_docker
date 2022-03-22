@@ -21,6 +21,7 @@
 #                                          PUT      /signup(.:format)                                                                                 users/registrations#update
 #                                          DELETE   /signup(.:format)                                                                                 users/registrations#destroy
 #                                          POST     /signup(.:format)                                                                                 users/registrations#create
+#                           profile_update PUT      /profile/update(.:format)                                                                         users/update_user#update
 #                       authenticated_root GET      /                                                                                                 home#index
 #                                  markets GET      /markets(.:format)                                                                                markets#index
 #                                          POST     /markets(.:format)                                                                                markets#create
@@ -78,21 +79,27 @@ Rails.application.routes.draw do
     controllers: {
       sessions: "users/sessions",
       registrations: "users/registrations",
-      omniauth_callbacks: 'users/omniauth_callbacks'
+      omniauth_callbacks: 'users/omniauth_callbacks',
+      update_user: 'users/update_user'
     }
 
   devise_scope :user do
+    # get "profile", to: "users/registrations#edit"
     # delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
     authenticated :user do
       root "home#index", as: :authenticated_root
     end
     # get 'update_account', to: 'devise/registrations#update'
     # unauthenticated do
-    #   root 'home#index', as: :unauthenticated_root
+    #   as :user do
+    #     root to: "devise/sessions#new", as: :unauthenticated_root
+    #   end
     # end
   end
 
   resources :markets, only: [:index, :create, :update, :destroy]
+
+  patch "/profile/update", to: "users/update_user#update"
 
   get "/current_user", to: "current_user#index"
   resources :category, only: [:index, :create, :update, :destroy]

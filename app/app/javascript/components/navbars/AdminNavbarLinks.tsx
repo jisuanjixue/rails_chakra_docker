@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, { useState, useEffect, useContext, useCallback, useRef } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { BellIcon, SearchIcon } from "@chakra-ui/icons";
 // Chakra Imports
@@ -57,12 +57,13 @@ const HeaderLinks = props => {
   let navbarIcon = useColorModeValue("gray.500", "gray.200");
   const searchIcon = useColorModeValue("gray.700", "gray.200");
   const { logoText, secondary, onOpen, ...rest } = props;
+  const initialRef: any = useRef();
 
   if (secondary) {
     navbarIcon = "white";
     mainText = "white";
   }
-  const settingsRef: any = React.useRef();
+  const settingsRef: any = useRef();
   // const { isOpen, onToggle } = useDisclosure();
   const { isOpen: isModal, onOpen: openModal, onClose: closeModal } = useDisclosure();
   const queryClient = useQueryClient();
@@ -225,14 +226,14 @@ const HeaderLinks = props => {
           </Flex>
         </MenuList>
       </Menu>
-      <Modal isOpen={isModal} onClose={closeModal}>
+      <Modal isOpen={isModal} onClose={closeModal} initialFocusRef={initialRef}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl id="name" variant="floating" isInvalid={isError} isRequired>
-              <Input isRequired isInvalid errorBorderColor="crimson" value={user.name} onChange={event => handValue(event)} type="text" size="md" variant="filled" placeholder="" />
+              <Input ref={initialRef} isRequired isInvalid errorBorderColor="crimson" value={user.name} onChange={event => handValue(event)} type="text" size="md" variant="filled" placeholder=" " />
               <FormLabel>用户昵称</FormLabel>
               {!isError ? <FormHelperText>填写不同的昵称</FormHelperText> : <FormErrorMessage>必填</FormErrorMessage>}
             </FormControl>

@@ -332,10 +332,6 @@ const Category = () => {
             </Tbody>
           </Table>
         </Flex>
-        {/* </Box>
-            </Box>
-          </Box>
-        </Box> */}
       </>
     );
   };
@@ -357,9 +353,10 @@ const Category = () => {
             <Box
               {...row.getToggleRowExpandedProps({
                 style: {
-                  paddingLeft: `${row.depth * 2}px`,
+                  paddingLeft: `${row.depth * 2}rem`,
                 },
               })}
+              pl={row.depth * 2}
             >
               {row.isExpanded ? <ChevronDownIcon w={8} h={8} color="red.500" /> : <ChevronRightIcon w={8} h={8} color="red.500" />}
             </Box>
@@ -490,7 +487,6 @@ const Category = () => {
                     {!isError ? <FormHelperText>填写不同名称类型</FormHelperText> : <FormErrorMessage>必填</FormErrorMessage>}
                   </FormControl>
                 </ModalBody>
-
                 <ModalFooter>
                   <Button colorScheme="teal" variant="outline" mr={3} onClick={() => onClose()}>
                     关闭
