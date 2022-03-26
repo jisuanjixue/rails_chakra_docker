@@ -1,15 +1,7 @@
 // Chakra Imports
 import React, { useState } from "react";
 
-import {
-  Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Flex,
-  Link,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Link, useColorModeValue } from "@chakra-ui/react";
 import AdminNavbarLinks from "./AdminNavbarLinks";
 
 const AdminNavbar = props => {
@@ -30,10 +22,7 @@ const AdminNavbar = props => {
   if (fixed === true) {
     if (scrolled === true) {
       navbarPosition = "fixed";
-      navbarShadow = useColorModeValue(
-        "0px 7px 23px rgba(0, 0, 0, 0.05)",
-        "none"
-      );
+      navbarShadow = useColorModeValue("0px 7px 23px rgba(0, 0, 0, 0.05)", "none");
       navbarBg = useColorModeValue(
         "linear-gradient(112.83deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.8) 110.84%)",
         "linear-gradient(112.83deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0) 110.84%)"
@@ -137,12 +126,7 @@ const AdminNavbar = props => {
           </Link>
         </Box>
         <Box ms="auto" w={{ sm: "100%", md: "unset" }}>
-          <AdminNavbarLinks
-            onOpen={onOpen}
-            logoText={logoText}
-            secondary={secondary}
-            fixed={fixed}
-          />
+          <AdminNavbarLinks onOpen={onOpen} logoText={logoText} secondary={secondary} fixed={fixed} />
         </Box>
       </Flex>
     </Flex>

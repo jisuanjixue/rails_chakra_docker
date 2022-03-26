@@ -21,13 +21,14 @@
 #                                          PUT      /signup(.:format)                                                                                 users/registrations#update
 #                                          DELETE   /signup(.:format)                                                                                 users/registrations#destroy
 #                                          POST     /signup(.:format)                                                                                 users/registrations#create
-#                           profile_update PUT      /profile/update(.:format)                                                                         users/update_user#update
 #                       authenticated_root GET      /                                                                                                 home#index
 #                                  markets GET      /markets(.:format)                                                                                markets#index
 #                                          POST     /markets(.:format)                                                                                markets#create
 #                                   market PATCH    /markets/:id(.:format)                                                                            markets#update
 #                                          PUT      /markets/:id(.:format)                                                                            markets#update
 #                                          DELETE   /markets/:id(.:format)                                                                            markets#destroy
+#                           profile_update PATCH    /profile/update(.:format)                                                                         users/profiles#update
+#                            avatar_upload POST     /avatar/upload(.:format)                                                                          users/profiles#upload
 #                             current_user GET      /current_user(.:format)                                                                           current_user#index
 #                           category_index GET      /category(.:format)                                                                               category#index
 #                                          POST     /category(.:format)                                                                               category#create
@@ -35,7 +36,7 @@
 #                                          PUT      /category/:id(.:format)                                                                           category#update
 #                                          DELETE   /category/:id(.:format)                                                                           category#destroy
 #                                     root GET      /                                                                                                 home#index
-#                                          GET      /*path(.:format)                                                                                  home#index
+#                                          GET      /*path(.:format)                                                                                  redirect(301, /)
 #         turbo_recede_historical_location GET      /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET      /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
 #        turbo_refresh_historical_location GET      /refresh_historical_location(.:format)                                                            turbo/native/navigation#refresh
@@ -80,7 +81,7 @@ Rails.application.routes.draw do
       sessions: "users/sessions",
       registrations: "users/registrations",
       omniauth_callbacks: 'users/omniauth_callbacks',
-      update_user: 'users/update_user'
+      profiles: 'users/profiles'
     }
 
   devise_scope :user do
@@ -99,12 +100,16 @@ Rails.application.routes.draw do
 
   resources :markets, only: [:index, :create, :update, :destroy]
 
-  patch "/profile/update", to: "users/update_user#update"
+  patch "/profile/update", to: "users/profiles#update"
+  post "/avatar/upload", to: "users/profiles#upload"
 
   get "/current_user", to: "current_user#index"
   resources :category, only: [:index, :create, :update, :destroy]
 
   # Defines the root path route ("/")
   root to: "home#index"
-  get "*path", to: "home#index", via: :all
+  
+  get '*path', to: redirect('/'), constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }
 end

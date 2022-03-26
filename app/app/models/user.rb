@@ -25,14 +25,19 @@
 class User < ApplicationRecord
   attr_writer :login
   enum role: [:user, :vip, :admin]
+  has_one :profile, dependent: :destroy
+  has_many :documents, dependent: :destroy
+  after_create :init_profile
 
   after_initialize :set_default_role, :if => :new_record?
+
+  def init_profile
+    self.build_profile.save(validate: false)
+  end
 
   def set_default_role
     self.role ||= :user
   end
-
-  has_one :profile, dependent: :destroy
 
   validates :email, uniqueness: true
   validates :name, presence: true, uniqueness: { case_sensitive: false }
@@ -45,6 +50,10 @@ class User < ApplicationRecord
   devise :omniauthable, :database_authenticatable, :jwt_authenticatable, :registerable, :recoverable, :rememberable, :validatable, jwt_revocation_strategy: JwtDenylist, authentication_keys: [:login], omniauth_providers: [:wechat]
 
 
+  # def init_profile
+  #   self.create_profile!
+  # end
+  
   def login
     @login || self.name || self.email
   end
@@ -100,4 +109,6 @@ class User < ApplicationRecord
   end
 
   self.skip_session_storage = [:http_auth, :params_auth]
+
+
 end

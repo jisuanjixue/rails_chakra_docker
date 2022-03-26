@@ -74,10 +74,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_09_133236) do
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.string "user_name"
     t.string "phone"
+    t.string "avatar_url"
     t.text "description"
-    t.string "avatar"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

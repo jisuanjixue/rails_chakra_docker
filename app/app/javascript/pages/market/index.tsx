@@ -700,7 +700,7 @@ const Market = () => {
                         />
                       </FormControl>
                       <FormControl variant={show.type === "edit" ? "editfloating" : "floating"} id="remark">
-                        <Textarea onChange={formik.handleChange} name="remark" value={remark} type="text" placeholder="  " variant="filled" />
+                        <Textarea onChange={formik.handleChange} name="remark" value={remark} placeholder="  " variant="filled" />
                         <FormLabel>备注</FormLabel>
                       </FormControl>
                       <FormControl isRequired>
