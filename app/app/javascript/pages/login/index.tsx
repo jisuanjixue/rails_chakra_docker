@@ -5,6 +5,7 @@ import { useQueryClient, useMutation } from "react-query";
 import userApi from "../../apis/user";
 import { UserLogin } from "../../types/user";
 import { useHistory } from "react-router-dom";
+import PasswordField from "@components/passwordInput/PasswordField";
 // Assets
 // import signInImage from "../../images/signInImage.png";
 
@@ -82,29 +83,8 @@ const SignIn = () => {
                 用户名或是电子邮件
               </FormLabel>
             </FormControl>
-            <FormControl variant="floating" isRequired>
-              <Input borderRadius="15px" mb="36px" variant="filled" fontSize="sm" type="password" placeholder=" " size="lg" value={user.password} name="password" onChange={e => handValue(e)} />
-              <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-                密码
-              </FormLabel>
-            </FormControl>
-            <FormControl variant="floating" isRequired>
-              <Input
-                borderRadius="15px"
-                mb="36px"
-                fontSize="sm"
-                type="password"
-                placeholder=" "
-                size="lg"
-                value={user.password_confirmation}
-                name="password_confirmation"
-                onChange={e => handValue(e)}
-                variant="filled"
-              />
-              <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-                密码确认
-              </FormLabel>
-            </FormControl>
+            <PasswordField password={user.password} handValue={handValue} ref={undefined} isConfirm={false} />
+            <PasswordField password_confirmation={user.password_confirmation} handValue={handValue} ref={undefined} isConfirm={true} />
             <FormControl display="flex" alignItems="center">
               <Switch id="remember-login" colorScheme="teal" me="10px" />
               <FormLabel htmlFor="remember-login" mb="0" ms="1" fontWeight="normal">

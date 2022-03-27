@@ -12,6 +12,7 @@ import { UserRegister } from "../../types/user";
 // import BgSignUp from "../../images/BgSignUp.png";
 import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
 import Alter from "@components/alerts/Alter";
+import PasswordField from "@components/passwordInput/PasswordField";
 
 const SignUp = () => {
   const toast = useToast();
@@ -85,7 +86,7 @@ const SignUp = () => {
           欢迎!
         </Text>
         <Text fontSize="md" color="white" fontWeight="normal" mt="10px" mb="26px" w={{ base: "90%", sm: "60%", lg: "40%", xl: "30%" }}>
-          使用这些很棒的表单免费登录或在您的项目中创建新帐户。
+          在创建您的新帐户或是登录。
         </Text>
       </Flex>
       <Flex alignItems="center" justifyContent="center" mb="60px" mt="20px">
@@ -168,12 +169,7 @@ const SignUp = () => {
               电子邮件
             </FormLabel>
           </FormControl>
-          <FormControl variant="floating" isRequired>
-            <Input fontSize="sm" ms="4px" borderRadius="15px" type="password" placeholder=" " mb="24px" size="lg" value={user.password} name="password" variant="filled" onChange={e => handValue(e)} />
-            <FormLabel fontSize="sm" fontWeight="normal">
-              密码
-            </FormLabel>
-          </FormControl>
+          <PasswordField password={user.password} handValue={handValue} ref={undefined} isConfirm={false} />
           <FormControl display="flex" alignItems="center" mb="24px">
             <Switch id="remember-login" colorScheme="teal" me="10px" />
             <FormLabel htmlFor="remember-login" mb="0" fontWeight="normal">
