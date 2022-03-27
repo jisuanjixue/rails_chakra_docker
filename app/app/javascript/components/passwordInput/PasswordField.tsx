@@ -1,10 +1,13 @@
-import { FormControl, FormLabel, IconButton, Input, InputGroup, InputRightElement, useDisclosure, useMergeRefs } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, IconButton, Input, InputGroup, InputRightElement, useDisclosure, useMergeRefs } from "@chakra-ui/react";
 import * as React from "react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 
 const PasswordField = ({ password, handValue, ref, isConfirm, password_confirmation }) => {
   const { isOpen, onToggle } = useDisclosure();
   const inputRef: any = React.useRef();
+
+  const isError = password !== password_confirmation;
+  const isShortError = password?.length < 8;
 
   const mergeRef = useMergeRefs(inputRef, ref);
   const onClickReveal = () => {
@@ -40,6 +43,8 @@ const PasswordField = ({ password, handValue, ref, isConfirm, password_confirmat
         <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
           {isConfirm ? "密码确认" : "密码"}
         </FormLabel>
+        {isShortError && <FormErrorMessage>密码太短</FormErrorMessage>}
+        {isConfirm && isError && <FormErrorMessage>密码错误</FormErrorMessage>}
       </InputGroup>
     </FormControl>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 // Chakra imports
-import { Box, Flex, Button, FormControl, FormLabel, Heading, Input, Switch, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Button, FormControl, FormLabel, Heading, Input, Switch, Text, useColorModeValue, HStack } from "@chakra-ui/react";
 import { useQueryClient, useMutation } from "react-query";
 import userApi from "../../apis/user";
 import { UserLogin } from "../../types/user";
@@ -85,12 +85,17 @@ const SignIn = () => {
             </FormControl>
             <PasswordField password={user.password} handValue={handValue} ref={undefined} isConfirm={false} />
             <PasswordField password_confirmation={user.password_confirmation} handValue={handValue} ref={undefined} isConfirm={true} />
-            <FormControl display="flex" alignItems="center">
-              <Switch id="remember-login" colorScheme="teal" me="10px" />
-              <FormLabel htmlFor="remember-login" mb="0" ms="1" fontWeight="normal">
-                记住我
-              </FormLabel>
-            </FormControl>
+            <HStack justify="space-between">
+              <FormControl display="flex" alignItems="center">
+                <Switch id="remember-login" colorScheme="teal" me="10px" />
+                <FormLabel htmlFor="remember-login" mb="0" ms="1" fontWeight="normal">
+                  记住我
+                </FormLabel>
+              </FormControl>
+              <Button variant="link" colorScheme="blue" size="sm">
+                忘记密码?
+              </Button>
+            </HStack>
             <Button
               fontSize="10px"
               type="submit"
