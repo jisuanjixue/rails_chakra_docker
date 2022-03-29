@@ -46,6 +46,7 @@ Rails.application.configure do
   config.active_storage.service = :local
   config.action_mailer.default_url_options = {host: 'localhost:3000'}
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
     from: 'from@example.com',
     user_name: 'e6d7e53e9b5616',
@@ -59,7 +60,7 @@ Rails.application.configure do
   # config.application.routes.default_url_options = {host: 'localhost:3000'}
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 

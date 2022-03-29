@@ -20,4 +20,5 @@ class UserMailer < Devise::Mailer
       user.reset_password_sent_at = Time.now.utc
       user.save
   end
+
 end

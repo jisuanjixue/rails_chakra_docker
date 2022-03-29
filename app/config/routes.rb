@@ -102,6 +102,7 @@ Rails.application.routes.draw do
 
   patch "/profile/update", to: "users/profiles#update"
   post "/avatar/upload", to: "users/profiles#upload"
+  post "/reset/send", to: "users/reset_password#send"
 
   get "/current_user", to: "current_user#index"
   resources :category, only: [:index, :create, :update, :destroy]

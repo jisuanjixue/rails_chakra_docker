@@ -32,6 +32,8 @@ import {
   useToast,
   InputLeftAddon,
   Textarea,
+  HStack,
+  Avatar,
 } from "@chakra-ui/react";
 // request imports
 import { useQueryClient, useMutation } from "react-query";
@@ -214,35 +216,6 @@ const HeaderLinks = props => {
         />
         <Input fontSize="xs" py="11px" color={mainText} placeholder="Type here..." borderRadius="inherit" />
       </InputGroup>
-      {id ? (
-        <Menu>
-          <MenuButton px={4} py={2} transition="all 0.2s" borderRadius="md" borderWidth="1px" _hover={{ bg: "gray.400" }} _expanded={{ bg: "blue.400" }} _focus={{ boxShadow: "outline" }}>
-            {name}
-          </MenuButton>
-          {/* <SlideFade in={isOpen} offsetY="20px"> */}
-          <MenuList>
-            <MenuItem>个人信息</MenuItem>
-            <MenuDivider />
-            <MenuItem onClick={openModal}>修改信息</MenuItem>
-            <MenuItem onClick={() => handOut()}>登出</MenuItem>
-          </MenuList>
-          {/* </SlideFade> */}
-        </Menu>
-      ) : (
-        <NavLink to="/auth/signin">
-          <Button
-            ms="0px"
-            px="0px"
-            me={{ sm: "2px", md: "16px" }}
-            color={navbarIcon}
-            variant="transparent-with-icon"
-            rightIcon={<ProfileIcon color={navbarIcon} w="22px" h="22px" me="0px" />}
-            leftIcon={<ProfileIcon color={navbarIcon} w="22px" h="22px" me="0px" />}
-          >
-            <Text display={{ sm: "none", md: "flex" }}>登录</Text>
-          </Button>
-        </NavLink>
-      )}
       <SidebarResponsive logoText={logoText} secondary={secondary} routes={routes} {...rest} />
       <SettingsIcon cursor="pointer" ms={{ base: "16px", xl: "0px" }} me="16px" ref={settingsRef} onClick={onOpen} color={navbarIcon} w="18px" h="18px" />
       <Menu>
@@ -275,6 +248,38 @@ const HeaderLinks = props => {
           </Flex>
         </MenuList>
       </Menu>
+      {id ? (
+        <HStack spacing={3} display="flex" alignItems="center">
+          <Menu>
+            <MenuButton px={4} py={2} transition="all 0.2s" borderRadius="md" borderWidth="0px" _hover={{ bg: "gray.400" }} _expanded={{ bg: "blue.400" }} _focus={{ boxShadow: "outline" }}>
+              {name}
+            </MenuButton>
+            {/* <SlideFade in={isOpen} offsetY="20px"> */}
+            <MenuList>
+              <MenuItem>个人信息</MenuItem>
+              <MenuDivider />
+              <MenuItem onClick={openModal}>修改信息</MenuItem>
+              <MenuItem onClick={() => handOut()}>登出</MenuItem>
+            </MenuList>
+            {/* </SlideFade> */}
+          </Menu>
+          <Avatar size="sm" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+        </HStack>
+      ) : (
+        <NavLink to="/auth/signin">
+          <Button
+            ms="0px"
+            px="0px"
+            me={{ sm: "2px", md: "16px" }}
+            color={navbarIcon}
+            variant="transparent-with-icon"
+            rightIcon={<ProfileIcon color={navbarIcon} w="22px" h="22px" me="0px" />}
+            leftIcon={<ProfileIcon color={navbarIcon} w="22px" h="22px" me="0px" />}
+          >
+            <Text display={{ sm: "none", md: "flex" }}>登录</Text>
+          </Button>
+        </NavLink>
+      )}
       <Modal isOpen={isModal} onClose={closeModal} initialFocusRef={initialRef}>
         <ModalOverlay />
         <ModalContent>
