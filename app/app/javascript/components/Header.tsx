@@ -3,7 +3,6 @@ import SearchModal from "./header/SearchModal";
 import Notifications from "./header/Notifications";
 import ChangeTheme from "./header/ChangeTheme";
 import Help from "./header/Help";
-import UserMenu from "./header/UserMenu";
 import { chakra, Flex, HStack, Box } from "@chakra-ui/react";
 import { useViewportScroll } from "framer-motion";
 
@@ -18,14 +17,7 @@ function Header() {
 
   return (
     <Box pos="relative">
-      <chakra.header
-        ref={ref}
-        shadow={y > height ? "sm" : undefined}
-        transition="box-shadow 0.2s"
-        borderTopColor="brand.400"
-        w="full"
-        overflowY="hidden"
-      >
+      <chakra.header ref={ref} shadow={y > height ? "sm" : undefined} transition="box-shadow 0.2s" borderTopColor="brand.400" w="full" overflowY="hidden">
         <chakra.div h="4.5rem" mx="auto" maxW="1200px">
           <Flex w="full" h="full" px="6" align="center" justify="space-between">
             {/* <Box className="flex items-center justify-between h-16 -mb-px"> */}
@@ -40,7 +32,6 @@ function Header() {
                 <Notifications />
                 <Help />
                 <hr className="w-px h-6 mx-3 bg-gray-200" />
-                <UserMenu />
               </HStack>
             </Flex>
           </Flex>

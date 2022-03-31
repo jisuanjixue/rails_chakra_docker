@@ -1,29 +1,12 @@
 import React, { useRef, useEffect } from "react";
 
-import {
-  Chart,
-  LineController,
-  LineElement,
-  Filler,
-  PointElement,
-  LinearScale,
-  TimeScale,
-  Tooltip,
-} from "chart.js";
+import { Chart, LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip } from "chart.js";
 import "chartjs-adapter-moment";
 
 // Import utilities
 import { tailwindConfig, formatValue } from "../utils/Utils";
 
-Chart.register(
-  LineController,
-  LineElement,
-  Filler,
-  PointElement,
-  LinearScale,
-  TimeScale,
-  Tooltip
-);
+Chart.register(LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip);
 
 function LineChart01({ data, width, height }) {
   const canvas = useRef(null);

@@ -1,31 +1,12 @@
 import React, { useState, useCallback } from "react";
 // Chakra imports
-import {
-  Box,
-  Flex,
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  Switch,
-  Text,
-  useColorModeValue,
-  HStack,
-  useDisclosure,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  ModalCloseButton,
-  ModalFooter,
-} from "@chakra-ui/react";
+import { Box, Flex, Button, FormControl, FormLabel, Heading, Input, Switch, Text, useColorModeValue, HStack, useDisclosure } from "@chakra-ui/react";
 import { useQueryClient, useMutation } from "react-query";
 import userApi from "../../apis/user";
 import { UserLogin } from "../../types/user";
 import { useHistory } from "react-router-dom";
 import PasswordField from "@components/passwordInput/PasswordField";
+import ForgotPassword from "./ForgotPassword";
 // Assets
 // import signInImage from "../../images/signInImage.png";
 
@@ -35,8 +16,9 @@ const SignIn = () => {
   const textColor = useColorModeValue("gray.400", "white");
   const bgColor = useColorModeValue("white", "gray.700");
   const defaultUser = { login: "", password: "", password_confirmation: "" };
-  const navigate = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const modalProps = { isOpen, onOpen, onClose };
+  const navigate = useHistory();
   const [user, setUser] = useState<UserLogin>(defaultUser);
 
   const handValue = useCallback(e => setUser({ ...user, [e.target.name]: e.target.value }), [user.login, user.password, user.password_confirmation]);
@@ -77,7 +59,10 @@ const SignIn = () => {
     });
   };
 
-  const handSend = useCallback(() => {}, []);
+  const handSend = useCallback(() => {
+    onOpen();
+  }, []);
+
   return (
     <Flex position="relative" mb="40px">
       <Flex h={{ sm: "initial", md: "75vh", lg: "85vh" }} w="100%" maxW="1044px" mx="auto" justifyContent="space-between" mb="30px" pt={{ sm: "100px", md: "0px" }}>
@@ -179,22 +164,7 @@ const SignIn = () => {
           ></Box>
         </Box>
       </Flex>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>重置密码</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <ForgotPassword {...modalProps} />
     </Flex>
   );
 };

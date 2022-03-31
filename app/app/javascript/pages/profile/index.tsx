@@ -2,9 +2,9 @@ import React from "react";
 // Chakra imports
 import { Avatar, AvatarGroup, Box, Button, Flex, Grid, Icon, Image, Link, Switch, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
-import Card from "@components/Card/Card";
-import CardBody from "@components/Card/CardBody";
-import CardHeader from "@components/Card/CardHeader";
+import Card from "@components/card/Card";
+import CardBody from "@components/card/CardBody";
+import CardHeader from "@components/card/CardHeader";
 // Assets
 // import avatar2 from "../../images/avatars/avatar2.jpg";
 // import avatar3 from "../../images/avatars/avatar3.jpg";
@@ -21,35 +21,14 @@ import { IoDocumentsSharp } from "react-icons/io5";
 function Profile() {
   // Chakra color mode
   const textColor = useColorModeValue("gray.700", "white");
-  const bgProfile = useColorModeValue(
-    "hsla(0,0%,100%,.8)",
-    "linear-gradient(112.83deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0) 110.84%)"
-  );
+  const bgProfile = useColorModeValue("hsla(0,0%,100%,.8)", "linear-gradient(112.83deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0) 110.84%)");
   const borderProfileColor = useColorModeValue("white", "rgba(255, 255, 255, 0.31)");
   const emailColor = useColorModeValue("gray.400", "gray.300");
 
   return (
     <Flex direction="column">
-      <Box
-        mb={{ sm: "205px", md: "75px", xl: "70px" }}
-        borderRadius="15px"
-        px="0px"
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        align="center"
-      >
-        <Box
-          bgImage={""}
-          w="100%"
-          h="300px"
-          borderRadius="25px"
-          bgPosition="50%"
-          bgRepeat="no-repeat"
-          position="relative"
-          display="flex"
-          justifyContent="center"
-        >
+      <Box mb={{ sm: "205px", md: "75px", xl: "70px" }} borderRadius="15px" px="0px" display="flex" flexDirection="column" justifyContent="center" align="center">
+        <Box bgImage={""} w="100%" h="300px" borderRadius="25px" bgPosition="50%" bgRepeat="no-repeat" position="relative" display="flex" justifyContent="center">
           <Flex
             direction={{ sm: "column", md: "row" }}
             mx="1.5rem"
@@ -71,13 +50,7 @@ function Profile() {
               lg: "translateY(160%)",
             }}
           >
-            <Flex
-              align="center"
-              mb={{ sm: "10px", md: "0px" }}
-              direction={{ sm: "column", md: "row" }}
-              w={{ sm: "100%" }}
-              textAlign={{ sm: "center", md: "start" }}
-            >
+            <Flex align="center" mb={{ sm: "10px", md: "0px" }} direction={{ sm: "column", md: "row" }} w={{ sm: "100%" }} textAlign={{ sm: "center", md: "start" }}>
               <Avatar me={{ md: "22px" }} src={""} w="80px" h="80px" borderRadius="15px" />
               <Flex direction="column" maxWidth="100%" my={{ sm: "14px" }}>
                 <Text fontSize={{ sm: "lg", lg: "xl" }} color={textColor} fontWeight="bold" ms={{ sm: "8px", md: "0px" }}>
@@ -108,15 +81,7 @@ function Profile() {
                 </Flex>
               </Button>
               <Button p="0px" bg="transparent" _hover={{ bg: "none" }}>
-                <Flex
-                  align="center"
-                  w={{ lg: "135px" }}
-                  borderRadius="15px"
-                  justifyContent="center"
-                  py="10px"
-                  mx={{ lg: "1rem" }}
-                  cursor="pointer"
-                >
+                <Flex align="center" w={{ lg: "135px" }} borderRadius="15px" justifyContent="center" py="10px" mx={{ lg: "1rem" }} cursor="pointer">
                   <Icon as={IoDocumentsSharp} me="6px" />
                   <Text fontSize="xs" color={textColor} fontWeight="bold">
                     TEAMS
@@ -198,8 +163,8 @@ function Profile() {
           <CardBody px="5px">
             <Flex direction="column">
               <Text fontSize="md" color="gray.500" fontWeight="400" mb="30px">
-                Hi, I’m Esthera Jackson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one
-                more painful in the short term (pain avoidance is creating an illusion of equality).
+                Hi, I’m Esthera Jackson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an
+                illusion of equality).
               </Text>
               <Flex align="center" mb="18px">
                 <Text fontSize="md" color={textColor} fontWeight="bold" me="10px">
@@ -366,22 +331,11 @@ function Profile() {
           </Flex>
         </CardHeader>
         <CardBody px="5px">
-          <Grid
-            templateColumns={{ sm: "1fr", md: "1fr 1fr", xl: "repeat(4, 1fr)" }}
-            templateRows={{ sm: "1fr 1fr 1fr auto", md: "1fr 1fr", xl: "1fr" }}
-            gap="24px"
-          >
+          <Grid templateColumns={{ sm: "1fr", md: "1fr 1fr", xl: "repeat(4, 1fr)" }} templateRows={{ sm: "1fr 1fr 1fr auto", md: "1fr 1fr", xl: "1fr" }} gap="24px">
             <Flex direction="column">
               <Box mb="20px" position="relative" borderRadius="15px">
                 <Image src={""} borderRadius="15px" />
-                <Box
-                  w="100%"
-                  h="100%"
-                  position="absolute"
-                  top="0"
-                  borderRadius="15px"
-                  bg="linear-gradient(360deg, rgba(49, 56, 96, 0.16) 0%, rgba(21, 25, 40, 0.88) 100%)"
-                ></Box>
+                <Box w="100%" h="100%" position="absolute" top="0" borderRadius="15px" bg="linear-gradient(360deg, rgba(49, 56, 96, 0.16) 0%, rgba(21, 25, 40, 0.88) 100%)"></Box>
               </Box>
               <Flex direction="column">
                 <Text fontSize="md" color="gray.500" fontWeight="600" mb="10px">
@@ -409,14 +363,7 @@ function Profile() {
             <Flex direction="column">
               <Box mb="20px" position="relative" borderRadius="15px">
                 <Image src={""} borderRadius="15px" />
-                <Box
-                  w="100%"
-                  h="100%"
-                  position="absolute"
-                  top="0"
-                  borderRadius="15px"
-                  bg="linear-gradient(360deg, rgba(49, 56, 96, 0.16) 0%, rgba(21, 25, 40, 0.88) 100%)"
-                ></Box>
+                <Box w="100%" h="100%" position="absolute" top="0" borderRadius="15px" bg="linear-gradient(360deg, rgba(49, 56, 96, 0.16) 0%, rgba(21, 25, 40, 0.88) 100%)"></Box>
               </Box>
               <Flex direction="column">
                 <Text fontSize="md" color="gray.500" fontWeight="600" mb="10px">
@@ -444,14 +391,7 @@ function Profile() {
             <Flex direction="column">
               <Box mb="20px" position="relative" borderRadius="15px">
                 <Image src={""} borderRadius="15px" />
-                <Box
-                  w="100%"
-                  h="100%"
-                  position="absolute"
-                  top="0"
-                  borderRadius="15px"
-                  bg="linear-gradient(360deg, rgba(49, 56, 96, 0.16) 0%, rgba(21, 25, 40, 0.88) 100%)"
-                ></Box>
+                <Box w="100%" h="100%" position="absolute" top="0" borderRadius="15px" bg="linear-gradient(360deg, rgba(49, 56, 96, 0.16) 0%, rgba(21, 25, 40, 0.88) 100%)"></Box>
               </Box>
               <Flex direction="column">
                 <Text fontSize="md" color="gray.500" fontWeight="600" mb="10px">
@@ -476,14 +416,7 @@ function Profile() {
                 </Flex>
               </Flex>
             </Flex>
-            <Button
-              p="0px"
-              bg="transparent"
-              color="gray.500"
-              border="1px solid lightgray"
-              borderRadius="15px"
-              minHeight={{ sm: "200px", md: "100%" }}
-            >
+            <Button p="0px" bg="transparent" color="gray.500" border="1px solid lightgray" borderRadius="15px" minHeight={{ sm: "200px", md: "100%" }}>
               <Flex direction="column" justifyContent="center" align="center">
                 <Icon as={FaPlus} fontSize="lg" mb="12px" />
                 <Text fontSize="lg" fontWeight="bold">

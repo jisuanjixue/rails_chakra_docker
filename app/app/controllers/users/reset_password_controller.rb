@@ -1,8 +1,8 @@
-class Users::ResetPassword < ApplicationController
+class Users::ResetPasswordController < ApplicationController
 
     def send
-        user = User.new(email: params[:email])
-        user.save
-        UserMailer.welcome_reset_password_instructions(user).deliver
+        @user = User.find_by(email: params[:email])
+        UserMailer.with(user: @user).welcome_reset_password_instructions.deliver_now
     end
+
 end

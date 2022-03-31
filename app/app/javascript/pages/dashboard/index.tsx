@@ -27,11 +27,11 @@ import {
 // import peopleImage from "assets/img/people-image.png";
 // import logoChakra from "assets/svg/logo-white.svg";
 // // Custom components
-import Card from "@components/Card/Card";
-import CardBody from "@components/Card/CardBody";
-import CardHeader from "@components/Card/CardHeader";
-import BarChart from "@components/Charts/BarChart";
-import LineChart from "@components/Charts/LineChart";
+import Card from "@components/card/Card";
+import CardBody from "@components/card/CardBody";
+import CardHeader from "@components/card/CardHeader";
+import BarChart from "@components/charts/BarChart";
+import LineChart from "@components/charts/LineChart";
 import IconBox from "@components/Icons/IconBox";
 // Custom icons
 import { CartIcon, DocumentIcon, GlobeIcon, RocketIcon, StatsIcon, WalletIcon } from "@components/icons/Icons";

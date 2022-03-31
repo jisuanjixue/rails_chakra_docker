@@ -29,6 +29,7 @@
 #                                          DELETE   /markets/:id(.:format)                                                                            markets#destroy
 #                           profile_update PATCH    /profile/update(.:format)                                                                         users/profiles#update
 #                            avatar_upload POST     /avatar/upload(.:format)                                                                          users/profiles#upload
+#                               reset_send POST     /reset/send(.:format)                                                                             users/reset_password#send
 #                             current_user GET      /current_user(.:format)                                                                           current_user#index
 #                           category_index GET      /category(.:format)                                                                               category#index
 #                                          POST     /category(.:format)                                                                               category#create
