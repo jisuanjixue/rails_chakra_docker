@@ -12,14 +12,22 @@ services:
     restart: always
 
   sidekiq:
-    build: ./app
-    restart: always
-    command: bundle exec sidekiq
+   depends_on:
+      - 'database'
+      - 'redis'
+   build: ./app
+   restart: always
+   volumes:
+      - ./app:/app
+      - /app/tmp
+   command: bundle exec sidekiq
+   environment:
+      REDIS_URL_SIDEKIQ: redis://redis:6379
 
   redis:
     image: redis:5.0.5-alpine
     restart: always
-    command: redis-server
+    command: redis-server --appendonly yes
     ports:
       - '6379:6379'
     volumes:
@@ -34,11 +42,12 @@ services:
       - /app/tmp
       - rails_log:/app/log
     environment:
-      - PORT=3000
+      REDIS_URL_SIDEKIQ: redis://redis:6379
     ports:
       - "3000:3000"
     depends_on:
       - database
+      - redis
     tty: true
     stdin_open: true
 

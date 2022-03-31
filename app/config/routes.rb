@@ -3,6 +3,7 @@
 # == Route Map
 #
 #                                   Prefix Verb     URI Pattern                                                                                       Controller#Action
+#                              sidekiq_web          /sidekiq                                                                                          Sidekiq::Web
 #                            markets_index GET      /markets/index(.:format)                                                                          markets#index
 #                         new_user_session GET      /login(.:format)                                                                                  users/sessions#new
 #                             user_session POST     /login(.:format)                                                                                  users/sessions#create
@@ -69,7 +70,11 @@
 #                update_rails_disk_service PUT      /rails/active_storage/disk/:encoded_token(.:format)                                               active_storage/disk#update
 #                     rails_direct_uploads POST     /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
+  
   get "markets/index"
   devise_for :users,
     path: "",
