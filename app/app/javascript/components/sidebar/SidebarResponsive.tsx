@@ -1,21 +1,6 @@
 import React, { useState, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import {
-  Box,
-  Button,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerOverlay,
-  Flex,
-  Icon,
-  Link,
-  Stack,
-  Text,
-  useColorModeValue,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerOverlay, Flex, Icon, Link, Stack, Text, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { CreativeTimLogo } from "@components/icons/Icons";
 import IconBox from "@components/icons/IconBox";
@@ -62,9 +47,7 @@ const SidebarResponsive = props => {
               }}
               py="12px"
             >
-              {document.documentElement.dir === "rtl"
-                ? prop.rtlName
-                : prop.name}
+              {document.documentElement.dir === "rtl" ? prop.rtlName : prop.name}
             </Text>
             {createLinks(prop.views)}
           </>
@@ -106,20 +89,12 @@ const SidebarResponsive = props => {
                 {typeof prop.icon === "string" ? (
                   <Icon>{prop.icon}</Icon>
                 ) : (
-                  <IconBox
-                    bg="teal.300"
-                    color="white"
-                    h="30px"
-                    w="30px"
-                    me="12px"
-                  >
+                  <IconBox bg="teal.300" color="white" h="30px" w="30px" me="12px">
                     {prop.icon}
                   </IconBox>
                 )}
                 <Text color={activeColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                  {document.documentElement.dir === "rtl" ? prop.rtlName : prop.name}
                 </Text>
               </Flex>
             </Button>
@@ -156,20 +131,12 @@ const SidebarResponsive = props => {
                 {typeof prop.icon === "string" ? (
                   <Icon>{prop.icon}</Icon>
                 ) : (
-                  <IconBox
-                    bg={inactiveBg}
-                    color="teal.300"
-                    h="30px"
-                    w="30px"
-                    me="12px"
-                  >
+                  <IconBox bg={inactiveBg} color="teal.300" h="30px" w="30px" me="12px">
                     {prop.icon}
                   </IconBox>
                 )}
                 <Text color={inactiveColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                  {document.documentElement.dir === "rtl" ? prop.rtlName : prop.name}
                 </Text>
               </Flex>
             </Button>
@@ -214,25 +181,9 @@ const SidebarResponsive = props => {
   const btnRef: any = useRef();
   // Color variables
   return (
-    <Flex
-      display={{ sm: "flex", xl: "none" }}
-      ref={mainPanel}
-      alignItems="center"
-    >
-      <HamburgerIcon
-        color={hamburgerColor}
-        w="18px"
-        h="18px"
-        ref={btnRef}
-        colorScheme="teal"
-        onClick={onOpen}
-      />
-      <Drawer
-        isOpen={isOpen}
-        onClose={onClose}
-        placement={document.documentElement.dir === "rtl" ? "right" : "left"}
-        finalFocusRef={btnRef}
-      >
+    <Flex display={{ sm: "flex", xl: "none" }} ref={mainPanel} alignItems="center">
+      <HamburgerIcon color={hamburgerColor} w="18px" h="18px" ref={btnRef} colorScheme="teal" onClick={onOpen} />
+      <Drawer isOpen={isOpen} onClose={onClose} placement={document.documentElement.dir === "rtl" ? "right" : "left"} finalFocusRef={btnRef}>
         <DrawerOverlay />
         <DrawerContent
           w="250px"
@@ -245,10 +196,7 @@ const SidebarResponsive = props => {
           }}
           borderRadius="16px"
         >
-          <DrawerCloseButton
-            _focus={{ boxShadow: "none" }}
-            _hover={{ boxShadow: "none" }}
-          />
+          <DrawerCloseButton _focus={{ boxShadow: "none" }} _hover={{ boxShadow: "none" }} />
           <DrawerBody maxW="250px" px="1rem">
             <Box maxW="100%" h="100vh">
               <Box>{brand}</Box>

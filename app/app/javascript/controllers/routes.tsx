@@ -30,31 +30,12 @@ const dashRoutes = [
     component: Dashboard,
     layout: "/admin",
   },
-  {
-    name: "用户管理",
-    category: "user",
-    rtlName: "",
-    state: "pageCollapse",
-    views: [
-      {
-        path: "/list",
-        name: "Sign In",
-        rtlName: " ",
-        icon: <DocumentIcon color="inherit" />,
-        component: SignIn,
-        layout: "/user",
-      },
-      {
-        path: "/profile",
-        name: "Profile",
-        rtlName: "",
-        icon: <PersonIcon color="inherit" />,
-        secondaryNavbar: true,
-        component: Profile,
-        layout: "/user",
-      },
-    ],
-  },
+  // {
+  //   name: "用户管理",
+  //   category: "user",
+  //   rtlName: "",
+  //   state: "pageCollapse",
+  // },
   {
     path: "/category/list",
     name: "系统分类",
@@ -77,6 +58,15 @@ const dashRoutes = [
     rtlName: "",
     state: "pageCollapse",
     views: [
+      {
+        path: "/profile",
+        name: "Profile",
+        rtlName: "",
+        icon: <PersonIcon color="inherit" />,
+        secondaryNavbar: true,
+        component: Profile,
+        layout: "/admin",
+      },
       {
         path: "/signin",
         name: "Sign In",

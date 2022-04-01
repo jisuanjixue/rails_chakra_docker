@@ -19,7 +19,6 @@ export default function handInterceptor() {
       config.headers["Content-Type"] = config.url === "/avatar/upload" ? "multipart/form-data" : "application/json";
       //判断token是否存在 token存在 请求头才添加token 否则不添加
       config.headers.Authorization = config.url === "/login" ? "" : token;
-      console.log(config)
       return config;
     },
     error => {

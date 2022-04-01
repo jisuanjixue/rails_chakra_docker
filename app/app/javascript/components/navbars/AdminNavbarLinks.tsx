@@ -114,7 +114,7 @@ const HeaderLinks = props => {
 
   const formik = useFormik({
     initialValues: defaultData,
-    onSubmit: () => {},
+    onSubmit: () => { },
     validationSchema: ProfileSchema,
   });
 
@@ -233,7 +233,7 @@ const HeaderLinks = props => {
                 info="by Josh Henry"
                 boldInfo="New Album"
                 aName="Josh Henry"
-                // aSrc={avatar2}
+              // aSrc={avatar2}
               />
             </MenuItem>
             <MenuItem borderRadius="8px">
@@ -242,7 +242,7 @@ const HeaderLinks = props => {
                 info="Payment succesfully completed!"
                 boldInfo=""
                 aName="Kara"
-                // aSrc={avatar3}
+              // aSrc={avatar3}
               />
             </MenuItem>
           </Flex>
@@ -256,8 +256,9 @@ const HeaderLinks = props => {
             </MenuButton>
             {/* <SlideFade in={isOpen} offsetY="20px"> */}
             <MenuList>
-              <MenuItem>个人信息</MenuItem>
-              <MenuDivider />
+              <NavLink to="/admin/profile">
+                <MenuItem>个人信息</MenuItem>
+              </NavLink>
               <MenuItem onClick={openModal}>修改信息</MenuItem>
               <MenuItem onClick={() => handOut()}>登出</MenuItem>
             </MenuList>
@@ -279,7 +280,8 @@ const HeaderLinks = props => {
             <Text display={{ sm: "none", md: "flex" }}>登录</Text>
           </Button>
         </NavLink>
-      )}
+      )
+      }
       <Modal isOpen={isModal} onClose={closeModal} initialFocusRef={initialRef}>
         <ModalOverlay />
         <ModalContent>
@@ -329,7 +331,7 @@ const HeaderLinks = props => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Flex>
+    </Flex >
   );
 };
 
