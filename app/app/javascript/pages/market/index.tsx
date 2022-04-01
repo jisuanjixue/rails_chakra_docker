@@ -335,7 +335,7 @@ const Market = () => {
           <Stack direction={{ sm: "column", md: "row" }} spacing={{ sm: "4px", md: "12px" }} align="center" me="12px" my="24px" minW={{ sm: "100px", md: "200px" }} />
           <Input type="text" placeholder="Search..." minW="75px" maxW="175px" fontSize="sm" _focus={{ borderColor: "teal.300" }} onChange={e => setGlobalFilter(e.target.value)} />
         </Flex>
-        <Flex direction="column" w="full" bg="gray.600" alignItems="center" justifyContent="center" overflowX={{ sm: "scroll", lg: "hidden" }}>
+        <Flex direction="column" w="full" alignItems="center" justifyContent="center" overflowX={{ sm: "scroll", lg: "hidden" }}>
           <Table
             w="full"
             display={{

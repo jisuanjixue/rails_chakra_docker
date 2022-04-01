@@ -68,7 +68,7 @@ const Category = () => {
     );
   };
 
-  const { status, data, error, isFetching, isRefetching } = fetchCategories();
+  const { status, data, error, isFetching } = fetchCategories();
   const tableData = useMemo(() => data?.categories, [status === "success", data]);
 
   // useEffect(() => { }, [category.name, category.id]);
@@ -201,7 +201,23 @@ const Category = () => {
         },
       });
     } else {
-      deleteCategory.mutate(category.id);
+      deleteCategory.mutate(category.id, {
+        onSuccess: () => {
+          toast({
+            position: "top",
+            isClosable: true,
+            variant: "solid",
+            render: () => (
+              <Alert status="success" variant="solid" alignItems="center" justifyContent="center" textAlign="center">
+                <AlertIcon boxSize="40px" mr={0} />
+                <AlertTitle mt={4} mb={1} fontSize="lg">
+                  删除成功！
+                </AlertTitle>
+              </Alert>
+            ),
+          });
+        },
+      });
     }
     setShow({ isShow: false, type: "" });
   };
@@ -230,7 +246,7 @@ const Category = () => {
     );
     return (
       <>
-        <Flex direction="column" w="full" bg="gray.600" p={50} alignItems="center" justifyContent="center" overflowX={{ sm: "scroll", lg: "hidden" }}>
+        <Flex direction="column" w="full" p={50} alignItems="center" justifyContent="center" overflowX={{ sm: "scroll", lg: "hidden" }}>
           <Table
             w="full"
             display={{
@@ -369,14 +385,25 @@ const Category = () => {
           </Heading>
         ),
         id: "name",
-        columns: [
-          {
-            accessor: "name",
-            width: 60,
-            id: "title",
-            minWidth: 30,
-          },
-        ],
+        accessor: "name",
+      },
+      {
+        Header: () => (
+          <Heading as="h4" size="md">
+            添加时间
+          </Heading>
+        ),
+        id: "created_at",
+        accessor: "created_at",
+      },
+      {
+        Header: () => (
+          <Heading as="h4" size="md">
+            修改时间
+          </Heading>
+        ),
+        id: "updated_at",
+        accessor: "updated_at",
       },
       {
         Header: () => (
@@ -385,26 +412,19 @@ const Category = () => {
           </Heading>
         ),
         id: "caozuo",
-        columns: [
-          {
-            accessor: originalRow => (
-              <ButtonGroup variant="solid" size="sm" spacing={3}>
-                <Button colorScheme="blue" leftIcon={<AddIcon />} size="sm" variant="solid" onClick={() => handModal(originalRow.id, "add")}>
-                  新增
-                </Button>
-                <Button colorScheme="teal" leftIcon={<EditIcon />} size="sm" variant="solid" onClick={() => handEdit(originalRow, "edit")}>
-                  编辑
-                </Button>
-                <Button colorScheme="red" size="sm" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handModal(originalRow.id, "del")}>
-                  删除
-                </Button>
-              </ButtonGroup>
-            ),
-            id: "caozuo",
-            width: 1,
-            minWidth: 0,
-          },
-        ],
+        accessor: originalRow => (
+          <ButtonGroup variant="solid" size="sm" spacing={3}>
+            <Button colorScheme="blue" leftIcon={<AddIcon />} size="sm" variant="solid" onClick={() => handModal(originalRow.id, "add")}>
+              新增
+            </Button>
+            <Button colorScheme="teal" leftIcon={<EditIcon />} size="sm" variant="solid" onClick={() => handEdit(originalRow, "edit")}>
+              编辑
+            </Button>
+            <Button colorScheme="red" size="sm" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handModal(originalRow.id, "del")}>
+              删除
+            </Button>
+          </ButtonGroup>
+        ),
       },
     ],
     []
@@ -453,7 +473,7 @@ const Category = () => {
             <Box>
               <Alert status="error">
                 <AlertIcon />
-                <AlertTitle mr={2}>{error.message}</AlertTitle>
+                <AlertTitle mr={2}>{error?.message}</AlertTitle>
                 <CloseButton position="absolute" right="8px" top="8px" />
               </Alert>
             </Box>

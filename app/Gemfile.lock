@@ -120,8 +120,6 @@ GEM
       faraday-net_http (~> 2.0)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (2.0.1)
-    fast_jsonapi (1.5)
-      activesupport (>= 4.2)
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
     file_validators (3.0.0)
@@ -141,6 +139,8 @@ GEM
       reline (>= 0.3.0)
     jsbundling-rails (1.0.0)
       railties (>= 6.0.0)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
     jwt (2.3.0)
     loofah (2.13.0)
       crass (~> 1.0.2)
@@ -206,6 +206,8 @@ GEM
       pry (>= 0.10.4)
     puma (5.6.1)
       nio4r (~> 2.0)
+    pundit (2.2.0)
+      activesupport (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.3)
     rack-protection (2.2.0)
@@ -320,17 +322,18 @@ DEPENDENCIES
   debug
   devise
   devise-jwt (~> 0.9.0)
-  fast_jsonapi (~> 1.5)
   figaro
   file_validators
   importmap-rails
   jsbundling-rails
+  jsonapi-serializer (~> 2.2)
   omniauth-rails_csrf_protection
   omniauth-wechat-oauth2
   pg (~> 1.3, >= 1.3.3)
   pry
   pry-rails
   puma (~> 5.0)
+  pundit (~> 2.2)
   rails (~> 7.0.1)
   rails-settings-cached (~> 2.8, >= 2.8.2)
   rb-readline (~> 0.5.5)

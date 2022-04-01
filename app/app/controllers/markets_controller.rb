@@ -2,17 +2,19 @@
 
 class MarketsController < ApplicationController
   before_action :find_params, only: [:update, :destroy]
+  after_action :verify_authorized, only: [:create, :update, :destroy]
 
   def index
     markets = Market.all
     render(
       status: :ok,
       json: { markets: }
-)
+    )
   end
 
   def create
     market = Market.new(market_params)
+    authorize market
     if market.save
       render(
         status: :ok,
@@ -52,5 +54,6 @@ class MarketsController < ApplicationController
 
     def find_params
       @market = Market.find(params[:id])
+      authorize @market
     end
 end

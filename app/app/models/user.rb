@@ -24,7 +24,7 @@
 #
 class User < ApplicationRecord
   attr_writer :login
-  enum role: [:user, :vip, :admin]
+  enum role: [:user, :admin, :superadmin]
   has_one :profile, dependent: :destroy
   has_many :documents, dependent: :destroy
   after_create :init_profile
