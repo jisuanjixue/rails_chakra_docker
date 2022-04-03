@@ -35,6 +35,10 @@ export default function handInterceptor() {
         navigate.push("/auth/signin");
       }
 
+      if (error.response && error.response.status === 403) {
+        navigate.push("/forbidden/page");
+      }
+
       return Promise.reject(error);
     }
   );

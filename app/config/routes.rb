@@ -74,8 +74,10 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
-  
-  get "markets/index"
+  # Defines the root path route ("/")
+  root to: "home#index"
+
+  # user
   devise_for :users,
     path: "",
     path_names: {
@@ -91,31 +93,26 @@ Rails.application.routes.draw do
     }
 
   devise_scope :user do
-    # get "profile", to: "users/registrations#edit"
-    # delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
     authenticated :user do
       root "home#index", as: :authenticated_root
     end
-    # get 'update_account', to: 'devise/registrations#update'
-    # unauthenticated do
-    #   as :user do
-    #     root to: "devise/sessions#new", as: :unauthenticated_root
-    #   end
-    # end
   end
-
-  resources :markets, only: [:index, :create, :update, :destroy]
 
   patch "/profile/update", to: "users/profiles#update"
   post "/avatar/upload", to: "users/profiles#upload"
   post "/reset/send", to: "users/reset_password#send"
-
   get "/current_user", to: "current_user#index"
+
+  # 市场
+  resources :markets, only: [:index, :create, :update, :destroy]
+
+  # 分类
   resources :category, only: [:index, :create, :update, :destroy]
 
-  # Defines the root path route ("/")
-  root to: "home#index"
+  # 403
+  # get "/forbidden/page", to: "errors#forbidden"
   
+  # 文件上传
   get '*path', to: redirect('/'), constraints: lambda { |req|
     req.path.exclude? 'rails/active_storage'
   }

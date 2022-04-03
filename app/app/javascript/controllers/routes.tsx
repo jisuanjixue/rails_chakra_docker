@@ -9,6 +9,7 @@ import Market from "../pages/market";
 import Profile from "../pages/profile";
 import SignIn from "../pages/login";
 import SignUp from "../pages/signup";
+import Error from "../pages/error";
 // import AdminLayout from "../layouts/Admin";
 
 import {
@@ -51,6 +52,15 @@ const dashRoutes = [
     icon: <StatsIcon color="inherit" />,
     component: Market,
     layout: "/admin",
+  },
+  {
+    path: "/forbidden/page",
+    name: "403",
+    rtlName: "",
+    icon: <StatsIcon color="inherit" />,
+    component: Error,
+    layout: "/admin",
+    show: false,
   },
   {
     name: "登录注册",

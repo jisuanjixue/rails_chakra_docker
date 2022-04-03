@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef, useContext } from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { useTable, useGlobalFilter, usePagination, useSortBy } from "react-table";
 import {
@@ -63,6 +63,7 @@ import { AddIcon, EditIcon, DeleteIcon, ChevronDownIcon, ChevronUpIcon, ArrowRig
 import { BsLightningFill } from "react-icons/bs";
 import { TiArrowSortedDown, TiArrowSortedUp, TiArrowUnsorted } from "react-icons/ti";
 import { useFormik } from "formik";
+import { UserContext } from "../../controllers/ContextManager";
 import * as Yup from "yup";
 
 import marketApi from "../../apis/market";
@@ -71,6 +72,9 @@ import arr from "../../../../public/addr";
 import Alter from "@components/alerts/Alter";
 
 const Market = () => {
+  const { state } = useContext(UserContext);
+  const { role } = state.user;
+  const isCan = role === "admin";
   const [firstList, setFirstList] = useControllableState({ defaultValue: [] });
   const [secondList, setSecondList] = useControllableState({ defaultValue: [] });
   const [marketId, setMarketId] = useControllableState({ defaultValue: "" });
@@ -124,7 +128,6 @@ const Market = () => {
     );
   };
 
-  //isRefetching
   const { status, data, isFetching } = fetchMarkets();
   const tableData = useMemo(() => data?.markets, [status === "success", data]);
 
@@ -573,12 +576,16 @@ const Market = () => {
         id: "action",
         accessor: originalRow => (
           <ButtonGroup variant="solid" size="sm" spacing={3}>
-            <Button colorScheme="teal" leftIcon={<EditIcon />} size="sm" variant="solid" onClick={() => handEdit(originalRow, "edit")}>
-              编辑
-            </Button>
-            <Button colorScheme="red" size="sm" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handDel(originalRow.id, "del")}>
-              删除
-            </Button>
+            {isCan && (
+              <Button colorScheme="teal" leftIcon={<EditIcon />} size="sm" variant="solid" onClick={() => handEdit(originalRow, "edit")}>
+                编辑
+              </Button>
+            )}
+            {isCan && (
+              <Button colorScheme="red" size="sm" leftIcon={<DeleteIcon />} variant="solid" onClick={() => handDel(originalRow.id, "del")}>
+                删除
+              </Button>
+            )}
           </ButtonGroup>
         ),
       },
@@ -616,9 +623,11 @@ const Market = () => {
     <>
       <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }}>
         <Container maxW="container.xl">
-          <Button mt={5} onClick={() => handModal("add")} colorScheme="blue" variant="solid" leftIcon={<AddIcon />} size="md" ref={finalRef}>
-            新增
-          </Button>
+          {isCan && (
+            <Button mt={5} onClick={() => handModal("add")} colorScheme="blue" variant="solid" leftIcon={<AddIcon />} size="md" ref={finalRef}>
+              新增
+            </Button>
+          )}
           {status === "loading" ? (
             <Box padding="6" boxShadow="lg" bg="white">
               <SkeletonCircle size="10" />

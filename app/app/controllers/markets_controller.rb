@@ -2,10 +2,9 @@
 
 class MarketsController < ApplicationController
   before_action :find_params, only: [:update, :destroy]
-  after_action :verify_authorized, only: [:create, :update, :destroy]
 
   def index
-    markets = Market.all
+    markets = policy_scope(Market)
     render(
       status: :ok,
       json: { markets: }
@@ -13,12 +12,11 @@ class MarketsController < ApplicationController
   end
 
   def create
-    market = Market.new(market_params)
-    authorize market
-    if market.save
+    @market = Market.new(market_params)
+    if @market.save
       render(
         status: :ok,
-        json: { data: market }
+        json: { data: @market }
       )
     else
       error = market.errors.full_messages.to_sentence
@@ -54,6 +52,5 @@ class MarketsController < ApplicationController
 
     def find_params
       @market = Market.find(params[:id])
-      authorize @market
     end
 end

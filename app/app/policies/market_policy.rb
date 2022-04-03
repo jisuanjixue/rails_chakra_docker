@@ -1,20 +1,13 @@
-class MarketPolicy
-  attr_reader :current_user, :market
+class MarketPolicy < ApplicationPolicy
 
-  def initialize(current_user, market)
-    @current_user = current_user
-    @market = market
+  class Scope < Scope
+    def resolve
+      if current_user.role == "admin"
+         scope.all
+      else
+        raise Pundit::NotAuthorizedError, "没有权限" 
+      end
+    end
   end
 
-  def create?
-    current_user.role == 'admin'
-  end
-
-  def update?
-    current_user.role == 'admin'
-  end
-
-  def destroy?
-    current_user.role == 'admin'
-  end
 end
