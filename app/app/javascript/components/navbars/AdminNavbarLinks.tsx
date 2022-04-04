@@ -32,7 +32,6 @@ import {
   InputLeftAddon,
   Textarea,
   HStack,
-  Avatar,
 } from "@chakra-ui/react";
 // request imports
 import { useQueryClient, useMutation } from "react-query";
@@ -56,6 +55,7 @@ import { UserContext } from "../../controllers/ContextManager";
 import SidebarResponsive from "@components/sidebar/SidebarResponsive";
 import routes from "../../controllers/routes";
 import handInterceptor from "../../apis/axios";
+import AvatarWithRipple from "./AvatarWithRipple";
 
 const HeaderLinks = props => {
   const defaultData = {
@@ -248,7 +248,7 @@ const HeaderLinks = props => {
         </MenuList>
       </Menu>
       {id ? (
-        <HStack spacing={3} display="flex" alignItems="center">
+        <HStack spacing={2} display="flex" alignItems="center">
           <Menu>
             <MenuButton px={4} py={2} transition="all 0.2s" borderRadius="md" borderWidth="0px" _hover={{ bg: "gray.400" }} _expanded={{ bg: "blue.400" }} _focus={{ boxShadow: "outline" }}>
               {name}
@@ -263,7 +263,7 @@ const HeaderLinks = props => {
             </MenuList>
             {/* </SlideFade> */}
           </Menu>
-          <Avatar size="sm" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+          <AvatarWithRipple />
         </HStack>
       ) : (
         <NavLink to="/auth/signin">
