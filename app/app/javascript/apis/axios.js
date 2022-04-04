@@ -36,7 +36,17 @@ export default function handInterceptor() {
       }
 
       if (error.response && error.response.status === 403) {
-        navigate.push("/forbidden/page");
+        navigate.push({
+          pathname: "/auth/forbidden/page",
+          state: { value: "403" },
+        });
+      }
+
+      if (error.response && error.response.status === 404) {
+        navigate.push({
+          pathname: "/notFound/page",
+          state: { value: "404" },
+        });
       }
 
       return Promise.reject(error);
