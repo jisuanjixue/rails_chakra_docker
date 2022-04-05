@@ -1,7 +1,8 @@
 // Chakra Imports
 import React, { useState } from "react";
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, Flex, Link, Switch, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, Flex, Switch, Text, useColorMode } from "@chakra-ui/react";
 import { Separator } from "@components/separator/Separator";
+import { HyperThemeEditor } from "@hypertheme-editor/chakra-ui";
 
 export default function Configurator(props) {
   const { secondary, isChecked, isOpen, onClose, onTransparent, onOpaque, onSwitch } = props;
@@ -76,8 +77,8 @@ export default function Configurator(props) {
                 </Text>
                 <Button onClick={toggleColorMode}>Toggle {colorMode === "light" ? "Dark" : "Light"}</Button>
               </Flex>
-
               <Separator />
+              <HyperThemeEditor pos="fixed" top={400} right={2} />
             </Flex>
           </DrawerBody>
         </DrawerContent>
