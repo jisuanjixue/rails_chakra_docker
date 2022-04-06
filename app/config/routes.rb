@@ -70,10 +70,10 @@
 #                update_rails_disk_service PUT      /rails/active_storage/disk/:encoded_token(.:format)                                               active_storage/disk#update
 #                     rails_direct_uploads POST     /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
 
-require 'sidekiq/web'
+require "sidekiq/web"
 
 Rails.application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq'
+  mount Sidekiq::Web => "/sidekiq"
   # Defines the root path route ("/")
   root to: "home#index"
 
@@ -88,8 +88,8 @@ Rails.application.routes.draw do
     controllers: {
       sessions: "users/sessions",
       registrations: "users/registrations",
-      omniauth_callbacks: 'users/omniauth_callbacks',
-      profiles: 'users/profiles'
+      omniauth_callbacks: "users/omniauth_callbacks",
+      profiles: "users/profiles"
     }
 
   devise_scope :user do
@@ -111,9 +111,9 @@ Rails.application.routes.draw do
 
   # 403
   # get "/forbidden/page", to: "errors#forbidden"
-  
+
   # 文件上传
-  get '*path', to: redirect('/'), constraints: lambda { |req|
-    req.path.exclude? 'rails/active_storage'
+  get "*path", to: redirect("/"), constraints: lambda { |req|
+    req.path.exclude?("rails/active_storage")
   }
 end

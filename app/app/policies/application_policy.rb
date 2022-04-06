@@ -16,6 +16,6 @@ class ApplicationPolicy
 
     private
 
-    attr_reader :current_user, :scope
+      attr_reader :current_user, :scope
   end
 end

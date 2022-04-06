@@ -15,15 +15,17 @@ module Devise
       # Checks whether the user session has expired based on configured time.
       def timedout?(last_access)
         return false if remember_exists_and_not_expired?
+
         last_access && last_access <= self.class.timeout_in.ago
       end
 
       private
 
-      def remember_exists_and_not_expired?
-        return false unless respond_to?(:remember_expired?)
-        remember_created_at && !remember_expired?
-      end
+        def remember_exists_and_not_expired?
+          return false unless respond_to?(:remember_expired?)
+
+          remember_created_at && !remember_expired?
+        end
     end
   end
 end
@@ -69,7 +71,7 @@ Devise.setup do |config|
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
-  config.mailer = 'UserMailer'
+  config.mailer = "UserMailer"
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
@@ -316,10 +318,13 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   if Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_ID.present?
-    config.omniauth :wechat, Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_ID, Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_ID, :authorize_params => {:scope => "snsapi_base"}
+    config.omniauth(
+      :wechat, Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_ID, Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_ID,
+      authorize_params: { scope: "snsapi_base" }
+)
   end
   unless Rails.env.production?
-    config.omniauth :developer, fields: %w[nickname sex province city country headimgurl unionid], uid_field: :unionid
+    config.omniauth(:developer, fields: %w[nickname sex province city country headimgurl unionid], uid_field: :unionid)
   end
 
   # ==> Warden configuration

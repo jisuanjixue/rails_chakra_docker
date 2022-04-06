@@ -1,13 +1,13 @@
-class MarketPolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class MarketPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if current_user.role == "admin"
-         scope.all
+        scope.all
       else
-        raise Pundit::NotAuthorizedError, "没有权限" 
+        raise(Pundit::NotAuthorizedError, "没有权限")
       end
     end
   end
-
 end

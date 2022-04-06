@@ -24,12 +24,13 @@
 #
 class User < ApplicationRecord
   attr_writer :login
+
   enum role: [:user, :admin, :superadmin]
   has_one :profile, dependent: :destroy
   has_many :documents, dependent: :destroy
   after_create :init_profile
 
-  after_initialize :set_default_role, :if => :new_record?
+  after_initialize :set_default_role, if: :new_record?
 
   def init_profile
     self.build_profile.save(validate: false)
@@ -47,13 +48,13 @@ class User < ApplicationRecord
   validate :validate_name
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :omniauthable, :database_authenticatable, :jwt_authenticatable, :registerable, :recoverable, :rememberable, :validatable, jwt_revocation_strategy: JwtDenylist, authentication_keys: [:login], omniauth_providers: [:wechat]
-
+  devise :omniauthable, :database_authenticatable, :jwt_authenticatable, :registerable, :recoverable, :rememberable,
+    :validatable, jwt_revocation_strategy: JwtDenylist, authentication_keys: [:login], omniauth_providers: [:wechat]
 
   # def init_profile
   #   self.create_profile!
   # end
-  
+
   def login
     @login || self.name || self.email
   end
@@ -82,13 +83,13 @@ class User < ApplicationRecord
       user.nickname = auth.extra.raw_info.nickname
       user.token = auth.credentials.token
       user.openid = auth.extra.raw_info.openid
-      user.headimgurl = auth.extra.raw_info.headimgurl   # assuming the user model has a name
-      user.sex = auth.extra.raw_info.sex   # assuming the user model has a name
-      user.city = auth.extra.raw_info.city   # assuming the user model has a name
-      user.province = auth.extra.raw_info.province   # assuming the user model has a name
-      user.headimgurl = auth.extra.raw_info.headimgurl   # assuming the user model has a name
+      user.headimgurl = auth.extra.raw_info.headimgurl # assuming the user model has a name
+      user.sex = auth.extra.raw_info.sex # assuming the user model has a name
+      user.city = auth.extra.raw_info.city # assuming the user model has a name
+      user.province = auth.extra.raw_info.province # assuming the user model has a name
+      user.headimgurl = auth.extra.raw_info.headimgurl # assuming the user model has a name
       # user.image = auth.info.image # assuming the user model has an image
-      # If you are using confirmable and the provider(s) you use validate emails, 
+      # If you are using confirmable and the provider(s) you use validate emails,
       # uncomment the line below to skip the confirmation emails.
       # user.skip_confirmation!
     end
@@ -109,6 +110,4 @@ class User < ApplicationRecord
   end
 
   self.skip_session_storage = [:http_auth, :params_auth]
-
-
 end

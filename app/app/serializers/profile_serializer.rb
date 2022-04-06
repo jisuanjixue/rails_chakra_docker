@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: profiles
@@ -33,14 +35,14 @@ class ProfileSerializer
     #   }
     # end
     return unless object.avatar.attached?
-      object.avatar.blob.attributes
-            .slice('filename', 'byte_size')
-            .merge('url': avatar_url)
-            .tap{|attrs| attrs['name'] = attrs.delete('filename')}
+
+    object.avatar.blob.attributes
+      .slice("filename", "byte_size")
+      .merge(url: avatar_url)
+      .tap { |attrs| attrs["name"] = attrs.delete("filename") }
   end
 
-    def avatar_url
-      url_for(object.avatar)
-    end
-
+  def avatar_url
+    url_for(object.avatar)
+  end
 end

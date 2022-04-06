@@ -47,7 +47,7 @@ class MarketsController < ApplicationController
   private
 
     def market_params
-      params.require(:market).permit(:name, :area, :is_show, {address: []}, :remark)
+      params.require(:market).permit(:name, :area, :is_show, { address: [] }, :remark)
     end
 
     def find_params

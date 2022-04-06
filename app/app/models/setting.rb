@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: settings
@@ -30,7 +32,6 @@ class Setting < RailsSettings::Base
   #   end
   # end
 
-  field :wechat_api_id, default:  Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_ID, type: :string, readonly: true
+  field :wechat_api_id, default: Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_ID, type: :string, readonly: true
   field :wechat_api_secret, default: Figaro.env.OMNIAUTH_OPEN_WECHAT_APP_SECRET, type: :string, readonly: true
-
 end

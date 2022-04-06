@@ -8,7 +8,14 @@ class CategoryController < ApplicationController
     root_list = Category.roots
     root_list.each do |item|
       child_arr = item.children
-      new_item = { name: item.name, id: item.id, parent_id: item.parent_id, subRows: arr_map(child_arr), created_at: item.created_at.strftime("%Y-%m-%d"), updated_at: item.updated_at.strftime("%Y-%m-%d") }
+      new_item = {
+        name: item.name,
+        id: item.id,
+        parent_id: item.parent_id,
+        subRows: arr_map(child_arr),
+        created_at: item.created_at.strftime("%Y-%m-%d"),
+        updated_at: item.updated_at.strftime("%Y-%m-%d")
+      }
       categories << new_item
     end
     render(status: :ok, json: { categories: })

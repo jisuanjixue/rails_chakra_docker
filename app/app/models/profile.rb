@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: profiles
@@ -29,27 +31,27 @@ class Profile < ApplicationRecord
   end
 
   validates :avatar, file_size: { less_than_or_equal_to: 5.megabytes },
-              file_content_type: { allow: ['image/jpeg', 'image/png', 'image/gif'] }
+    file_content_type: { allow: ["image/jpeg", "image/png", "image/gif"] }
 
   validate :avatar_present?
 
   validates :user_name, presence: true
-  validates :phone,      presence: true
+  validates :phone, presence: true
   validates :description, length: { maximum: 300 }
 
   private
 
-  # def set_defaults
-  #   if self.new_record?
-  #     self.avatar = Rack::Test::UploadedFile.new(
-  #       Rails.root.join('app/assets/images/avatar.png'),
-  #       'image/png',
-  #     )
-  #   end
-  # end
+    # def set_defaults
+    #   if self.new_record?
+    #     self.avatar = Rack::Test::UploadedFile.new(
+    #       Rails.root.join('app/assets/images/avatar.png'),
+    #       'image/png',
+    #     )
+    #   end
+    # end
 
-  def avatar_present?
-    pattern = %r{^(image|application|text)/(.)+$}
-    errors.add(:avatar, :blank) unless avatar.attached? && pattern.match?(avatar.blob.content_type)
-  end
+    def avatar_present?
+      pattern = %r{^(image|application|text)/(.)+$}
+      errors.add(:avatar, :blank) unless avatar.attached? && pattern.match?(avatar.blob.content_type)
+    end
 end

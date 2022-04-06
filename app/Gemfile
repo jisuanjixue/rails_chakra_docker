@@ -12,7 +12,7 @@ gem "rails", "~> 7.0.1"
 gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
-gem 'pg', '~> 1.3', '>= 1.3.3'
+gem "pg", "~> 1.3", ">= 1.3.3"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
@@ -33,16 +33,16 @@ gem "tailwindcss-rails"
 gem "cssbundling-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jsonapi-serializer', '~> 2.2'
+gem "jsonapi-serializer", "~> 2.2"
 
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.6'
+gem "redis", "~> 4.6"
 
 # Simple, efficient background processing for Ruby.
-gem 'sidekiq', '~> 6.4', '>= 6.4.1'
+gem "sidekiq", "~> 6.4", ">= 6.4.1"
 
 # Object oriented authorization for Rails applications
-gem 'pundit', '~> 2.2'
+gem "pundit", "~> 2.2"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -62,16 +62,16 @@ gem "closure_tree"
 gem "devise"
 gem "devise-jwt", "~> 0.9.0"
 
-gem 'file_validators'
+gem "file_validators"
 
 # omniauth with wechat
+gem "omniauth-rails_csrf_protection"
 gem "omniauth-wechat-oauth2"
-gem 'omniauth-rails_csrf_protection'
 
 # Setting
-gem 'rails-settings-cached', '~> 2.8', '>= 2.8.2'
+gem "rails-settings-cached", "~> 2.8", ">= 2.8.2"
 
-gem 'figaro'
+gem "figaro"
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -94,7 +94,7 @@ group :development do
   gem "bullet"
   gem "pry"
   gem "pry-rails"
-  gem 'rb-readline', '~> 0.5.5'
+  gem "rb-readline", "~> 0.5.5"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"

@@ -15,7 +15,7 @@ class Users::ProfilesController < ApplicationController
 
   def update
     @profile = current_user.profile
-    if(@profile.update(profile_params))
+    if @profile.update(profile_params)
       render(
         status: :ok,
         json: { data: profile }
@@ -40,12 +40,11 @@ class Users::ProfilesController < ApplicationController
 
   protected
 
-  def profile_params
-    params.require(:profile).permit(:avatar, :phone, :description, :avatar_url)
-  end
+    def profile_params
+      params.require(:profile).permit(:avatar, :phone, :description, :avatar_url)
+    end
 
-  def user_params
-    params.permit(:name)
-  end
-
-  end
+    def user_params
+      params.permit(:name)
+    end
+end
