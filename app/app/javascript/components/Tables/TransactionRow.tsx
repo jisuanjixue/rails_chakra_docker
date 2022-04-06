@@ -11,13 +11,7 @@ function TransactionRow(props) {
         <Box
           me="12px"
           borderRadius="50%"
-          color={
-            price[0] === "+"
-              ? "green.400"
-              : price[0] === "-"
-              ? "red.400"
-              : "gray.400"
-          }
+          color={price[0] === "+" ? "green.400" : price[0] === "-" ? "red.400" : "gray.400"}
           border="1px solid"
           display="flex"
           alignItems="center"
@@ -28,31 +22,15 @@ function TransactionRow(props) {
           <Icon as={logo} />
         </Box>
         <Flex direction="column">
-          <Text
-            fontSize={{ sm: "md", md: "lg", lg: "md" }}
-            color={textColor}
-            fontWeight="bold"
-          >
+          <Text fontSize={{ sm: "md", md: "lg", lg: "md" }} color={textColor} fontWeight="bold">
             {name}
           </Text>
-          <Text
-            fontSize={{ sm: "xs", md: "sm", lg: "xs" }}
-            color="gray.400"
-            fontWeight="semibold"
-          >
+          <Text fontSize={{ sm: "xs", md: "sm", lg: "xs" }} color="gray.400" fontWeight="semibold">
             {date}
           </Text>
         </Flex>
       </Flex>
-      <Box
-        color={
-          price[0] === "+"
-            ? "green.400"
-            : price[0] === "-"
-            ? "red.400"
-            : { textColor }
-        }
-      >
+      <Box color={price[0] === "+" ? "green.400" : price[0] === "-" ? "red.400" : { textColor }}>
         <Text fontSize={{ sm: "md", md: "lg", lg: "md" }} fontWeight="bold">
           {price}
         </Text>

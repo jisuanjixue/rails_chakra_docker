@@ -129,14 +129,7 @@ const AdminLayout = props => {
   // Chakra Color Mode
   return (
     <>
-      <Sidebar
-        routes={routes}
-        logoText={"PURITY UI DASHBOARD"}
-        display="none"
-        isOpen={siderbarOpen}
-        sidebarVariant={sidebarVariant}
-        {...rest}
-      />
+      <Sidebar routes={routes} logoText={"PURITY UI DASHBOARD"} display="none" isOpen={siderbarOpen} sidebarVariant={sidebarVariant} {...rest} />
       <MainPanel
         ref={mainPanel}
         w={{
@@ -145,14 +138,7 @@ const AdminLayout = props => {
         }}
       >
         <Portal>
-          <AdminNavbar
-            onOpen={onOpen}
-            logoText={"PURITY UI DASHBOARD"}
-            brandText={getActiveRoute(routes)}
-            secondary={getActiveNavbar(routes)}
-            fixed={fixed}
-            {...rest}
-          />
+          <AdminNavbar onOpen={onOpen} logoText={"PURITY UI DASHBOARD"} brandText={getActiveRoute(routes)} secondary={getActiveNavbar(routes)} fixed={fixed} {...rest} />
         </Portal>
         {getRoute() ? (
           <PanelContent>

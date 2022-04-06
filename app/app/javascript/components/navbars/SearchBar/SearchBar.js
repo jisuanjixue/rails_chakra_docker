@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  IconButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { IconButton, Input, InputGroup, InputLeftElement, useColorModeValue } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 export function SearchBar(props) {
   // Pass the computed styles into the `__css` prop
@@ -44,12 +38,7 @@ export function SearchBar(props) {
           ></IconButton>
         }
       />
-      <Input
-        fontSize="xs"
-        py="11px"
-        placeholder="Type here..."
-        borderRadius="inherit"
-      />
+      <Input fontSize="xs" py="11px" placeholder="Type here..." borderRadius="inherit" />
     </InputGroup>
   );
 }

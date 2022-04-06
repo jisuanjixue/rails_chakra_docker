@@ -34,19 +34,14 @@ function Help() {
     <div className="relative inline-flex ml-3">
       <button
         ref={trigger}
-        className={`flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 transition duration-150 hover:bg-gray-200 ${
-          dropdownOpen && "bg-gray-200"
-        }`}
+        className={`flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 transition duration-150 hover:bg-gray-200 ${dropdownOpen && "bg-gray-200"}`}
         aria-haspopup="true"
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
         <span className="sr-only">Need help?</span>
         <svg className="w-4 h-4" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-          <path
-            className="text-gray-500 fill-current"
-            d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z"
-          />
+          <path className="text-gray-500 fill-current" d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
         </svg>
       </button>
 
@@ -64,11 +59,7 @@ function Help() {
           <div className="px-4 pt-1.5 pb-2 text-xs font-semibold uppercase text-gray-400">Need help?</div>
           <ul>
             <li>
-              <Link
-                className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 hover:text-indigo-600"
-                to="#0"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
+              <Link className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 hover:text-indigo-600" to="#0" onClick={() => setDropdownOpen(!dropdownOpen)}>
                 <svg className="w-3 h-3 mr-2 text-indigo-300 fill-current shrink-0" viewBox="0 0 12 12">
                   <rect y="3" width="12" height="9" rx="1" />
                   <path d="M2 0h8v2H2z" />
@@ -77,11 +68,7 @@ function Help() {
               </Link>
             </li>
             <li>
-              <Link
-                className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 hover:text-indigo-600"
-                to="#0"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
+              <Link className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 hover:text-indigo-600" to="#0" onClick={() => setDropdownOpen(!dropdownOpen)}>
                 <svg className="w-3 h-3 mr-2 text-indigo-300 fill-current shrink-0" viewBox="0 0 12 12">
                   <path d="M10.5 0h-9A1.5 1.5 0 000 1.5v9A1.5 1.5 0 001.5 12h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0010.5 0zM10 7L8.207 5.207l-3 3-1.414-1.414 3-3L5 2h5v5z" />
                 </svg>
@@ -89,11 +76,7 @@ function Help() {
               </Link>
             </li>
             <li>
-              <Link
-                className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 hover:text-indigo-600"
-                to="#0"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
+              <Link className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 hover:text-indigo-600" to="#0" onClick={() => setDropdownOpen(!dropdownOpen)}>
                 <svg className="w-3 h-3 mr-2 text-indigo-300 fill-current shrink-0" viewBox="0 0 12 12">
                   <path d="M11.854.146a.5.5 0 00-.525-.116l-11 4a.5.5 0 00-.015.934l4.8 1.921 1.921 4.8A.5.5 0 007.5 12h.008a.5.5 0 00.462-.329l4-11a.5.5 0 00-.116-.525z" />
                 </svg>

@@ -26,10 +26,7 @@ export default function Footer() {
         }}
         mb={{ base: "20px", xl: "0px" }}
       >
-        &copy; {1900 + new Date().getYear()},{" "}
-        <Text as="span">
-          {document.documentElement.dir === "rtl" ? " " : "Made with ❤️ by "}
-        </Text>
+        &copy; {1900 + new Date().getYear()}, <Text as="span">{document.documentElement.dir === "rtl" ? " " : "Made with ❤️ by "}</Text>
         <Link
           // color={linkTeal}
           color="teal.400"
@@ -76,20 +73,12 @@ export default function Footer() {
             md: "44px",
           }}
         >
-          <Link
-            color="gray.400"
-            href="#blog"
-            href="https://creative-tim.com/blog"
-          >
+          <Link color="gray.400" href="#blog" href="https://creative-tim.com/blog">
             {document.documentElement.dir === "rtl" ? "" : "Blog"}
           </Link>
         </ListItem>
         <ListItem>
-          <Link
-            color="gray.400"
-            href="#license"
-            href="https://www.creative-tim.com/license"
-          >
+          <Link color="gray.400" href="#license" href="https://www.creative-tim.com/license">
             {document.documentElement.dir === "rtl" ? "" : "License"}
           </Link>
         </ListItem>

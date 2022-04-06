@@ -17,20 +17,7 @@ function useIsInitialRender() {
   return isInitialRender.current;
 }
 
-function CSSTransition({
-  show,
-  enter = "",
-  enterStart = "",
-  enterEnd = "",
-  leave = "",
-  leaveStart = "",
-  leaveEnd = "",
-  appear,
-  unmountOnExit,
-  tag = "div",
-  children,
-  ...rest
-}) {
+function CSSTransition({ show, enter = "", enterStart = "", enterEnd = "", leave = "", leaveStart = "", leaveEnd = "", appear, unmountOnExit, tag = "div", children, ...rest }) {
   const enterClasses = enter.split(" ").filter(s => s.length);
   const enterStartClasses = enterStart.split(" ").filter(s => s.length);
   const enterEndClasses = enterEnd.split(" ").filter(s => s.length);
@@ -85,11 +72,7 @@ function CSSTransition({
         if (!removeFromDom) node.style.display = "none";
       }}
     >
-      <Component
-        ref={nodeRef}
-        {...rest}
-        style={{ display: !removeFromDom ? "none" : null }}
-      >
+      <Component ref={nodeRef} {...rest} style={{ display: !removeFromDom ? "none" : null }}>
         {children}
       </Component>
     </ReactCSSTransition>
@@ -103,15 +86,7 @@ function Transition({ show, appear, ...rest }) {
   const isChild = show === undefined;
 
   if (isChild) {
-    return (
-      <CSSTransition
-        unmountOnExit={undefined}
-        children={undefined}
-        appear={parent.appear || !parent.isInitialRender}
-        show={parent.show}
-        {...rest}
-      />
-    );
+    return <CSSTransition unmountOnExit={undefined} children={undefined} appear={parent.appear || !parent.isInitialRender} show={parent.show} {...rest} />;
   }
 
   return (
@@ -124,13 +99,7 @@ function Transition({ show, appear, ...rest }) {
         },
       }}
     >
-      <CSSTransition
-        unmountOnExit={undefined}
-        children={undefined}
-        appear={appear}
-        show={show}
-        {...rest}
-      />
+      <CSSTransition unmountOnExit={undefined} children={undefined} appear={appear} show={show} {...rest} />
     </TransitionContext.Provider>
   );
 }
