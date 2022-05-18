@@ -68,7 +68,7 @@ import * as Yup from "yup";
 
 import marketApi from "../../apis/market";
 import { MarketInfo } from "../../types/market";
-import arr from "../../../../public/addr";
+import arr from "../../variables/addr";
 import Alter from "@components/alerts/Alter";
 
 const Market = () => {
