@@ -1,0 +1,7 @@
+version: "2"
+syncs:
+  # 卷名，通常是 AppName-sync
+  app-sync:
+    src: './app'
+    # 可以添加其他需要忽略的目录
+    sync_excludes: ['.git', 'tmp', 'log']

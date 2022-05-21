@@ -20,7 +20,7 @@ import {
   DocumentIcon,
   RocketIcon,
   // SupportIcon,
-} from "../components/icons/Icons";
+} from "../components/Icons/Icons";
 
 const dashRoutes = [
   {

@@ -2,7 +2,7 @@
 import React from "react";
 
 import { Box, Button, Flex, HStack, Link, Text, useColorModeValue } from "@chakra-ui/react";
-import { CreativeTimLogo, DocumentIcon, HomeIcon, PersonIcon, RocketIcon } from "../icons/Icons";
+import { CreativeTimLogo, DocumentIcon, HomeIcon, PersonIcon, RocketIcon } from "../Icons/Icons";
 import SidebarResponsive from "@components/sidebar/Sidebar";
 import { NavLink } from "react-router-dom";
 import routes from "../../controllers/routes";

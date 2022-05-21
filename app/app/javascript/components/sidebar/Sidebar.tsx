@@ -15,7 +15,7 @@ import {
   // Spacer,
 } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";
-import IconBox from "@components/icons/IconBox";
+import IconBox from "@components/Icons/IconBox";
 import { Separator } from "@components/separator/Separator";
 // import { AiFillFastBackward } from "react-icons/ai";
 import { Logo } from "@choc-ui/logo";

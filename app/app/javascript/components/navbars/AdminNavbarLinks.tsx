@@ -47,7 +47,7 @@ import userApi from "../../apis/user";
 // import avatar3 from "../../images/avatars/avatar3.jpg";
 
 // Custom Icons
-import { ProfileIcon, SettingsIcon } from "@components/icons/Icons";
+import { ProfileIcon, SettingsIcon } from "@components/Icons/Icons";
 import FileUpload from "@components/upload/FileUpload";
 // Custom Components
 import { ItemContent } from "@components/menu/ItemContent";

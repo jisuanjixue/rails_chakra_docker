@@ -1,0 +1,6 @@
+          ok  Starting native_osx for sync app-sync
+          ok  app-sync container still running, restarting unison in container
+unison: stopped
+unison: started
+     success  Sync container started
+     success  Showing unison logs from your sync container: app-sync

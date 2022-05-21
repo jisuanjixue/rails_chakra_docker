@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 // Chakra Imports
 import { Button, useColorModeValue } from "@chakra-ui/react";
 // Custom Icons
-import { SettingsIcon } from "@components/icons/Icons";
+import { SettingsIcon } from "@components/Icons/Icons";
 
 export default function FixedPlugin(props) {
   const { secondary, onOpen } = props;

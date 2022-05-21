@@ -2,8 +2,8 @@ import React, { useState, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerOverlay, Flex, Icon, Link, Stack, Text, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { CreativeTimLogo } from "@components/icons/Icons";
-import IconBox from "@components/icons/IconBox";
+import { CreativeTimLogo } from "@components/Icons/Icons";
+import IconBox from "@components/Icons/IconBox";
 import { Separator } from "@components/separator/Separator";
 
 const SidebarResponsive = props => {

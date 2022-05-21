@@ -34,7 +34,7 @@ import BarChart from "@components/charts/BarChart";
 import LineChart from "@components/charts/LineChart";
 import IconBox from "@components/Icons/IconBox";
 // Custom icons
-import { CartIcon, DocumentIcon, GlobeIcon, RocketIcon, StatsIcon, WalletIcon } from "@components/icons/Icons";
+import { CartIcon, DocumentIcon, GlobeIcon, RocketIcon, StatsIcon, WalletIcon } from "@components/Icons/Icons";
 import DashboardTableRow from "@components/Tables/DashboardTableRow";
 import TimelineRow from "@components/Tables/TimelineRow";
 // react icons
