@@ -38,7 +38,7 @@ services:
     restart: always
     command: bash -c "rm -f /app/tmp/pids/server.pid && foreman start -f /app/Procfile"
     volumes:
-      - ./app:/app
+      - app-sync:/app:nocopy
       - /app/tmp
       - rails_log:/app/log
     environment:
@@ -52,6 +52,8 @@ services:
     stdin_open: true
 
 volumes:
+  app-sync:
+    external: true
   database:
   redis:
   rails_log:
